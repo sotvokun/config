@@ -1,0 +1,2 @@
+- `Microsoft.PowerShell_profile.ps1` Powershell Profile
+- `BluePlus.ini` ConHost color scheme, with ColorTool.exe
