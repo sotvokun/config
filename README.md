@@ -10,3 +10,4 @@ Copy this files to correct place.
 - `Microsoft.PowerShell_profile.ps1` Powershell Profile
 - `BluePlus.ini` ConHost color scheme, with ColorTool.exe
 - `.tmux.conf` tmux configuration file **UNIX ONLY**
+- `init.vim` neovim configuration file
