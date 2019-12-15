@@ -1,13 +1,20 @@
 This repository stored all configuration files of my frequent using softwares.
 
 ## USAGE
-Copy this files to correct place.
+Run the autodeploy.ps1 script in the PowerShell Core or Windows PowerShell
 
-## TODO
-- [ ] Auto deploy script for Windows and Unix
+## CHANGELOG OF AUTODEPLOY SCRIPT
+- 2019-12-16 First Release:
 
-## LIST
+## KNOWN ISSUE OF AUTODEPLOY SCRIPT
+_Unknown currently_
+
+## AVAILABLE
 - `Microsoft.PowerShell_profile.ps1` Powershell Profile
-- `BluePlus.ini` ConHost color scheme, with ColorTool.exe
 - `.tmux.conf` tmux configuration file **UNIX ONLY**
 - `init.vim` neovim configuration file
+- `settings.json` vscode configuration file
+- `profiles.json` windows terminal configuration file **WINDOWS ONLY**
+
+## ARCHIVED
+- `BluePlus.ini` ConHost color scheme, with ColorTool.exe 

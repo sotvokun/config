@@ -1,0 +1,41 @@
+{
+    /* [Extension List]
+        - VIM                   by vscodevim
+        - Dolch Theme           by be5invis
+
+
+    /** 
+     * WORKBENCH
+     */
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.colorTheme": "Dolch",
+    "workbench.iconTheme": "dolch",
+    "workbench.editor.labelFormat": "medium",
+    "workbench.editor.showIcons": false,
+
+    /**
+     * BREADCRUMB
+     */
+    "breadcrumbs.enabled": false,
+
+    /**
+     * EDITOR
+     */
+    "editor.fontFamily": "'iosevka sotvokunal'",
+    "editor.fontSize": 15,
+    "editor.codeLens": false,
+
+
+
+    /**
+     * VIM
+     */
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["@", "@"],
+            "commands": ["workbench.action.showCommands"]
+        }
+    ]
+}

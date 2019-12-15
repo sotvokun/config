@@ -1,0 +1,93 @@
+
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+
+    "profiles":
+    [
+        {
+            // Make changes here to the powershell.exe profile
+            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+            "name": "Windows PowerShell",
+            "commandline": "powershell.exe -NoLogo",
+            "hidden": false,
+            // CUSTOM
+            "useAcrylic": true,
+            "acrylicOpacity": 0.85,
+            "colorScheme": "BluePlus",
+            "fontFace": "Sarasa Term SC"
+        },
+        {
+            // Make changes here to the cmd.exe profile
+            "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+            "name": "cmd",
+            "commandline": "cmd.exe",
+            "hidden": false,
+            // CUSTOM
+            "colorScheme": "BluePlus",
+            "useAcrylic": true,
+            "acrylicOpacity": 0.8
+        },
+        {
+          "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+          "hidden": false,
+          "name": "Ubuntu",
+          "source": "Windows.Terminal.Wsl",
+          // CUSTOM
+          "useAcrylic": true,
+          "acrylicOpacity": 0.85,
+          "colorScheme": "BluePlus",
+          "fontFace": "Sarasa Term SC"
+        },
+        {
+            "guid": "{2731a959-ef7c-41c5-8241-e7750fde89e5}",
+            "hidden": false,
+            "name": "PowerShell Core",
+            "source": "pwsh.exe -NoLogo",
+            // CUSTOM
+            "useAcrylic": true,
+            "acrylicOpacity": 0.85,
+            "colorScheme": "BluePlus",
+            "fontFace": "Sarasa Term SC"
+        }
+    ],
+
+    // Add custom color schemes to this array
+    "schemes": [
+        {
+            "name": "BluePlus",
+            "foreground": "#EDEDEC",
+            "background": "#031F36",
+            "selectionBackground": "#B2B2B2",
+            "black" :   "#031F36",
+            "blue"  :   "#125CCF",
+            "green" :   "#32895C",
+            "cyan"  :   "#32C2C0",
+            "red"   :   "#F72729",
+            "purple":   "#9F00BC",
+            "yellow":   "#F96F1C",
+            "white" :   "#B2B2B2",
+            "brightBlack" :   "#545753",
+            "brightBlue"  :   "#156FFE",
+            "brightGreen" :   "#2CC631",
+            "brightCyan"  :   "#39D5CE",
+            "brightRed"   :   "#FB0416",
+            "brightPurple":   "#E800B0",
+            "brightYellow":   "#FCD627",
+            "brightWhite" :   "#EDEDEC"
+        }
+    ],
+
+    // Add any keybinding overrides to this array.
+    // To unbind a default keybinding, set the command to "unbound"
+    "keybindings": [
+        {
+            "command":"newTab",
+            "keys": ["alt+t"]
+        }
+    ]
+}
