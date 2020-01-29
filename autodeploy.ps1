@@ -22,7 +22,7 @@ $FILEPATH = @{
 }
 
 $FILEPATH_WIN = @{
-    "profiles.json"                    = @(); # Speicial processing while running with OS info
+    "profiles.json"                    = @("~/AppData/Local/Microsoft/'Windows Terminal'"); # Speicial processing while running with OS info
     "Microsoft.PowerShell_profile.ps1" = @("~/Documents/PowerShell/");
     "settings.json"                    = @("~/AppData/Roaming/Code/User/");
 }
@@ -75,7 +75,6 @@ if (($PSVersionTable.Platform -eq "Win32NT") -or ($PSVersionTable.PSEdition -eq 
     
     #    Speicial Path
     #----------------------
-    $FILEPATH_WIN["profiles.json"] = @("~/AppData/Local/Packages/$((Get-AppxPackage '*WindowsTerminal*').PackageFamilyName)/LocalState/")
 
     #     List Combine
     #----------------------
@@ -88,7 +87,7 @@ elseif ($PSVersionTable.Platform -eq "Unix") {
 
     #     List Combine
     #----------------------
-    $list = $FILEPATH + $FILEPATH_UNIX
+    $List = $FILEPATH + $FILEPATH_UNIX
 }
 else {
     Write-Error "Sorry, the autodeploy script doesn't support ``$($PSVersionTable.Platform)' yet."

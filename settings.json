@@ -28,14 +28,10 @@
 
 
     /**
-     * VIM
+     * EXT:VIM
      */
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
-    "vim.normalModeKeyBindings": [
-        {
-            "before": ["@", "@"],
-            "commands": ["workbench.action.showCommands"]
-        }
+    "vim.normalModeKeyBindingsNonRecursive": [
     ]
 }
