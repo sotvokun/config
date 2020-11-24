@@ -8,10 +8,13 @@
      * WORKBENCH
      */
     "workbench.startupEditor": "newUntitledFile",
-    "workbench.colorTheme": "Dolch",
+    "workbench.colorTheme": "Dolch Light",
+    "workbench.preferredLightColorTheme": "Dolch Light",
+    "workbench.preferredDarkColorTheme": "Dolch",
     "workbench.iconTheme": "dolch",
     "workbench.editor.labelFormat": "medium",
     "workbench.editor.showIcons": false,
+    "workbench.commandPalette.history": 10,
 
     /**
      * BREADCRUMB
@@ -21,17 +24,29 @@
     /**
      * EDITOR
      */
-    "editor.fontFamily": "'iosevka sotvokunal'",
+    "editor.fontFamily": "'Iosevka Pragmatus",
     "editor.fontSize": 15,
-    "editor.codeLens": false,
+    "editor.fontLigatures": true,
+    "editor.codeLens": true,
+    "editor.minimap.renderCharacters": false,
 
+    /*
+     * WINDOW
+     */
+    "window.autoDetectColorScheme": true,
+
+    /**
+     * EXTENSIONS
+     */
+    "extensions.autoUpdate": false,
+    "extensions.ignoreRecommendations": true,
 
 
     /**
      * EXT:VIM
      */
     "vim.useSystemClipboard": true,
-    "vim.useCtrlKeys": true,
+    "vim.useCtrlKeys": false,
     "vim.normalModeKeyBindingsNonRecursive": [
-    ]
+    ],
 }
