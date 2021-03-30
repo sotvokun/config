@@ -13,15 +13,15 @@
             "useAcrylic": true,
             "acrylicOpacity": 0.85,
             "colorScheme": "BluePlus",
-            "fontFace": "Sarasa Term SC"
+            "fontFace": "Consolas"
         },
         {
             "guid": "{2952ef07-ded0-48d4-ad02-b8c0e209986f}",
             "name": "Developer PowerShell",
             "commandline": 
-                "powershell.exe -noe -c \"&{Import-Module \"\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell 3e2c361a}; Set-Location ~;\"",
+                "powershell.exe -noe -c \"&{Import-Module \"\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell 06e1ddd9}; Set-Location ~;\"",
             "hidden": false,
-            "fontFace": "Sarasa Term SC"
+            "fontFace": "Consolas"
         },
         {
             "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -29,13 +29,15 @@
             "commandline": "cmd.exe",
             "hidden": false,
             "useAcrylic": true,
-            "acrylicOpacity": 0.8
+            "acrylicOpacity": 0.8,
+            "fontFace": "Consolas"
         },
         {
             "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
             "hidden": false,
             "name": "WSL",
-            "source": "Windows.Terminal.Wsl"
+            "source": "Windows.Terminal.Wsl",
+            "fontFace": "Consolas"
         },
         {
             "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
