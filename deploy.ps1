@@ -84,3 +84,14 @@ foreach ($key in $ini[$platform].Keys)
         Copy-Item -Path $src -Destination $dst -Force
     }
 }
+
+#======================
+#     EXTENDED CMD 
+#======================
+# Set HOME path for emacs
+# ---------------------
+if ($env:HOME.Length -eq 0)
+{
+   $env:HOME = $env:USERPROFILE
+   [System.Environment]::SetEnvironmentVariable("HOME", $env:HOME, 'User')
+}
