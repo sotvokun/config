@@ -63,6 +63,10 @@ foreach ($key in $ini[$platform].Keys)
 {
     $src = $key
     $dst = $ini[$platform][$key]
+    if ($key[0] -eq "!")
+    {
+        continue
+    }
     if ($key[0] -eq "@")
     {
         $src = Get-DefinitionValue -obj $ini -name $key

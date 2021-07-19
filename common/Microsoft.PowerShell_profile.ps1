@@ -1,5 +1,16 @@
-Set-Alias -Name pwds -Value Get-ShortPath
+#======================================
+#              SETTINGS
+#======================================
+Set-PSReadLineOption -Colors @{Parameter='white'}
 
+#======================================
+#                ALIAS
+#======================================
+
+
+#======================================
+#                PROMPT
+#======================================
 function prompt
 {
     $CMD = $ENV:USERNAME + "@" + $ENV:COMPUTERNAME
@@ -10,6 +21,9 @@ function prompt
     return " "
 }
 
+#======================================
+#              UTILITIES
+#======================================
 function Get-ShortLocation
 {
     if($ENV:OS -eq "Windows_NT") {$splitSign = '\'} else {$splitSign = '/'}

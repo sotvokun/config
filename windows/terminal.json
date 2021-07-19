@@ -2,6 +2,8 @@
     "$schema": "https://aka.ms/terminal-profiles-schema",
 
     "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "copyFormatting": "none",
+    "tabWidthMode": "equal",
 
     "profiles":
     [
@@ -13,14 +15,6 @@
             "useAcrylic": true,
             "acrylicOpacity": 0.85,
             "colorScheme": "BluePlus",
-            "fontFace": "Consolas"
-        },
-        {
-            "guid": "{2952ef07-ded0-48d4-ad02-b8c0e209986f}",
-            "name": "Developer PowerShell",
-            "commandline": 
-                "powershell.exe -noe -c \"&{Import-Module \"\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell 06e1ddd9}; Set-Location ~;\"",
-            "hidden": false,
             "fontFace": "Consolas"
         },
         {
