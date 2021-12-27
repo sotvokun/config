@@ -1,3 +1,5 @@
+**CURRENT VERSION HAS BEEN DEPRECATED**
+
 This repository stored all configuration files of my frequent using softwares.
 
 ## USAGE
