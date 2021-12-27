@@ -1,37 +1,66 @@
-This repository stored all configuration files of my frequent using softwares.
+This repository contains some program profiles that I using frequently.
 
-## USAGE
-1. Editing `deploy.ini` make sure that all configuration files can be copy to corret distination.
-2. Run the `deploy.ps1` script in the PowerShell Core or Windows PowerShell
+## Requires
+To deploy profile automatically, the following programs are necessary:
+- `lua` `version >= 5.2`
 
-## DEPLOY.INI
-`deploy.ini` is a key-value configuration file, it has three sections in its content. The sections has some difference between themselves.
-### Section `[define]`
-In section `[define]` you can give the alias to some profiles, but alias must start with `@` symbol. You can define some cross-platform programs' profiles in this section, thereforce you don't need maintain two files to Windows or *nix.
-```
-@name = file_path
-```
+For Microsoft Windows, you should promise PowerShell is available.
 
-### Section `[location.*]`
-In section `[location.windows]` or `[location.unix]` you need to define the path of profile and where its deploy desitination path is.
+## Usage
 ```
-file_path_or_alias = distination_path
-```
-If the `distination_path` ends with character `\` or `/` , the deploy script will copy the file into the distination folder. But if the `distination_path` ends without the slash mark, the deploy script will copy into distination path and rename to the new name.
-
-### Ignore deployment 
-In section `[location.*]`, we can define a deployment ignored. The deploy script will skip it. To define a deployment ignored, just put a symbol `!` in the head of the line.
-```
-!file_path_or_alias = distination_path
+> lua deploy.lua
 ```
 
-## CHANGELOG OF AUTODEPLOY SCRIPT
-- 2019-12-16 First Release
-- 2020-09-25 New version with readable deploying configuration
-- 2021-07-19 Add the feature - ignore deployment
+## Custom
+Open `deploy.lua` file with favorite text editor, then edit the `deploy_list`.
 
-## TODO OF AUTO DEPLOY SCRIPT
-- [ ] Link mode: copy the configuration files into `~/.config`, then use the symbolic link to link them to distination_path
+To define a new deployment, the two arguments are necessary: the profile path in the repository and the target path. The deployment procedure will link or copy the first to the second.
+```lua
+{"windows/terminal.json", "~/AppData/Local/Microsoft/Windows Terminal/settings.json"}
+```
 
-## KNOWN ISSUE OF AUTODEPLOY SCRIPT
-_Unknown currently_
+By default, the deployment procedure will deploy the file or folder to the second path on any OS. But for some programs, the content of profile is compatible on any OS, but the path is different. We can specify the path for Microsoft Windows (`win`) or all others (`unix`).
+```lua
+{
+    'windows/Microsoft.PowerShell_profile.ps1',
+    {
+        win = '~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1',
+        unix = '~/.config/powershell/Microsoft.PowerShell_profile.ps1'
+    }
+},
+```
+
+Some programs are special OS only, to ignore on another OS, just define the path for which OS that program running on.
+```lua
+{'unix/.bashrc', {unix='~/.bashrc'}}
+```
+
+Some programs profiles is complicated, like the emacs or vim, we also can deploy the foler. Just set the folder option.
+```lua
+{'nvim', {unix = '~/.config/nvim'}, folder=true}
+```
+
+The default deployment action is linking, but sometimes we do not have permission to create the symbolic link. We set the deployment action is copy.
+```lua
+{
+    'common/vscode_settings.json',
+    {win = '~/AppData/Roaming/Code/User/settings.json'}
+    copy=true
+},
+```
+
+**WINDOWS 10 DISABLED THE PERMISSION TO CREATE SYMBOLIC LINK AS NORMAL USER. FOR COMPATIBLE, PLEASE USE COPY FOR MOST SUITATIONS**
+
+### Ignore deployment
+There are too many reason that we can stop use a software, we also can ignore a deployment if we do not need it.
+
+The easiest way is to delete it in the `deploy_list`.
+
+If we just pause using temporarily, we can set the target path to empty table or empty string, or set the ignore option.
+```lua
+{'unix/.bashrc', {}}
+-- equavalent
+{'unix/.bashrc', ""}
+-- equavalent
+{'unix/.bashrc', {unix='~/.bashrc'}, ignore=true}
+```

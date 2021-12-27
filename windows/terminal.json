@@ -14,8 +14,7 @@
             "hidden": false,
             "useAcrylic": true,
             "acrylicOpacity": 0.85,
-            "colorScheme": "BluePlus",
-            "fontFace": "Consolas"
+            "colorScheme": "BluePlus"
         },
         {
             "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",

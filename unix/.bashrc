@@ -27,8 +27,10 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
+
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
 
 # The new prompt like fishy in oh-my-zsh
 # https://zhuanlan.zhihu.com/p/51008087
@@ -38,6 +40,7 @@ function _fish_collapsed_pwd() {
     local size=${#home}
     [[ $# == 0 ]] && pwd="$PWD"
     [[ -z "$pwd" ]] && return
+
     if [[ "$pwd" == "/" ]]; then
         echo "/"
         return
@@ -45,7 +48,9 @@ function _fish_collapsed_pwd() {
         echo "~"
         return
     fi
+
     [[ "$pwd" == "$home/"* ]] && pwd="~${pwd:$size}"
+
     if [[ -n "$BASH_VERSION" ]]; then
         local IFS="/"
         local elements=($pwd)
@@ -66,6 +71,7 @@ function _fish_collapsed_pwd() {
             fi
         done
     fi
+
     local IFS="/"
     echo "${elements[*]}"
 }
@@ -77,6 +83,7 @@ if [ -n "$BASH_VERSION" ]; then
         export PS1='\u@\h \[\e[32m\]$(_fish_collapsed_pwd)\[\e[0m\]> '
     fi
 else
+
     if [ $UID -eq 0 ]; then
         export PROMPT='%f%n@%m %F{1}$(_fish_collapsed_pwd)%f# '
     else
@@ -84,13 +91,14 @@ else
     fi
 fi
 
+
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
-
     #alias grep='grep --color=auto'
     #alias fgrep='fgrep --color=auto'
     #alias egrep='egrep --color=auto'
@@ -100,7 +108,6 @@ fi
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -115,3 +122,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
