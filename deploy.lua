@@ -13,9 +13,19 @@
 }
 --]]
 local deploy_list = {
+    -- neovim
+    {
+        'common/nvim',
+        {
+            win = '~/AppData/Local',
+            unix = '~/.config'
+        },
+        copy=true,
+        folder=true
+    },
     -- powershell profile
     {
-        'windows/Microsoft.PowerShell_profile.ps1',
+        'common/Microsoft.PowerShell_profile.ps1',
         {
             win = '~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1',
             unix = '~/.config/powershell/Microsoft.PowerShell_profile.ps1'
