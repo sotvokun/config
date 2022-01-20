@@ -35,17 +35,15 @@ function core.setup(opt)
     -- Terminal
     -- -- set shell
     if opt.shell then
+        --[==[
         if opt.shell == 'powershell' or opt.shell == 'pwsh' then
-            if vim.fn.has('win32') == 1 then
-                vim.opt.shell = 'powershell'
-            else
-                vim.opt.shell = 'pwsh'
-            end
-            vim.opt.shellcmdflag = '-NoLogo -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-            vim.opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-            vim.opt.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-            vim.cmd[[set shellquote= shellxquote=]]
+            vim.cmd[[let &shell = has('win32') ? 'powershell' : 'pwsh']]
+            vim.cmd[[let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;']]
+		    vim.cmd[[let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode']]
+		    vim.cmd[[let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode']]
+		    vim.cmd[[set shellquote= shellxquote=]]
         end
+        --]==]
     end
 
 

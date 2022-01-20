@@ -23,8 +23,10 @@ local plugin_list = {
     },
     {
         "nvim-telescope/telescope.nvim",
-        post_sync = function() vim.cmd("checkhealth telescope") end
+        post_sync = function() vim.cmd("checkhealth telescope") end,
+        setup = function() require('plugins/telescope') end
     },
+    {"nvim-telescope/telescope-file-browser.nvim"},
 
     -- Treesitter
     {
@@ -74,6 +76,9 @@ function()
         end
         if val.branch then
             item.branch = val.branch
+        end
+        if val.commit then
+            item.commit = val.commit
         end
         use(item)
     end
