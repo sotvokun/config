@@ -13,16 +13,6 @@
 }
 --]]
 local deploy_list = {
-    -- neovim
-    {
-        'common/nvim',
-        {
-            win = '~/AppData/Local',
-            unix = '~/.config'
-        },
-        copy=true,
-        folder=true
-    },
     -- powershell profile
     {
         'common/Microsoft.PowerShell_profile.ps1',
@@ -32,32 +22,20 @@ local deploy_list = {
         },
         copy=true
     },
+    -- bashrc
+    {
+        'unix/.bashrc', 
+        {
+            unix='~/.bashrc'
+        }, 
+        copy=true
+    },
     -- windows terminal
     {
         'windows/terminal.json',
         {win = '~/AppData/Local/Microsoft/Windows Terminal/settings.json'},
         copy=true
     },
-    -- [[vscode::begin]]
-    {
-        'common/vscode_settings.json',
-        {
-            win = '~/AppData/Roaming/Code/User/settings.json',
-            unix = '~/.config/Code/User/settings.json'
-        },
-        copy=true, ignore=true
-    },
-    {
-        'common/vscode_keybindings.json',
-        {
-            win = '~/AppData/Roaming/Code/User/keybindings.json',
-            unix = '~/.config/Code/User/keybindings.json'
-        },
-        copy=true, ignore=true
-    },
-    -- [[vscode::end]]
-    -- bashrc
-    {'unix/.bashrc', {unix='~/.bashrc'}, copy=true},
 }
 --[[-------------------------------------------------------------------------------------------[[--
   _____             _               _
