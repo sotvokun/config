@@ -36,6 +36,11 @@ local deploy_list = {
         {win = '~/AppData/Local/Microsoft/Windows Terminal/settings.json'},
         copy=true
     },
+    {
+        'common/alacritty.yml',
+        {win = '~/AppData/Roaming/alacritty/alacritty.yml'},
+        copy=true
+    }
 }
 --[[-------------------------------------------------------------------------------------------[[--
   _____             _               _
