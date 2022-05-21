@@ -1,7 +1,10 @@
 #======================================
 #              SETTINGS
 #======================================
-Set-PSReadLineOption -Colors @{Parameter='white'}
+Set-PSReadLineOption -Colors @{
+    Parameter= 'White'
+    Operator = 'White'
+}
 
 #======================================
 #                ALIAS
