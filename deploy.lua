@@ -13,6 +13,12 @@
 }
 --]]
 local deploy_list = {
+    -- ideavimrc
+    {
+        'common/.ideavimrc',
+        '~/.ideavimrc',
+        copy=true
+    },
     -- powershell profile
     {
         'common/Microsoft.PowerShell_profile.ps1',
