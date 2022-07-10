@@ -36,6 +36,15 @@ local deploy_list = {
         }, 
         copy=true
     },
+    -- bash configuration
+    {
+        'unix/bash/',
+        {
+            unix='~/.config/bash'
+        },
+        copy=true,
+        folder=true
+    },
     -- windows terminal
     {
         'windows/terminal.json',
