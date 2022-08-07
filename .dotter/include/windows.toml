@@ -1,0 +1,9 @@
+[pwsh.files]
+"Microsoft.PowerShell_profile.ps1" = "~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
+
+[svim.files]
+"svim/init.fnl" = "~/AppData/Local/nvim/fnl/init.fnl"
+"svim/configs.fnl" = "~/AppData/Local/nvim/fnl/configs.fnl"
+"svim/keymaps.fnl" = "~/AppData/Local/nvim/fnl/keymaps.fnl"
+"svim/packages.fnl" = "~/AppData/Local/nvim/fnl/packages.fnl"
+"svim/pkgs" = "~/AppData/Local/nvim/fnl/pkgs"

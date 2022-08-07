@@ -1,0 +1,21 @@
+[helpers]
+
+[default]
+depends = []
+
+[ideavim.files]
+".ideavimrc" = "~/.ideavimrc"
+
+[pwsh.files]
+"Microsoft.PowerShell_profile.ps1" = "~/.config/powershell/profile.ps1"
+
+[bash.files]
+"bash/.bashrc" = "~/.bashrc"
+"bash/bash" = "~/.config/bash"
+
+[svim.files]
+"svim/init.fnl" = "~/.config/nvim/fnl/init.fnl"
+"svim/configs.fnl" = "~/.config/nvim/fnl/configs.fnl"
+"svim/keymaps.fnl" = "~/.config/nvim/fnl/keymaps.fnl"
+"svim/packages.fnl" = "~/.config/nvim/fnl/packages.fnl"
+"svim/pkgs" = "~/.config/nvim/fnl/pkgs"
