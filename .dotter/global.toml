@@ -19,3 +19,6 @@ depends = []
 "svim/keymaps.fnl" = "~/.config/nvim/fnl/keymaps.fnl"
 "svim/packages.fnl" = "~/.config/nvim/fnl/packages.fnl"
 "svim/pkgs" = "~/.config/nvim/fnl/pkgs"
+
+[wezterm.files]
+"wezterm" = "~/.config/wezterm"
