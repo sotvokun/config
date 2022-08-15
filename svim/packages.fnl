@@ -31,3 +31,7 @@
 ;; Terminal
 (use-package akinsho/toggleterm.nvim
              :config (config-package! :pkgs.toggleterm))
+
+;; UI
+(use-package b0o/incline.nvim
+             :config (setup-package! :incline))

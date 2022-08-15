@@ -114,13 +114,21 @@
 (set-keymap :<leader>qq ":nohls<cr>" :label "Disable search highlighting")
 (set-keymap :<leader>qz ":ZenMode<cr>" :label "Zen Mode")
 
+;----------------
+; BETTER EDITING
+;----------------
+(set-keymap :< :<gv :mode :v)
+(set-keymap :> :>gv :mode :v)
+
+; Move selected line and block
+(set-keymap :<a-j> ":m '>+1<cr>gv-gv" :mode :x :label "Move selected up")
+(set-keymap :<a-k> ":m '<-2<cr>gv-gv" :mode :x :label "Move selected down")
+
 ;-------------------
 ; LABEL FOR PLUGINS
 ;-------------------
 (set-keymap-label "s" "Leap forward")
 (set-keymap-label "S" "Leap backward")
-(set-keymap-label "cs" "Surround")
-(set-keymap-label "cS" "Surround (new line)")
 
 ;----------------------
 ; LABEL FOR LEADERMENU
