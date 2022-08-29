@@ -13,12 +13,8 @@ depends = []
 "bash/.bashrc" = "~/.bashrc"
 "bash/bash" = "~/.config/bash"
 
-[svim.files]
-"svim/init.fnl" = "~/.config/nvim/fnl/init.fnl"
-"svim/configs.fnl" = "~/.config/nvim/fnl/configs.fnl"
-"svim/keymaps.fnl" = "~/.config/nvim/fnl/keymaps.fnl"
-"svim/packages.fnl" = "~/.config/nvim/fnl/packages.fnl"
-"svim/pkgs" = "~/.config/nvim/fnl/pkgs"
+[nvim.files]
+"nvim" = "~/.config/nvim"
 
 [wezterm.files]
 "wezterm" = "~/.config/wezterm"
