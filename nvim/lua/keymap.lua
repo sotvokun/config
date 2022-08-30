@@ -42,8 +42,6 @@ local keymaps = {
   },
 
   -- Telescope ---------------------------
-  {'<c-p>', '<cmd>Telescope<cr>', desc = 'Open Telescope'},
-  {'<a-p>', '<cmd>Telescope project<cr>', desc = 'Open project'},
   {'<a-x>', '<cmd>Telescope commands<cr>', desc = 'Call commands'},
 
   -- Nvim-Tree ---------------------------
@@ -89,4 +87,5 @@ local keymaps = {
 }
 
 -- Setup -----------------------------------------------------------------------
+
 setup(keymaps)

@@ -3,8 +3,8 @@ local packages = {
   {'wbthomason/packer.nvim'},
   {'lewis6991/impatient.nvim'},
   {'nvim-lua/plenary.nvim'},
-  { 
-    'folke/which-key.nvim', 
+  {
+    'folke/which-key.nvim',
     config = function()
       require('which-key').setup()
     end
@@ -124,7 +124,10 @@ local packages = {
 
   -- Misc
   {'antoinemadec/FixCursorHold.nvim'},
-  {'folke/todo-comments.nvim'}
+  {
+    'folke/todo-comments.nvim',
+    config = function() require('todo-comments').setup() end
+  }
 }
 
 local setup = function(opts)

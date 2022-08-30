@@ -33,12 +33,13 @@ require('lsp').startup(function(use)
     }
   }
 
-  use({
-    'diagnostics.cspell',
-    diagnostics_postprocess = function(diagnostic)
-      diagnostic.severity = vim.diagnostic.severity.HINT
-    end
-  }, true)
+  -- use({
+  --   'diagnostics.cspell',
+  --   diagnostics_postprocess = function(diagnostic)
+  --     diagnostic.severity = vim.diagnostic.severity.HINT
+  --   end
+  -- }, true)
 end)
 
 require('keymap')
+require('keymap-hydra')
