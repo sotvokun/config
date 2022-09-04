@@ -65,20 +65,20 @@ local packages = {
   {'rafamadriz/friendly-snippets'},
 
   -- Editing
-  { 
-    'numToStr/Comment.nvim', 
-    config = function() require('Comment').setup() end 
+  {
+    'numToStr/Comment.nvim',
+    config = function() require('Comment').setup() end
   },
-  { 
-    'windwp/nvim-autopairs', 
-    config = function() 
+  {
+    'windwp/nvim-autopairs',
+    config = function()
       require('nvim-autopairs').setup({
         ignored_next_char = '[%w]'
       })
-    end 
+    end
   },
-  { 
-    'kylechui/nvim-surround', 
+  {
+    'kylechui/nvim-surround',
     config = function() require('nvim-surround').setup() end
   },
   {
@@ -96,7 +96,7 @@ local packages = {
   -- Terminal
   {
     'akinsho/toggleterm.nvim',
-    config = function() 
+    config = function()
       local cfg = {}
       if vim.fn.has('win32') == 1 then
         cfg.shell = 'powershell'
@@ -110,7 +110,7 @@ local packages = {
   {'gpanders/editorconfig.nvim'},
   {'famiu/bufdelete.nvim'},
   {
-    'sotvokun/reach.nvim', 
+    'sotvokun/reach.nvim',
     config = function() require('reach').setup() end
   },
   {

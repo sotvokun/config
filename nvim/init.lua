@@ -56,6 +56,13 @@ if utils.need_has('win32') or utils.need_has('wsl') then
   }
 end
 
+-- Fold
+vim.o.foldcolumn = '1'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+vim.o.foldnestmax = 2
+
 -- filetype.lua
 -- TODO: remove this part when it be enabled by default.
 do
@@ -104,6 +111,12 @@ set_keymap('<a-k>', ":m '<-2<cr>gv-gv", {
   mode = 'x',
   desc = 'Move selection up'
 })
+
+-- Some emacs keybinding for insert mode
+set_keymap('<a-a>', '<c-\\><c-n>^i', { mode = 'i' })
+set_keymap('<c-a>', '<c-\\><c-n>0i', { mode = 'i' })
+set_keymap('<c-e>', '<c-\\><c-n>$a', { mode = 'i' })
+set_keymap('<c-k>', '<c-\\><c-n>Da', { mode = 'i' })
 
 -- Enhancing with plugins ------------------------------------------------------
 

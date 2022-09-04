@@ -56,7 +56,12 @@ local packages = {
     end
   },
 
-  {'mfussenegger/nvim-dap'}
+  {'mfussenegger/nvim-dap'},
+
+  {
+    'kevinhwang91/nvim-ufo',
+    requires = { 'kevinhwang91/promise-async' }
+  },
 
 }
 

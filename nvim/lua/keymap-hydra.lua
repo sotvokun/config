@@ -29,8 +29,10 @@ Hydra({
       'S', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>',
       { desc = 'Workspace symbols (dynamic)' }
     },
+    { 'g', '<cmd>Telescope grep_string<cr>', { desc = 'Grep string' } },
+    { 'G', '<cmd>Telescope live_grep<cr>', { desc = 'Live grep' } },
     { 't', '<cmd>Telescope buffers<cr>', { desc = 'Todo comments'} },
-    { '<c-p>', '<cmd>Telescope project<cr>', { desc = 'Projects' } }
+    { '<c-p>', '<cmd>Telescope project<cr>', { desc = 'Projects' } },
   }
 })
 

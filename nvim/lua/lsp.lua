@@ -49,6 +49,11 @@ end
 local function get_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  -- UFO requirements
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+  }
   return capabilities
 end
 
@@ -103,6 +108,8 @@ local startup = function(init)
     on_attach = on_attach,
     capabilities = get_capabilities()
   }
+
+  require('ufo').setup()
 
   local lspconfig_setup_list = {
     function(server_name)

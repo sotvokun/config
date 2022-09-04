@@ -27,20 +27,6 @@ local keymaps = {
   {'dq', '<cmd>Bdelete<cr>', desc = 'Buffer'},
   {'dQ', '<cmd>bd<cr>', desc = 'Buffer and layout'},
 
-  -- Reach -------------------------------
-  {
-    '<c-g>',
-    function()
-      require('reach').buffers({
-        handle = 'dynamic',
-        show_icons = false,
-        modified_icon = '[+]',
-        previous = {depth = 1}
-      })
-    end,
-    desc = 'Go buffers'
-  },
-
   -- Telescope ---------------------------
   {'<a-x>', '<cmd>Telescope commands<cr>', desc = 'Call commands'},
 
@@ -51,6 +37,10 @@ local keymaps = {
   {'[t', ':tabp<cr>', desc = 'Go to previous tabpage'},
   {']t', ':tabn<cr>', desc = 'Go to next tabpage'},
   {'<leader>et', ':tabnew<cr>', desc = 'Tabpage'},
+
+  -- UFO ---------------------------------
+  {'zR', require('ufo').openAllFolds, desc = 'Open all folds'},
+  {'zM', require('ufo').closeAllFolds, desc = 'Close all folds'},
 
   -- LSP ---------------------------------
   {
