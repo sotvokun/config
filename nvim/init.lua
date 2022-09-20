@@ -13,7 +13,7 @@ if _G['svim/bootstrap'] then
   require('svim.modules.lsp').apply(function (use)
     -- EXAMPLE: Setup language server
     -- use {<name of ls>, setup = <options>, raw = <manually setup>}
-    use {'racket_langserver'}
+    -- use {'racket_langserver'}
   end)
   require('svim.modules.lsp-util')
   require('svim.modules.null-ls').apply(function (use)

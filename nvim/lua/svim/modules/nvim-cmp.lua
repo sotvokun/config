@@ -3,15 +3,20 @@ local use = require('svim.modules.package').use
 -- Packages ----------------------------------------------------------
 -- Completeion
 use {'hrsh7th/nvim-cmp'}
-use {'hrsh7th/cmp-vsnip'}
 use {'hrsh7th/cmp-buffer'}
 use {'hrsh7th/cmp-path'}
+use {'saadparwaiz1/cmp_luasnip'}
 
 -- Snippets
-use {'hrsh7th/vim-vsnip',
-     setup =
+use {'L3MON4D3/LuaSnip',
+     config =
      function ()
-       vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/snippets'
+       local paths = {
+         (vim.fn.stdpath('config') .. '/snippets'),
+         (vim.fn.stdpath('data') .. '/site/pack/packer/start/friendly-snippets')
+       }
+       vim.pretty_print(paths)
+       require('luasnip.loaders.from_vscode').lazy_load()
      end}
 use {'rafamadriz/friendly-snippets'}
 
@@ -33,20 +38,21 @@ end
 
 do
   local ok, cmp = pcall(require, 'cmp')
-  if not ok then return end
+  local luasnip_ok, luasnip = pcall(require, 'luasnip')
+  if not ok or not luasnip_ok then return end
 
   vim.o.completeopt = 'menu,menuone,noselect'
 
   -- Snippet
   local snippet = {
     expand = function(args)
-      vim.fn['vsnip#anonymous'](args.body)
+      luasnip.lsp_expand(args.body)
     end
   }
 
   -- Sources
   local sources = {
-    {name = 'vsnip'},
+    {name = 'luasnip'},
     {name = 'buffer', keyword_length = 7, dup = 0},
     {name = 'path'}
   }
@@ -71,15 +77,15 @@ do
         else
           cmp.confirm()
         end
-      elseif vim.fn['vsnip#available'](1) == 1 then
-        feedkey('<Plug>(vsnip-expand-or-jump)', '')
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
     end, {'i', 's'}),
     ['<s-tab>'] = cmp.mapping(function()
-      if vim.fn['vsnip#jumpable'](-1) == 1 then
-        feedkey('<Plug>(vsnip-jump-prev)', '')
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       end
     end, {'i', 's'})
   }
