@@ -5,50 +5,24 @@ local use = require('svim.modules.package').use
 use {'hrsh7th/nvim-cmp'}
 use {'hrsh7th/cmp-buffer'}
 use {'hrsh7th/cmp-path'}
-use {'saadparwaiz1/cmp_luasnip'}
-
--- Snippets
-use {'L3MON4D3/LuaSnip',
-     config =
-     function ()
-       local paths = {
-         (vim.fn.stdpath('config') .. '/snippets'),
-         (vim.fn.stdpath('data') .. '/site/pack/packer/start/friendly-snippets')
-       }
-       vim.pretty_print(paths)
-       require('luasnip.loaders.from_vscode').lazy_load()
-     end}
-use {'rafamadriz/friendly-snippets'}
 
 -- Apply -------------------------------------------------------------
-local function feedkey(key, mode)
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes(key, true, true, true),
-    mode,
-    true
-  )
-end
-
-local function has_words_before()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return (
-    col ~= 0 and
-    vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil)
-end
-
 do
   local ok, cmp = pcall(require, 'cmp')
-  local luasnip_ok, luasnip = pcall(require, 'luasnip')
-  if not ok or not luasnip_ok then return end
+  if not ok then return end
 
   vim.o.completeopt = 'menu,menuone,noselect'
 
+  local luasnip_ok, luasnip = pcall(require, 'luasnip')
+
   -- Snippet
-  local snippet = {
-    expand = function(args)
+  local snippet = {}
+
+  if luasnip_ok then
+    snippet.expand = function (args)
       luasnip.lsp_expand(args.body)
     end
-  }
+  end
 
   -- Sources
   local sources = {
@@ -77,14 +51,14 @@ do
         else
           cmp.confirm()
         end
-      elseif luasnip.expand_or_jumpable() then
+      elseif luasnip_ok and luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       else
         fallback()
       end
     end, {'i', 's'}),
     ['<s-tab>'] = cmp.mapping(function()
-      if luasnip.jumpable(-1) then
+      if luasnip_ok and luasnip.jumpable(-1) then
         luasnip.jump(-1)
       end
     end, {'i', 's'})
@@ -93,7 +67,8 @@ do
   -- Formatting
   local formatting = {
     format = function(entry, item)
-      item.menu = string.format('[%s]', string.gsub(entry.source.name, 'nvim_', ''), item)
+      local trimmed_word = string.gsub(entry.source.name, 'nvim_', '')
+      item.menu = string.format('[%s]', trimmed_word)
       return item
     end
   }

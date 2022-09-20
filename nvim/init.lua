@@ -8,6 +8,7 @@ if _G['svim/bootstrap'] then
   require('svim.modules.tree-sitter')
   require('svim.modules.lualine')
   require('svim.modules.nvim-cmp')
+  require('svim.modules.snippet').apply()
 
   -- LSP Configurations
   require('svim.modules.lsp').apply(function (use)

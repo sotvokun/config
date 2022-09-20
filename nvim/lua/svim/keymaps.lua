@@ -79,6 +79,11 @@ set_keymap('<c-x>f', '<cmd>Telescope find_files<cr>', { desc = 'Find files' })
 -- Macros ------------------------------------------------------------
 set_keymap('Q', '@q', { desc = 'Replay macro q' })
 
+-- Quick Setup -------------------------------------------------------
+set_keymap('<leader>qq', '<cmd>nohl<cr>', { desc = 'Disable search highlight' })
+set_keymap('<leader>qr', '<cmd>set relativenumber!<cr>', { desc = 'Toggle relative number' })
+set_keymap('<leader>qw', '<cmd>set wrap!<cr>', { desc = 'Text wrap' })
+
 -- Misc --------------------------------------------------------------
 set_keymap(';;', ':')
 set_keymap('<a-x>', '<cmd>Telescope<cr>')

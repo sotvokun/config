@@ -24,6 +24,11 @@ opt.ignorecase = true
 opt.mouse = 'a'
 opt.clipboard = 'unnamedplus'
 
+-- Fold
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+
 -- Enable filetype.lua
 -- TODO: remove this part when it be enabled by default
 do

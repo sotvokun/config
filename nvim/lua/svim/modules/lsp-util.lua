@@ -53,3 +53,13 @@ use {'kosayoda/nvim-lightbulb',
      end}
 
 use {'j-hui/fidget.nvim', config = function() require('fidget').setup() end}
+
+use {'kevinhwang91/nvim-ufo',
+     requires = {'kevinhwang91/promise-async'},
+     config =
+     function()
+       require('ufo').setup({
+         provider_selector = function(bufnr, filetype, buftype)
+           return {'lsp', 'indent'}
+         end})
+     end}
