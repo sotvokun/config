@@ -47,7 +47,7 @@ sections.lualine_a = {
 }
 
 sections.lualine_b = {
-  {'filename', patah = 1}
+  {'filename', path = 1}
 }
 
 sections.lualine_c = {
