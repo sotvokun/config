@@ -70,6 +70,7 @@ set_keymap('<leader>cr', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename [
 -- Toggle Term -------------------------------------------------------
 set_keymap('<c-\\>', '<cmd>ToggleTerm<cr>', { desc = 'Toggle terminal' })
 set_keymap('<c-\\>', '<c-\\><c-n><cmd>ToggleTerm<cr>', { mode = 't' })
+set_keymap('<esc>', '<c-\\><c-n>', { mode = 't' })
 
 -- <c-x> -------------------------------------------------------------
 set_keymap('<c-x>b', '<cmd>Telescope buffers<cr>', { desc = 'List buffers' })
@@ -85,7 +86,7 @@ set_keymap('<leader>qr', '<cmd>set relativenumber!<cr>', { desc = 'Toggle relati
 set_keymap('<leader>qw', '<cmd>set wrap!<cr>', { desc = 'Text wrap' })
 
 -- Misc --------------------------------------------------------------
-set_keymap(';;', ':')
-set_keymap('<a-x>', '<cmd>Telescope<cr>')
+set_keymap('<space><space>', ':', { desc = 'Command' })
+set_keymap('<a-x>', '<cmd>Telescope<cr>', { desc = 'Telescope' })
 set_keymap('<c-n>', '<cmd>NeoTreeFocusToggle<cr>', { desc = 'Toggle NeoTree' })
 set_keymap('<F10>', '<cmd>UndotreeToggle<cr>', { desc = 'Toggle Undotree' })

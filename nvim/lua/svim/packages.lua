@@ -91,16 +91,15 @@ use {'lewis6991/gitsigns.nvim',
 use {'akinsho/toggleterm.nvim',
      config =
      function()
-       local shell = 'bash'
+       local opts = {}
        if vim.fn.has('win32') == 1 then
-        shell = 'powershell'
+         opts.shell = 'powershell'
        end
-       require('toggleterm').setup({
-         shell = shell
-       })
+       require('toggleterm').setup(opts)
      end}
 
 -- Misc
+use { 'sotvokun/lftp-sync.nvim' }
 use {'gpanders/editorconfig.nvim'}
 use {'dstein64/vim-startuptime'}
 use {'famiu/bufdelete.nvim'}
