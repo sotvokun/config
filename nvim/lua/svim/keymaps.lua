@@ -42,6 +42,10 @@ set_keymap('<a-k>', ":m '<-2<cr>gv-gv", {
 set_keymap('<c-a>', '<c-\\><c-n>0i', { mode = 'i' })
 set_keymap('<a-a>', '<c-\\><c-n>^i', { mode = 'i' })
 set_keymap('<c-e>', '<c-\\><c-n>$a', { mode = 'i' })
+set_keymap('<c-n>', '<down>', { mode = 'i', noremap = true})
+set_keymap('<c-p>', '<up>', { mode = 'i', noremap = true})
+set_keymap('<c-f>', '<right>', { mode = 'i'})
+set_keymap('<c-b>', '<left>', { mode = 'i'})
 
 -- Buffers -----------------------------------------------------------
 set_keymap('<leader>ee', '<cmd>enew<cr>', { desc = 'New buffer' })
