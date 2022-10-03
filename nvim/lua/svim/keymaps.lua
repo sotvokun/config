@@ -4,6 +4,9 @@ local set_keymap = function(lhs, rhs, opts)
     mode = opts.mode
     opts.mode = nil
   end
+  opts = vim.tbl_extend('keep', opts, {
+    replace_keycodes = false
+  })
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
@@ -67,8 +70,8 @@ set_keymap('gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', { desc = 'Go to im
 set_keymap('K', '<cmd>lua vim.lsp.buf.hover()<cr>', { desc = 'Hover [LSP]' })
 set_keymap('<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code Action [LSP]' })
 set_keymap('<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<cr>', { desc = 'Formatting [LSP]' })
-set_keymap('<leader>cd', '<cmd>TroubleToggle<cr>', { desc = 'Diagnostic' })
-set_keymap('<leader>cs', '<cmd>AerialToggle<cr>', { desc = 'Symbols' })
+set_keymap('<leader>cd', '<cmd>TroubleToggle<cr>', { desc = 'Diagnostic [LSP]' })
+set_keymap('<leader>cs', '<cmd>AerialToggle<cr>', { desc = 'Symbols [LSP]' })
 set_keymap('<leader>cr', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename [LSP]' })
 
 -- Toggle Term -------------------------------------------------------
@@ -88,6 +91,7 @@ set_keymap('Q', '@q', { desc = 'Replay macro q' })
 set_keymap('<leader>qq', '<cmd>nohl<cr>', { desc = 'Disable search highlight' })
 set_keymap('<leader>qr', '<cmd>set relativenumber!<cr>', { desc = 'Toggle relative number' })
 set_keymap('<leader>qw', '<cmd>set wrap!<cr>', { desc = 'Text wrap' })
+set_keymap('<leader>qs', '<cmd>set spell!<cr>', { desc = 'Spell'})
 
 -- Misc --------------------------------------------------------------
 set_keymap('<space><space>', ':', { desc = 'Command' })

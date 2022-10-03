@@ -77,6 +77,10 @@ use {'s1n7ax/nvim-window-picker',
      function()
        require('window-picker').setup()
      end}
+use {'folke/todo-comments.nvim',
+     config = function()
+       require('todo-comments').setup()
+     end}
 
 -- Git
 use {'TimUntersberger/neogit'}
@@ -99,7 +103,11 @@ use {'akinsho/toggleterm.nvim',
      end}
 
 -- Misc
-use { 'sotvokun/lftp-sync.nvim' }
+use {'NvChad/nvim-colorizer.lua',
+     config = function()
+       require('colorizer').setup()
+     end}
+use {'sotvokun/lftp-sync.nvim'}
 use {'gpanders/editorconfig.nvim'}
 use {'dstein64/vim-startuptime'}
 use {'famiu/bufdelete.nvim'}
