@@ -1,12 +1,17 @@
 local use = require('svim.modules.package').use
 
 use {'nvim-lualine/lualine.nvim'}
+use {'sotvokun/falcon-lualine'}
 
 -- Options -----------------------------------------------------------
 local options = {
   section_separators = '',
   component_separators = ''
 }
+
+if pcall(require, 'falcon-lualine') then
+  options.theme = require('falcon-lualine').theme()
+end
 
 -- Components --------------------------------------------------------
 local lsp_server = function()

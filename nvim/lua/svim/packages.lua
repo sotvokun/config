@@ -16,12 +16,12 @@ use {'nvim-lua/plenary.nvim'}
 use {'antoinemadec/FixCursorHold.nvim'}
 
 -- Faces
-use {'EdenEast/nightfox.nvim',
-     config =
-     function()
-       vim.cmd('colorscheme duskfox')
+use {'sotvokun/falcon',
+     config = function()
+       vim.g.falcon_detect_gui = 0
+       vim.g.falcon_background = 1
+       vim.cmd('colorscheme falcon')
      end}
-use {'rktjmp/lush.nvim'}
 use {'lukas-reineke/indent-blankline.nvim'}
 use {'stevearc/dressing.nvim',
      config =

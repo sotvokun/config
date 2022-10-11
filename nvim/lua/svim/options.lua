@@ -29,16 +29,6 @@ opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
 
--- Enable filetype.lua
--- TODO: remove this part when it be enabled by default
-do
-  local ver = vim.version()
-  if ver.major <= 0 and ver.minor < 8 then
-    vim.g.did_load_filetypes = 0
-    vim.g.do_filetype_lua = 1
-  end
-end
-
 -- Windows
 if vim.fn.has('win32') == 1 or vim.fn.has('wsl') == 1 then
   require('svim.options.win32')

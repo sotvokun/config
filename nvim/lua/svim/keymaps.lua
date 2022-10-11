@@ -58,8 +58,8 @@ set_keymap('dQ', '<cmd>bdelete<cr>', { desc = 'Delete buffer' })
 
 -- Tabs --------------------------------------------------------------
 set_keymap('<leader>et', '<cmd>tabnew<cr>', { desc = 'New tab' })
-set_keymap('dt', '<cmd>tabclose<cr>', { desc = 'Close tab' })
-set_keymap('dT', '<cmd>tabo<cr>', { desc = 'Close all other tab pages' })
+set_keymap('<leader>dt', '<cmd>tabclose<cr>', { desc = 'Close tab' })
+set_keymap('<leader>dT', '<cmd>tabo<cr>', { desc = 'Close all other tab pages' })
 
 -- LSP ---------------------------------------------------------------
 set_keymap('gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Go to definition [LSP]' })
