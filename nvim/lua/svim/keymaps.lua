@@ -45,10 +45,10 @@ set_keymap('<a-k>', ":m '<-2<cr>gv-gv", {
 set_keymap('<c-a>', '<c-\\><c-n>0i', { mode = 'i' })
 set_keymap('<a-a>', '<c-\\><c-n>^i', { mode = 'i' })
 set_keymap('<c-e>', '<c-\\><c-n>$a', { mode = 'i' })
-set_keymap('<c-n>', '<down>', { mode = 'i', noremap = true})
-set_keymap('<c-p>', '<up>', { mode = 'i', noremap = true})
-set_keymap('<c-f>', '<right>', { mode = 'i'})
-set_keymap('<c-b>', '<left>', { mode = 'i'})
+set_keymap('<c-n>', '<down>', { mode = 'i', noremap = true })
+set_keymap('<c-p>', '<up>', { mode = 'i', noremap = true })
+set_keymap('<c-f>', '<right>', { mode = 'i' })
+set_keymap('<c-b>', '<left>', { mode = 'i' })
 
 -- Buffers -----------------------------------------------------------
 set_keymap('<leader>ee', '<cmd>enew<cr>', { desc = 'New buffer' })
@@ -58,9 +58,8 @@ set_keymap('dQ', '<cmd>bdelete<cr>', { desc = 'Delete buffer' })
 
 -- Tabs --------------------------------------------------------------
 set_keymap('<leader>et', '<cmd>tabnew<cr>', { desc = 'New tab' })
-set_keymap('[t', '<cmd>tabprevious<cr>', { desc = 'Previous tab' })
-set_keymap(']t', '<cmd>tabnext<cr>', { desc = 'Next tab' })
-set_keymap('d<c-t>', '<cmd>tabclose<cr>', { desc = 'Close tab' })
+set_keymap('dt', '<cmd>tabclose<cr>', { desc = 'Close tab' })
+set_keymap('dT', '<cmd>tabo<cr>', { desc = 'Close all other tab pages' })
 
 -- LSP ---------------------------------------------------------------
 set_keymap('gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Go to definition [LSP]' })
@@ -69,7 +68,7 @@ set_keymap('gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', { desc = 'Go to decla
 set_keymap('gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', { desc = 'Go to implementation [LSP]' })
 set_keymap('K', '<cmd>lua vim.lsp.buf.hover()<cr>', { desc = 'Hover [LSP]' })
 set_keymap('<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code Action [LSP]' })
-set_keymap('<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<cr>', { desc = 'Formatting [LSP]' })
+set_keymap('<leader>cf', '<cmd>lua vim.lsp.buf.format()<cr>', { desc = 'Formatting [LSP]' })
 set_keymap('<leader>cd', '<cmd>TroubleToggle<cr>', { desc = 'Diagnostic [LSP]' })
 set_keymap('<leader>cs', '<cmd>AerialToggle<cr>', { desc = 'Symbols [LSP]' })
 set_keymap('<leader>cr', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename [LSP]' })
@@ -91,10 +90,14 @@ set_keymap('Q', '@q', { desc = 'Replay macro q' })
 set_keymap('<leader>qq', '<cmd>nohl<cr>', { desc = 'Disable search highlight' })
 set_keymap('<leader>qr', '<cmd>set relativenumber!<cr>', { desc = 'Toggle relative number' })
 set_keymap('<leader>qw', '<cmd>set wrap!<cr>', { desc = 'Text wrap' })
-set_keymap('<leader>qs', '<cmd>set spell!<cr>', { desc = 'Spell'})
+set_keymap('<leader>qs', '<cmd>set spell!<cr>', { desc = 'Spell' })
+
+-- Git Signs ---------------------------------------------------------
+set_keymap(']g', '<cmd>Gitsigns next_hunk<cr>', { desc = 'Next hunk (git)' })
+set_keymap('[g', '<cmd>Gitsigns prev_hunk<cr>', { desc = 'Previous hunk (git)' })
 
 -- Misc --------------------------------------------------------------
 set_keymap('<space><space>', ':', { desc = 'Command' })
 set_keymap('<a-x>', '<cmd>Telescope<cr>', { desc = 'Telescope' })
-set_keymap('<c-n>', '<cmd>NeoTreeFocusToggle<cr>', { desc = 'Toggle NeoTree' })
+set_keymap('<c-n>', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle NvimTree' })
 set_keymap('<F10>', '<cmd>UndotreeToggle<cr>', { desc = 'Toggle Undotree' })

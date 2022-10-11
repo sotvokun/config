@@ -18,7 +18,7 @@ vim.diagnostic.config({
   },
   signs = {
     severity = {
-      min = vim.diagnostic.severity.WARN
+      min = vim.diagnostic.severity.ERROR
     }
   },
   update_in_insert = true

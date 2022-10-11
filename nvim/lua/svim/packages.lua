@@ -21,6 +21,7 @@ use {'EdenEast/nightfox.nvim',
      function()
        vim.cmd('colorscheme duskfox')
      end}
+use {'rktjmp/lush.nvim'}
 use {'lukas-reineke/indent-blankline.nvim'}
 use {'stevearc/dressing.nvim',
      config =
@@ -39,12 +40,11 @@ use {'nvim-telescope/telescope.nvim',
      function()
        require('svim.configs.telescope')
      end}
-use {'nvim-neo-tree/neo-tree.nvim',
+use {'nvim-tree/nvim-tree.lua',
      config =
      function ()
-       require('svim.configs.neo-tree')
-     end,
-     requires = {'MunifTanjim/nui.nvim'}}
+       require('svim.configs.nvim-tree')
+     end}
 
 -- Editing
 use {'numToStr/Comment.nvim',
@@ -72,14 +72,11 @@ use {'ggandor/leap.nvim',
      end,
      requires =
      {'tpope/vim-repeat'}}
-use {'s1n7ax/nvim-window-picker',
-     config =
-     function()
-       require('window-picker').setup()
-     end}
 use {'folke/todo-comments.nvim',
      config = function()
-       require('todo-comments').setup()
+       require('todo-comments').setup({
+         signs = false
+       })
      end}
 
 -- Git

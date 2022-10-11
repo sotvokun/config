@@ -33,8 +33,9 @@ use {'ray-x/lsp_signature.nvim',
          bind = true,
          hint_enable = false,
          handler_opts = {
-           border = 'single'
-         }
+           border = 'none'
+         },
+         padding = ' '
        })
      end}
 

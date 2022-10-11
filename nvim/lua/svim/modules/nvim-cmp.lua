@@ -52,7 +52,7 @@ do
           cmp.confirm()
         end
       elseif luasnip_ok and luasnip.expand_or_jumpable() then
-        luasnip.expand_or_locally_jumpable()
+        luasnip.expand_or_jump()
       else
         fallback()
       end
