@@ -100,4 +100,4 @@ set_keymap('[g', '<cmd>Gitsigns prev_hunk<cr>', { desc = 'Previous hunk (git)' }
 set_keymap('<space><space>', ':', { desc = 'Command' })
 set_keymap('<a-x>', '<cmd>Telescope<cr>', { desc = 'Telescope' })
 set_keymap('<c-n>', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle NvimTree' })
-set_keymap('<F10>', '<cmd>UndotreeToggle<cr>', { desc = 'Toggle Undotree' })
+set_keymap('<F3>', '<cmd>UndotreeToggle<cr>', { desc = 'Toggle Undotree' })

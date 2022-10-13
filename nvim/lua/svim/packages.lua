@@ -102,7 +102,13 @@ use {'akinsho/toggleterm.nvim',
 -- Misc
 use {'NvChad/nvim-colorizer.lua',
      config = function()
-       require('colorizer').setup()
+       require('colorizer').setup({
+         filetypes = {
+           'typescript', 'typescriptreact',
+           'javascript', 'javascriptreact',
+           'html', 'css', 'sass'
+         }
+       })
      end}
 use {'sotvokun/lftp-sync.nvim'}
 use {'gpanders/editorconfig.nvim'}
