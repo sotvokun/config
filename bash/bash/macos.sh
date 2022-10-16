@@ -4,4 +4,5 @@ if [[ $(uname) == "Darwin" ]]; then
 
     # Disable the message
     export BASH_SILENCE_DEPRECATION_WARNING=1
+    export PATH="$PATH:/Users/sotvokun/.dotnet/tools"
 fi

@@ -29,7 +29,7 @@ local renderer = {
   indent_width = 2,
   icons = icons,
   indent_markers = {
-    enable = true
+    enable = false
   }
 }
 

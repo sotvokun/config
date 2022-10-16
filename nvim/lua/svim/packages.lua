@@ -99,6 +99,17 @@ use {'akinsho/toggleterm.nvim',
        require('toggleterm').setup(opts)
      end}
 
+-- Tasks
+use {'skywind3000/asynctasks.vim',
+     requires = {
+       'skywind3000/asyncrun.vim',
+       'GustavoKatel/telescope-asynctasks.nvim'
+     },
+     setup = function()
+       vim.g.asyncrun_open = 6
+       vim.g.asynctasks_config_name = '.vim/tasks.ini'
+     end}
+
 -- Misc
 use {'NvChad/nvim-colorizer.lua',
      config = function()
