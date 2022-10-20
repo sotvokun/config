@@ -22,6 +22,10 @@ if _G['svim/bootstrap'] then
     -- use {<category>, <source>, setup = <options>}
   end)
 
+  -- Development Spec
+  require('svim.modules.web-dev')
+
   require('svim.keymaps')
+  require('svim.autocmds')
   require('svim.modules.package').apply()
 end

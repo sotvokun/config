@@ -50,11 +50,16 @@ set_keymap('<c-p>', '<up>', { mode = 'i', noremap = true })
 set_keymap('<c-f>', '<right>', { mode = 'i' })
 set_keymap('<c-b>', '<left>', { mode = 'i' })
 
+-- Commands in insert mode
+set_keymap('<c-s>', '<cmd>:write<cr>', { mode = 'i' })
+set_keymap('<c-z>', '<cmd>:undo<cr>', { mode = 'i' })
+
 -- Buffers -----------------------------------------------------------
 set_keymap('<leader>ee', '<cmd>enew<cr>', { desc = 'New buffer' })
 set_keymap('d!', '<cmd>%bdelete<cr>', { desc = 'Delete all buffers' })
 set_keymap('dq', '<cmd>Bdelete<cr>', { desc = 'Delete buffer (hold window)' })
 set_keymap('dQ', '<cmd>bdelete<cr>', { desc = 'Delete buffer' })
+set_keymap('<leader>dq', '<cmd>:cclose<cr>', { desc = 'Close the quickfix window' })
 
 -- Tabs --------------------------------------------------------------
 set_keymap('<leader>et', '<cmd>tabnew<cr>', { desc = 'New tab' })

@@ -33,6 +33,19 @@ local renderer = {
   }
 }
 
-require('nvim-tree').setup({
+local setup_opts = {
   renderer = renderer
-})
+}
+
+if pcall(require, 'project_nvim') then
+  setup_opts = vim.tbl_extend('force', setup_opts, {
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
+    update_focused_file = {
+      enable = true,
+      update_root = true
+    }
+  })
+end
+
+require('nvim-tree').setup(setup_opts)

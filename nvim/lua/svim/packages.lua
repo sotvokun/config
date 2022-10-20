@@ -110,6 +110,19 @@ use {'skywind3000/asynctasks.vim',
        vim.g.asynctasks_config_name = '.vim/tasks.ini'
      end}
 
+-- Project
+use {'ahmedkhalf/project.nvim', config = function()
+      require('project_nvim').setup({})
+     end}
+use {'klen/nvim-config-local', config = function()
+      require('config-local').setup({
+        config_files = {
+          '.vim/init.lua', '.vim/init.vim',
+          '.vimrc.lua', '.vimrc'
+        }
+      })
+     end}
+
 -- Misc
 use {'NvChad/nvim-colorizer.lua',
      config = function()
