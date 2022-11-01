@@ -77,6 +77,7 @@ set_keymap('<leader>cf', '<cmd>lua vim.lsp.buf.format()<cr>', { desc = 'Formatti
 set_keymap('<leader>cd', '<cmd>TroubleToggle<cr>', { desc = 'Diagnostic [LSP]' })
 set_keymap('<leader>cs', '<cmd>AerialToggle<cr>', { desc = 'Symbols [LSP]' })
 set_keymap('<leader>cr', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename [LSP]' })
+set_keymap('<leader>cg', '<cmd>Neogen<cr>', { desc = 'Neogen' })
 
 -- Toggle Term -------------------------------------------------------
 set_keymap('<c-\\>', '<cmd>ToggleTerm direction=float<cr>', { desc = 'Toggle terminal' })
@@ -87,11 +88,13 @@ set_keymap('<esc>', '<c-\\><c-n>', { mode = 't' })
 set_keymap('<c-x>b', '<cmd>Telescope buffers<cr>', { desc = 'List buffers' })
 set_keymap('<c-x>g', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep' })
 set_keymap('<c-x>f', '<cmd>Telescope find_files<cr>', { desc = 'Find files' })
+set_keymap('<c-x>o', '<cmd>Telescope oldfiles<cr>', { desc = 'Old Files' })
 set_keymap(
   '<c-x>B',
   '<cmd>lua require("telescope").extensions.asynctasks.all()<cr>',
   {desc = 'Run Tasks'}
 )
+set_keymap('<c-x>z', '<cmd>@:<cr>', { desc = 'Repeat the last command' })
 
 -- Macros ------------------------------------------------------------
 set_keymap('Q', '@q', { desc = 'Replay macro q' })

@@ -8,6 +8,9 @@ use {'nvim-treesitter/nvim-treesitter-context',
      function ()
        require('treesitter-context').setup()
      end}
+use {'danymat/neogen', config = function()
+      require('neogen').setup({})
+     end}
 
 -- Apply -------------------------------------------------------------
 do

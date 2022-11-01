@@ -81,6 +81,7 @@ use {'folke/todo-comments.nvim',
 
 -- Git
 use {'TimUntersberger/neogit'}
+use {'tpope/vim-fugitive'}
 use {'sindrets/diffview.nvim'}
 use {'lewis6991/gitsigns.nvim',
      config =
@@ -114,11 +115,12 @@ use {'skywind3000/asynctasks.vim',
 use {'ahmedkhalf/project.nvim', config = function()
       require('project_nvim').setup({})
      end}
-use {'klen/nvim-config-local', config = function()
-      require('config-local').setup({
-        config_files = {
-          '.vim/init.lua', '.vim/init.vim',
-          '.vimrc.lua', '.vimrc'
+use {'MunifTanjim/exrc.nvim', config = function()
+      require('exrc').setup({
+        files = {
+          '.vim/exrc.lua', '.vim/exrc.vim',
+          '.exrc.lua', '.exrc',
+          '.nvimrc.lua', '.vimrc'
         }
       })
      end}
