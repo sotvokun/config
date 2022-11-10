@@ -67,15 +67,15 @@ set_keymap('<leader>dt', '<cmd>tabclose<cr>', { desc = 'Close tab' })
 set_keymap('<leader>dT', '<cmd>tabo<cr>', { desc = 'Close all other tab pages' })
 
 -- LSP ---------------------------------------------------------------
-set_keymap('gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Go to definition [LSP]' })
-set_keymap('gr', '<cmd>lua vim.lsp.buf.references()<cr>', { desc = 'Go to references [LSP]' })
+set_keymap('gd', '<cmd>Telescope lsp_definitions<cr>', { desc = 'Go to definition [LSP]' })
+set_keymap('gr', '<cmd>Telescope lsp_references<cr>', { desc = 'Go to references [LSP]' })
 set_keymap('gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', { desc = 'Go to declaration [LSP]' })
 set_keymap('gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', { desc = 'Go to implementation [LSP]' })
 set_keymap('K', '<cmd>lua vim.lsp.buf.hover()<cr>', { desc = 'Hover [LSP]' })
 set_keymap('<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code Action [LSP]' })
 set_keymap('<leader>cf', '<cmd>lua vim.lsp.buf.format()<cr>', { desc = 'Formatting [LSP]' })
 set_keymap('<leader>cd', '<cmd>TroubleToggle<cr>', { desc = 'Diagnostic [LSP]' })
-set_keymap('<leader>cs', '<cmd>AerialToggle<cr>', { desc = 'Symbols [LSP]' })
+set_keymap('<leader>cs', '<cmd>Vista!!<cr>', { desc = 'Symbols [LSP]' })
 set_keymap('<leader>cr', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename [LSP]' })
 set_keymap('<leader>cg', '<cmd>Neogen<cr>', { desc = 'Neogen' })
 
@@ -104,6 +104,7 @@ set_keymap('<leader>qq', '<cmd>nohl<cr>', { desc = 'Disable search highlight' })
 set_keymap('<leader>qr', '<cmd>set relativenumber!<cr>', { desc = 'Toggle relative number' })
 set_keymap('<leader>qw', '<cmd>set wrap!<cr>', { desc = 'Text wrap' })
 set_keymap('<leader>qs', '<cmd>set spell!<cr>', { desc = 'Spell' })
+set_keymap('<leader>ql', ':nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>', { desc = 'Redraw'})
 
 -- Git Signs ---------------------------------------------------------
 set_keymap(']g', '<cmd>Gitsigns next_hunk<cr>', { desc = 'Next hunk (git)' })

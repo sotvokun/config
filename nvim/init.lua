@@ -18,8 +18,11 @@ if _G['svim/bootstrap'] then
   end)
   require('svim.modules.lsp-util')
   require('svim.modules.null-ls').apply(function (use)
-    -- EXAMPLE: Use builtin source
-    -- use {<category>, <source>, setup = <options>}
+    use({'cspell', {diagnostics = {
+      diagnostics_postprocess = function (diagnostic)
+        diagnostic.severity = vim.diagnostic.severity['WARN']
+      end
+    }}})
   end)
 
   -- Development Spec

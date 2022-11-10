@@ -9,6 +9,13 @@ use {'stevearc/aerial.nvim',
      config =
      function() require('aerial').setup() end}
 
+use {'liuchengxu/vista.vim',
+     config =
+     function()
+      vim.g['vista#renderer#enable_icon'] = 0
+      vim.g['vista_default_executive'] = 'nvim_lsp'
+     end}
+
 use {'folke/trouble.nvim',
      config =
      function()
