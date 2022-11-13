@@ -140,6 +140,7 @@ use {'sotvokun/lftp-sync.nvim'}
 use {'gpanders/editorconfig.nvim'}
 use {'dstein64/vim-startuptime'}
 use {'famiu/bufdelete.nvim'}
+use {'tpope/vim-dotenv'}
 use {'mbbill/undotree',
      setup =
      function()

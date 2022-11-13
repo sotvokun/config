@@ -73,6 +73,11 @@ do
     end
   }
 
+  luasnip.setup({
+    region_check_events = 'CursorHold,InsertLeave',
+    delete_check_events = 'TextChanged,InsertEnter'
+  });
+
   cmp.setup({
     formatting = formatting,
     snippet = snippet,

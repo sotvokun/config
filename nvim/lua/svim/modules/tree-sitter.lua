@@ -11,6 +11,7 @@ use {'nvim-treesitter/nvim-treesitter-context',
 use {'danymat/neogen', config = function()
       require('neogen').setup({})
      end}
+use {'nvim-treesitter/nvim-treesitter-textobjects'}
 
 -- Apply -------------------------------------------------------------
 do
@@ -18,7 +19,19 @@ do
   if ok then
     tsconfig.setup({
       autotag = { enable = true },
-      highlight = { enable = true }
+      highlight = { enable = true },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner'
+          }
+        }
+      }
     })
   end
 end

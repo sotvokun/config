@@ -19,8 +19,9 @@ if _G['svim/bootstrap'] then
   require('svim.modules.lsp-util')
   require('svim.modules.null-ls').apply(function (use)
     use({'cspell', {diagnostics = {
+      disabled_filetypes = { 'NvimTree', 'vista_kind' },
       diagnostics_postprocess = function (diagnostic)
-        diagnostic.severity = vim.diagnostic.severity['WARN']
+        diagnostic.severity = vim.diagnostic.severity['HINT']
       end
     }}})
   end)
