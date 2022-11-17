@@ -28,7 +28,9 @@ do
             ['af'] = '@function.outer',
             ['if'] = '@function.inner',
             ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner'
+            ['ic'] = '@class.inner',
+            ['ia'] = '@attribute.inner',
+            ['aa'] = '@attribute.outer'
           }
         }
       }
