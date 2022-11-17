@@ -16,8 +16,10 @@ create_autocmd('BufWritePre', {
   end
 })
 
+create_augroup('SetCursorlineAuto', {})
 create_autocmd('WinEnter', {
   desc = 'Enable curosorline when enter window',
+  group = 'SetCursorlineAuto',
   pattern = '*',
   callback = function()
     vim.o.cursorline = true
@@ -25,6 +27,7 @@ create_autocmd('WinEnter', {
 })
 create_autocmd('WinLeave', {
   desc = 'Disable curosorline when enter window',
+  group = 'SetCursorlineAuto',
   pattern = '*',
   callback = function()
     vim.o.cursorline = false

@@ -84,20 +84,25 @@ set_keymap('<c-\\>', '<cmd>ToggleTerm direction=float<cr>', { desc = 'Toggle ter
 set_keymap('<c-\\>', '<c-\\><c-n><cmd>ToggleTerm<cr>', { mode = 't' })
 set_keymap('<esc>', '<c-\\><c-n>', { mode = 't' })
 
--- <c-x> -------------------------------------------------------------
-set_keymap('<c-x>b', '<cmd>Telescope buffers<cr>', { desc = 'List buffers' })
-set_keymap('<c-x>g', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep' })
-set_keymap('<c-x>f', '<cmd>Telescope find_files<cr>', { desc = 'Find files' })
-set_keymap('<c-x>o', '<cmd>Telescope oldfiles<cr>', { desc = 'Old Files' })
+-- <leader>g -------------------------------------------------------------
 set_keymap(
-  '<c-x>B',
+  '<leader>gt',
+  function() require('telescope-tabs').list_tabs() end,
+  {desc = 'List tabs'}
+)
+set_keymap('<leader>gb', '<cmd>Telescope buffers<cr>', { desc = 'List buffers' })
+set_keymap('<leader>gg', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep' })
+set_keymap('<leader>gf', '<cmd>Telescope find_files previewer=false<cr>', { desc = 'Find files' })
+set_keymap('<leader>go', '<cmd>Telescope oldfiles<cr>', { desc = 'Old Files' })
+set_keymap(
+  '<leader>g!',
   '<cmd>lua require("telescope").extensions.asynctasks.all()<cr>',
   {desc = 'Run Tasks'}
 )
-set_keymap('<c-x>z', '<cmd>@:<cr>', { desc = 'Repeat the last command' })
 
 -- Macros ------------------------------------------------------------
 set_keymap('Q', '@q', { desc = 'Replay macro q' })
+set_keymap('<c-z>', '<cmd>@:<cr>', { desc = 'Repeat the last command' })
 
 -- Quick Setup -------------------------------------------------------
 set_keymap('<leader>qq', '<cmd>nohl<cr>', { desc = 'Disable search highlight' })
@@ -111,7 +116,10 @@ set_keymap(']g', '<cmd>Gitsigns next_hunk<cr>', { desc = 'Next hunk (git)' })
 set_keymap('[g', '<cmd>Gitsigns prev_hunk<cr>', { desc = 'Previous hunk (git)' })
 
 -- Misc --------------------------------------------------------------
-set_keymap('<space><space>', ':', { desc = 'Command' })
-set_keymap('<a-x>', '<cmd>Telescope<cr>', { desc = 'Telescope' })
+set_keymap('<space>;', ':', { desc = 'Ex Command' })
 set_keymap('<c-n>', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle NvimTree' })
-set_keymap('<F3>', '<cmd>UndotreeToggle<cr>', { desc = 'Toggle Undotree' })
+
+-- Tools -------------------------------------------------------------
+set_keymap('<F12>u', '<cmd>UndotreeToggle<cr>', { desc = 'Toggle Undotree' })
+set_keymap('<F12>d', '<cmd>DiffviewOpen<cr>', { desc = 'Open Diffview' })
+set_keymap('<F12>D', '<cmd>DiffviewClose<cr>', { desc = 'Close Diffview' })

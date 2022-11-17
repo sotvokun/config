@@ -5,10 +5,6 @@ if not pcall(require, 'lspconfig') then
 end
 
 -- Packages ----------------------------------------------------------
-use {'stevearc/aerial.nvim',
-     config =
-     function() require('aerial').setup() end}
-
 use {'liuchengxu/vista.vim',
      config =
      function()

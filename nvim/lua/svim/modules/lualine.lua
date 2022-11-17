@@ -9,9 +9,27 @@ local options = {
   component_separators = ''
 }
 
-if pcall(require, 'falcon-lualine') then
-  options.theme = require('falcon-lualine').theme()
-end
+vim.api.nvim_create_augroup('SetLualineFalconTheme', {})
+vim.api.nvim_create_autocmd('ColorScheme', {
+  desc = 'Set lualine theme when theme is falcon',
+  group = 'SetLualineFalconTheme',
+  pattern = '*',
+  callback = function()
+    local colorscheme = vim.g.colors_name
+    local lualine_setup_theme = function(theme)
+      require('lualine').setup({
+        options = {
+          theme = theme or 'auto'
+        }
+      })
+    end
+    if colorscheme == 'falcon' and pcall(require, 'falcon-lualine') then
+      lualine_setup_theme(require('falcon-lualine').theme())
+      return
+    end
+    lualine_setup_theme()
+  end
+})
 
 -- Components --------------------------------------------------------
 local lsp_server = function()
@@ -113,7 +131,7 @@ do
     lualine.setup({
       options = options,
       extensions = {
-        'aerial', 'neo-tree', 'quickfix', 'toggleterm'
+        'aerial', 'neo-tree', 'quickfix', 'toggleterm', 'nvim-tree'
       },
       sections = sections,
       inactive_sections = inactive_sections,

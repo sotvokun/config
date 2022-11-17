@@ -18,12 +18,9 @@ if _G['svim/bootstrap'] then
   end)
   require('svim.modules.lsp-util')
   require('svim.modules.null-ls').apply(function (use)
-    use({'cspell', {diagnostics = {
-      disabled_filetypes = { 'NvimTree', 'vista_kind' },
-      diagnostics_postprocess = function (diagnostic)
-        diagnostic.severity = vim.diagnostic.severity['HINT']
-      end
-    }}})
+    -- Example: Setup null-ls builtin sources
+    -- use {<source_name>, {<category> = <options>}}
+    -- use {'cspell', {diagnostics = {}}}
   end)
 
   -- Development Spec

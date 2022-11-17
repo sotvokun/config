@@ -40,6 +40,11 @@ use {'nvim-telescope/telescope.nvim',
      function()
        require('svim.configs.telescope')
      end}
+use {'LukasPietzschmann/telescope-tabs',
+     after = {'telescope.nvim'},
+     config = function()
+       require('telescope-tabs').setup()
+     end}
 use {'nvim-tree/nvim-tree.lua',
      config =
      function ()
@@ -82,7 +87,12 @@ use {'folke/todo-comments.nvim',
 -- Git
 use {'TimUntersberger/neogit'}
 use {'tpope/vim-fugitive'}
-use {'sindrets/diffview.nvim'}
+use {'sindrets/diffview.nvim',
+     config = function()
+       require('diffview').setup({
+         use_icons = false
+       })
+     end}
 use {'lewis6991/gitsigns.nvim',
      config =
      function()
