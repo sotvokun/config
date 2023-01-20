@@ -1,3 +1,0 @@
-[bash.files]
-"bash/.bashrc" = "~/.profile"
-"bash/bash" = "~/.config/bash"

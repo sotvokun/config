@@ -1,6 +1,0 @@
-includes = []
-packages = ["ideavim", "bash"]
-
-[files]
-
-[variables]
