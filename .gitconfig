@@ -1,0 +1,7 @@
+[core]
+    autocrlf = input
+[init]
+    defaultBranch = master
+[user]
+    name = sotvokun
+    email = sotvokun@outlook.com
