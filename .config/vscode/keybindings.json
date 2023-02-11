@@ -1,0 +1,81 @@
+[
+    /**
+     * View
+     */
+    { "key": "ctrl+q", "command": "-workbench.action.quickOpenView" },
+    { "key": "ctrl+q", "command": "workbench.action.openView" },
+
+    /**
+    * Editors And Editor Groups
+    */
+    // - Split Editor
+    { "key": "ctrl+-", "command": "workbench.action.splitEditorOrthogonal" },
+    // - Close Editor
+    { "key": "ctrl+w", "command": "-workbench.action.closeActiveEditor" },
+    { "key": "ctrl+w", "command": "-workbench.action.closeGroup" },
+    { "key": "ctrl+w q", "command": "workbench.action.closeActiveEditor", "when": "editorTextFocus && dance.mode == 'normal'" },
+    {
+        "key": "ctrl+w q",
+        "command": "workbench.action.closeGroup",
+        "when": "activeEditorGroupEmpty && multipleEditorGroups && editorTextFocus && dance.mode == 'normal'"
+    },
+    { "key": "ctrl+w h", "command": "workbench.action.focusLeftGroup", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "ctrl+w j", "command": "workbench.action.focusBelowGroup", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "ctrl+w k", "command": "workbench.action.focusAboveGroup", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "ctrl+w l", "command": "workbench.action.focusRightGroup", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "ctrl+w b", "command": "workbench.action.toggleSidebarVisibility" },
+
+    { "key": "ctrl+w 0", "command": "workbench.action.closeActiveEditor" },
+    { "key": "ctrl+w escape", "command": "workbench.action.focusActiveEditorGroup" },
+
+    // - Editor View
+    { "key": "ctrl+tab", "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup" },
+    { "key": "ctrl+tab", "command": "workbench.action.showEditorsInGroup", "when": "!activeEditorGroupEmpty" },
+
+    /**
+     * Suggestion, Code Action, List
+     */
+    // Code Action
+    { "key": "ctrl+p", "command": "selectPrevCodeAction", "when": "codeActionMenuVisible && dance.mode == 'insert'" },
+    { "key": "ctrl+n", "command": "selectNextCodeAction", "when": "codeActionMenuVisible && dance.mode == 'insert'" },
+    { "key": "tab", "command": "acceptSelectedCodeAction", "when": "codeActionMenuVisible && dance.mode == 'insert'" },
+
+    // Suggestion
+    { "key": "ctrl+p", "command": "selectPrevSuggestion", "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && dance.mode == 'insert'" },
+    { "key": "ctrl+n", "command": "selectNextSuggestion", "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && dance.mode == 'insert'" },
+
+    // List
+    { "key": "ctrl+p", "command": "workbench.action.quickOpenSelectPrevious", "when": "inQuickOpen" },
+    { "key": "ctrl+n", "command": "workbench.action.quickOpenSelectNext", "when": "inQuickOpen" },
+
+    /**
+     * Dance
+     */
+    // Debound `X` to nop
+    { "key": "shift+x", "command": "-dance.select.line.below.extend" },
+    { "key": "shift+x", "command": "dance.ignore", "when": "editorTextFocus && dance.mode == 'normal'" },
+    // Make `x` do `a-x` behavior
+    { "key": "x", "command": "-dance.select.lineEnd" },
+    { "key": "x", "command": "dance.selections.expandToLines", "when": "editorTextFocus && dance.mode == 'normal'" },
+    // Make `a-x` do `a-s-x` behavior
+    { "key": "alt+x", "command": "-dance.selections.expandToLines" },
+    { "key": "alt+x", "command": "dance.selections.trimLines", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "alt+shift+x", "command": "-dance.selections.trimLines" },
+    // Swap `<spc>` and `,` behavior
+    { "key": "space", "command": "-dance.selections.clear.secondary" },
+    { "key": "alt+space", "command": "-dance.selections.clear.main" },
+    { "key": ",", "command": "dance.selections.clear.secondary", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "alt+,", "command": "dance.selections.clear.main", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "space", "command": "dance.ignore", "when": "editorTextFocus && dance.mode == 'normal'" },
+    // Jump forward and backward
+    { "key": "ctrl+o", "command": "workbench.action.navigateBack", "when": "editorTextFocus && dance.mode == 'normal'" },
+    { "key": "ctrl+i", "command": "workbench.action.navigateForward", "when": "editorTextFocus && dance.mode == 'normal'" },
+    // Fix some works incorrectly.
+    {
+        "key": "backspace",
+        "command": "cursorMove",
+        "args": { "to": "left", "value": 1 },
+        "when": "editorTextFocus && dance.mode == 'normal'"
+    },
+    { "key": "tab", "command": "noop", "when": "editorTextFocus && dance.mode == 'normal'" }
+]

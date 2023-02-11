@@ -1,0 +1,66 @@
+{
+    /**
+     * Editor
+     */
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.editor.untitled.hint": "hidden",
+    "workbench.sideBar.location": "right",
+    "workbench.layoutControl.enabled": false,
+    "workbench.commandPalette.experimental.suggestCommands": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.showIcons": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.labelFormat": "medium",
+    "workbench.editor.navigationScope": "default",
+    "workbench.colorTheme": "Railgun",
+    "workbench.iconTheme": "vs-nomo-dark",
+
+    "editor.minimap.enabled": false,
+    "editor.bracketPairColorization.enabled": false,
+    "editor.autoSurround": "languageDefined",
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.fontFamily": "Iosevka Pragmatus",
+    "editor.fontSize": 15,
+    "editor.smoothScrolling": true,
+    "editor.renderWhitespace": "all",
+    "editor.cursorBlinking": "solid",
+    "editor.acceptSuggestionOnEnter": "off",
+
+    "window.commandCenter": false,
+    "window.experimental.useSandbox": true,
+    "window.menuBarVisibility": "compact",
+
+    "breadcrumbs.enabled": false,
+
+    /**
+     * Files
+     */
+    "files.autoSave": "onFocusChange",
+    "files.eol": "\n",
+    "files.encoding": "utf8",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+
+    "[javascript][typescript][javascriptreact][typescriptreact]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+    },
+
+    /**
+     * Other
+     */
+    "telemetry.telemetryLevel": "off",
+
+    "security.workspace.trust.enabled": false,
+
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
+
+    "dance.modes": {
+        "normal": {
+            "lineNumbers": "inherit",
+            "cursorStyle": "block",
+            "selectionBehavior": "character"
+        },
+    },
+}
