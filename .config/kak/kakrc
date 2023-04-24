@@ -1,0 +1,13 @@
+colorscheme solarized-dark
+
+set-option global tabstop 4
+
+set-option global indentwidth 4
+
+set-option global ui_options terminal_status_on_top=true
+
+set-option global ui_options terminal_assistant=none
+
+# Highlighter
+
+add-highlighter global/ number-lines -hlcursor
