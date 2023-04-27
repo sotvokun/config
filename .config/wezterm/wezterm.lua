@@ -5,6 +5,14 @@ local actions = wezterm.action
 
 -- Configuration
 
+local mouse_binding = {
+  {
+    event = { Down = { streak = 1, button = 'Right' }},
+    mods = 'NONE',
+    action = wezterm.action({ PasteFrom = 'Clipboard' })
+  }
+}
+
 local configuration = {
   -- Window and Pane
   window_padding = {
@@ -37,12 +45,15 @@ local configuration = {
   disable_default_key_bindings = true,
   keys = {
     { key = 'F11', action = wezterm.action.ToggleFullScreen }
-  }
+  },
+  mouse_bindings = mouse_binding
 }
 
 if (wezterm.target_triple == 'x86_64-pc-windows-msvc') then
   configuration.default_prog = { 'powershell' }
+elseif (string.match(wezterm.target_triple, 'darwin')) then
+  configuration.font_size = 19
 end
 
 return configuration
--- vim: sw=2
+-- vim: sw=2:ts=2

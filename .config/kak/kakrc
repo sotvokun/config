@@ -11,3 +11,8 @@ set-option global ui_options terminal_assistant=none
 # Highlighter
 
 add-highlighter global/ number-lines -hlcursor
+
+# Keymap
+
+map global insert <c-p> <up>
+map global insert <c-n> <down>
