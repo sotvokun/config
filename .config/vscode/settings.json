@@ -1,3 +1,12 @@
+/**
+ * Extensions needs to be installed:
+ * - Dance (gregoire.dance)
+ * - EditorConfig for VS Code (editorconfig.editorconfig)
+ * - Nomo Dark Icon Theme (be5invis.vscode-icontheme-nomo-dark)
+ * - Railgun Theme (be5invis.theme-railgun)
+ * - GitHub Copilot (github.copilot)
+ * - GitHub Copilot Labs (GitHub.copilot-labs)
+ */
 {
     /**
      * Editor
@@ -14,6 +23,7 @@
     "workbench.editor.navigationScope": "default",
     "workbench.colorTheme": "Railgun",
     "workbench.iconTheme": "vs-nomo-dark",
+    "editor.inlineSuggest.enabled": true,
 
     "editor.minimap.enabled": false,
     "editor.bracketPairColorization.enabled": false,
@@ -22,7 +32,7 @@
     "editor.fontFamily": "Iosevka Pragmatus",
     "editor.fontSize": 15,
     "editor.smoothScrolling": true,
-    "editor.renderWhitespace": "all",
+    "editor.renderWhitespace": "selection",
     "editor.cursorBlinking": "solid",
     "editor.acceptSuggestionOnEnter": "off",
 
@@ -41,21 +51,25 @@
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
 
+    /**
+     * Other
+     */
+    "telemetry.telemetryLevel": "off",
+    "security.workspace.trust.enabled": false,
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
+
+    /**
+     * Language Specific Settings
+     */
     "[javascript][typescript][javascriptreact][typescriptreact]": {
         "editor.insertSpaces": true,
         "editor.tabSize": 2,
     },
 
     /**
-     * Other
+     * Extension Settings
      */
-    "telemetry.telemetryLevel": "off",
-
-    "security.workspace.trust.enabled": false,
-
-    "extensions.autoCheckUpdates": false,
-    "extensions.autoUpdate": false,
-
     "dance.modes": {
         "normal": {
             "lineNumbers": "inherit",
