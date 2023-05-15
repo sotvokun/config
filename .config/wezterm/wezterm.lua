@@ -5,6 +5,12 @@ local actions = wezterm.action
 
 -- Configuration
 
+local configuration = {}
+
+if wezterm.config_builder then
+    configuration = wezterm.config_builder()
+end
+
 local mouse_binding = {
   {
     event = { Down = { streak = 1, button = 'Right' }},
@@ -13,7 +19,7 @@ local mouse_binding = {
   }
 }
 
-local configuration = {
+configuration = {
   -- Window and Pane
   window_padding = {
     left = 0,
@@ -44,7 +50,7 @@ local configuration = {
   enable_csi_u_key_encoding = true,
   disable_default_key_bindings = true,
   keys = {
-    { key = 'F11', action = wezterm.action.ToggleFullScreen }
+    { key = 'F11', mods='ALT', action = wezterm.action.ToggleFullScreen },
   },
   mouse_bindings = mouse_binding
 }
