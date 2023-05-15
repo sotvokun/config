@@ -42,6 +42,10 @@ function _fish_collapsed_pwd() {
     echo "${elements[*]}"
 }
 
+if [[ "$SHELL" =~ '.*/zsh' ]]; then
+    setopt PROMPT_SUBST
+fi
+
 if [[ -n "$BASH_VERSION" ]]; then
     if [ "$UID" -eq 0 ]; then
         export PS1='\u@\h \[\e[31m\]$(_fish_collapsed_pwd)\[\e[0m\]# '

@@ -20,6 +20,8 @@ local mouse_binding = {
 }
 
 configuration = {
+    color_scheme = 'Builtin Tango Dark',
+
   -- Window and Pane
   window_padding = {
     left = 0,
@@ -38,7 +40,6 @@ configuration = {
   -- freetype_render_target = 'HorizontalLcd',
   -- freetype_load_flags = 'MONOCHROME',
   font_size = 12,
-  dpi = 96.0,
 
   -- Tab
   use_fancy_tab_bar = false,
@@ -58,7 +59,7 @@ configuration = {
 if (wezterm.target_triple == 'x86_64-pc-windows-msvc') then
   configuration.default_prog = { 'powershell' }
 elseif (string.match(wezterm.target_triple, 'darwin')) then
-  configuration.font_size = 19
+  configuration.font_size = 14
 end
 
 return configuration
