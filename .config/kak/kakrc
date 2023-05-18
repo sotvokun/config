@@ -1,18 +1,11 @@
 colorscheme solarized-dark
 
 set-option global tabstop 4
-
 set-option global indentwidth 4
+set-option global autoreload yes 
+set-option -add global ui_options terminal_assitant=none
 
-set-option global ui_options terminal_status_on_top=true
+# Load options
 
-set-option global ui_options terminal_assistant=none
+source "%val{config}/mappings.kak"
 
-# Highlighter
-
-add-highlighter global/ number-lines -hlcursor
-
-# Keymap
-
-map global insert <c-p> <up>
-map global insert <c-n> <down>

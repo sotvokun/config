@@ -8,19 +8,26 @@ local actions = wezterm.action
 local configuration = {}
 
 if wezterm.config_builder then
-    configuration = wezterm.config_builder()
+  configuration = wezterm.config_builder()
 end
 
-local mouse_binding = {
-  {
-    event = { Down = { streak = 1, button = 'Right' }},
-    mods = 'NONE',
-    action = wezterm.action({ PasteFrom = 'Clipboard' })
-  }
+-- Keybindings
+
+local key_bindings = {
+  { key='F11', mods='ALT', action=wezterm.action.ToggleFullScreen },
 }
 
+local macos_bindings = {
+  { key='c', mods='CMD', action=wezterm.action.CopyTo('Clipboard') },
+  { key='v', mods='CMD', action=wezterm.action.PasteFrom('Clipboard') },
+}
+
+-- Configurations
+
 configuration = {
-    color_scheme = 'Builtin Tango Dark',
+  -- Faces
+  use_resize_increments = true,
+  color_scheme = 'Builtin Tango Dark',
 
   -- Window and Pane
   window_padding = {
@@ -50,16 +57,16 @@ configuration = {
   enable_kitty_keyboard = true,
   enable_csi_u_key_encoding = true,
   disable_default_key_bindings = true,
-  keys = {
-    { key = 'F11', mods='ALT', action = wezterm.action.ToggleFullScreen },
-  },
-  mouse_bindings = mouse_binding
+  keys = key_bindings,
 }
 
 if (wezterm.target_triple == 'x86_64-pc-windows-msvc') then
   configuration.default_prog = { 'powershell' }
 elseif (string.match(wezterm.target_triple, 'darwin')) then
   configuration.font_size = 14
+  for _, v in ipairs(macos_bindings) do
+    table.insert(configuration.keys, v)
+  end
 end
 
 return configuration
