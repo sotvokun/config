@@ -14,6 +14,8 @@ set list
 set listchars=tab:\|\ ,extends:>,precedes:\<
 set title
 colorscheme darkblue
+silent! colorscheme mercury
+
 
 " - File & Encoding
 set fileencoding=utf-8

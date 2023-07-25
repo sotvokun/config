@@ -11,6 +11,8 @@ local pkg_home = vim.fn.stdpath('data') .. '/site/pack/pkg'
 -- Packages ----------------------------
 local packages = [[
 
+# Core
+
 github.com/machakann/vim-sandwich
 github.com/jiangmiao/auto-pairs
 github.com/dcampos/nvim-snippy
@@ -19,9 +21,26 @@ github.com/tpope/vim-fugitive
 github.com/tpope/vim-abolish
 github.com/tpope/vim-commentary
 github.com/gpanders/nvim-parinfer
+# github.com/bakpakin/fennel.vim
 
-github.com/mfussenegger/nvim-lsp-compl opt
-github.com/neovim/nvim-lspconfig opt
+# LSP
+
+# github.com/neovim/nvim-lspconfig                opt sync
+# github.com/williamboman/mason.nvim              opt sync
+# github.com/williamboman/mason-lspconfig.nvim    opt sync
+# github.com/hrsh7th/cmp-nvim-lsp                 opt sync
+
+# Completion
+
+# github.com/hrsh7th/nvim-cmp        opt
+# github.com/hrsh7th/cmp-buffer      opt
+# github.com/hrsh7th/cmp-path        opt
+# github.com/dcampos/cmp-snippy      opt
+
+# Enhanced
+
+# github.com/anuvyklack/hydra.nvim
+# github.com/lambdalisue/fern.vim
 
 ]]
 
@@ -51,6 +70,9 @@ function _parse()
     local split_opt = {trimempty=true}
     local pkgstr = vim.trim(packages)
     for index, line in ipairs(vim.split(pkgstr, '\n', split_opt)) do
+        if #line == 0 or line:sub(1,1) == '#' then
+	        goto continue
+        end
         local parts = vim.split(line, '%s', split_opt)
         local pkg = {}
         -- name
@@ -58,7 +80,9 @@ function _parse()
         pkg['name'] = name_parts[#name_parts]
         -- attribute
         for _, attr in ipairs({unpack(parts, 2)}) do
-            pkg[attr] = true
+            if #attr ~= 0 then
+                pkg[attr] = true
+            end
         end
         -- location
         pkg['remote'] = parts[1]
@@ -66,7 +90,12 @@ function _parse()
             pkg_home .. 
             (pkg['opt'] and '/opt/' or '/start/') .. 
             pkg['name']
+        -- installed
+        local isdir = vim.fn.isdirectory
+        pkg['installed'] = isdir(pkg['local']) == 1
+        --
         table.insert(result, pkg)
+        ::continue::
     end
     return result
 end
@@ -156,6 +185,23 @@ function clean()
     end
 end
 
+function list_()
+    local str = ''
+    str = string.format('%-10s %5s %20s', 'STATUS', 'TYPE', 'NAME') .. '\n'
+    str = str .. '--------------------------------------\n'
+
+    for index, p in ipairs(_parse()) do
+        local msg = string.format(
+            '%-10s %5s %20s',
+            (p['installed'] and '[I]' or '[ ]'),
+            (p['opt'] and 'opt' or 'start'),
+            p['name']
+        )
+        str = str .. msg .. '\n'
+    end
+    print(str)
+end
+
 function help()
     print [[
 usage:
@@ -177,7 +223,7 @@ if #arg == 0 or arg[1] == 'help' then
 end
 
 if arg[1] == 'list' then
-    vim.print(_parse())
+    list_()
 end
 
 if arg[1] == 'sync' then

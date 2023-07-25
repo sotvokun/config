@@ -8,14 +8,28 @@ command! -nargs=1 -complete=file
 	\ RequireSource
 	\ execute 'source ' . fnameescape(stdpath('config') . '/<args>')
 
-RequireSource init-tiny.vim
+if exists('g:vscode')
+    RequireSource init-vscode.vim
+else
+    RequireSource init-tiny.vim
+endif
 
-" Initialize fennel
-lua require('moonwalk').add_loader('fnl', function(src, path)
-    \ return require('fennel').compileString(src, { filename = path })
+
+" Load moonwalk
+" -----------------------
+lua (function ()
+    \ local fennel = require('fennel')
+    \ fennel['macro-path'] = 
+    \     fennel['macro-path'] .. ';' .. vim.fn.stdpath('config') .. '/fnl/?.fnl'
+    \ require('moonwalk').add_loader('fnl', function (src)
+    \     return fennel.compileString(src)
     \ end)
+    \ end)()
 
-" Initial for neovim w/o vscode
+
+" Load modules
+" -----------------------
 if !exists('g:vscode')
-    lua require('lsp')
-end
+    " lua require 'lsp'
+    " lua require 'completion'
+endif
