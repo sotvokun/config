@@ -21,6 +21,7 @@ github.com/tpope/vim-fugitive
 github.com/tpope/vim-abolish
 github.com/tpope/vim-commentary
 github.com/gpanders/nvim-parinfer
+github.com/tommcdo/vim-lion
 # github.com/bakpakin/fennel.vim
 
 # LSP
@@ -164,6 +165,10 @@ function sync()
             goto continue
         end
         ::continue::
+        local p_doc = p['local'] .. '/doc'
+        if isdir(p_doc) == 1 then
+            vim.cmd('helptags ' .. p_doc)
+        end
     end
 end
 
