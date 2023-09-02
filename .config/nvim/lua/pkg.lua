@@ -13,13 +13,14 @@ local packages = [[
 
 # Core
 
-github.com/machakann/vim-sandwich
+github.com/kylechui/nvim-surround
 github.com/jiangmiao/auto-pairs
 github.com/dcampos/nvim-snippy
-github.com/justinmk/vim-sneak
 github.com/tpope/vim-fugitive
+github.com/ggandor/leap.nvim
 github.com/tpope/vim-abolish
 github.com/tpope/vim-commentary
+github.com/suy/vim-context-commentstring
 github.com/gpanders/nvim-parinfer
 github.com/tommcdo/vim-lion
 # github.com/bakpakin/fennel.vim

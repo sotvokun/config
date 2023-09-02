@@ -9,12 +9,18 @@
 vnoremap < <gv
 vnoremap > >gv
 
-" -- Move selected line and block
-xnoremap <a-j> <cmd>m '>+1<cr>gv-gv
-xnoremap <a-k> <cmd>m '<-2<cr>gv-gv
+" -- VsCodeCommentary Instead vim-commentary
+unmap gc
+xunmap gc
+ounmap gc
+unmap gcc
 
-" - Sensible
-nnoremap ]b <cmd>bn<cr>
-nnoremap [b <cmd>bp<cr>
-nnoremap ]t <cmd>tabnext<cr>
-nnoremap [t <cmd>tabprev<cr>
+xmap gc  <Plug>VSCodeCommentary
+nmap gc  <Plug>VSCodeCommentary
+omap gc  <Plug>VSCodeCommentary
+nmap gcc <Plug>VSCodeCommentaryLine
+
+
+" - Settings
+" -- Clipboard
+set clipboard+=unnamedplus

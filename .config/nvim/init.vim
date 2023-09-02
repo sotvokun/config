@@ -10,8 +10,10 @@ command! -nargs=1 -complete=file
 
 if exists('g:vscode')
     RequireSource init-vscode.vim
+    let g:__mode = 'vscode'
 else
     RequireSource init-tiny.vim
+    let g:__mode = 'term'
 endif
 
 
