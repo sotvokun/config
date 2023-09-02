@@ -31,6 +31,9 @@ nnoremap [t <cmd>call VSCodeCall("workbench.action.focusPreviousGroup")<cr>
 nnoremap <esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
 
 
+" - LSP supports
+nnoremap gR <cmd>call VSCodeCall("editor.action.rename")<cr>
+
 " - Settings
 " -- Clipboard
 set clipboard+=unnamedplus
