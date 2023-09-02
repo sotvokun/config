@@ -128,6 +128,7 @@ nnoremap <c-p> :
 nnoremap d<c-w> <cmd>q<cr>
 nnoremap d<c-t> <cmd>tabclose<cr>
 nnoremap dq <cmd>bdel<cr>
+nnoremap <esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
 
 
 " Builtin Plugins and Component
