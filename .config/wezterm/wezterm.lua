@@ -13,8 +13,51 @@ end
 
 -- Keybindings
 
+local leader_key = { key='a', mods='CTRL', timeout_milliseconds=500 }
+
 local key_bindings = {
+  -- Fix Leader Key
+  { 
+    key='a', 
+    mods='LEADER|CTRL', 
+    action=wezterm.action.SendKey({
+      key='a',
+      mods='CTRL'
+    })
+  },
+
   { key='F11', mods='ALT', action=wezterm.action.ToggleFullScreen },
+  { key='e', mods='CTRL|ALT', action=wezterm.action.ActivateCommandPalette },
+
+  -- MUX
+  { 
+    key='s', 
+    mods='LEADER', 
+    action=wezterm.action.SplitVertical({
+      domain='CurrentPaneDomain'
+    }) 
+  },
+  { 
+    key='v', 
+    mods='LEADER', 
+    action=wezterm.action.SplitHorizontal({
+      domain='CurrentPaneDomain'
+    }) 
+  },
+  { key='h', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Left') },
+  { key='j', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Down') },
+  { key='k', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Up') },
+  { key='l', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Right') },
+  { key='q', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentPane() },
+
+  { 
+    key='c', 
+    mods='LEADER', 
+    action=wezterm.action.SpawnTab('CurrentPaneDomain')
+  },
+  { key='[', mods='LEADER', action=wezterm.action.ActivateTabRelative(-1) },
+  { key=']', mods='LEADER', action=wezterm.action.ActivateTabRelative( 1) },
+  { key='x', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentTab() }
 }
 
 local macos_bindings = {
@@ -58,6 +101,7 @@ configuration = {
   enable_csi_u_key_encoding = true,
   disable_default_key_bindings = true,
   keys = key_bindings,
+  leader = leader_key
 }
 
 if (wezterm.target_triple == 'x86_64-pc-windows-msvc') then
