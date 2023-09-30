@@ -41,6 +41,12 @@
             (tset result (. list_ i) (. list_ (+ i 1)))))
         result)))
 
+(fn with-module [module-binding ...]
+  (let [[binding name] module-binding]
+    `(match (pcall require ,name)
+       (true ,binding)
+       (do ,...))))
+
 ;; VIM
 ;; --------------------
 
@@ -64,5 +70,6 @@
  : head
  : tail
  : list->table
+ : with-module
  
  : define-command}

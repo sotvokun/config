@@ -13,12 +13,14 @@ command! -nargs=1 -complete=file
 
 
 " Initialize moonwalk
+"   - Inject macros
 " -----------------------
 lua (function ()
     \ local fennel = require('fennel')
     \ fennel['macro-path'] = 
     \     fennel['macro-path'] .. ';' .. vim.fn.stdpath('config') .. '/fnl/?.fnl'
     \ require('moonwalk').add_loader('fnl', function (src)
+    \     src = "(require-macros :macros)\n" .. src
     \     return fennel.compileString(src)
     \ end)
     \ end)()

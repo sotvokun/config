@@ -1,5 +1,3 @@
-(require-macros :macros)
-
 
 ;; Health Check
 ;; --------------------
