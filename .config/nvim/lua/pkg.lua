@@ -34,7 +34,6 @@ github.com/sotvokun/fennel.vim
 
 github.com/vijaymarupudi/nvim-fzf
 github.com/stevearc/oil.nvim
-github.com/anuvyklack/hydra.nvim
 github.com/lewis6991/gitsigns.nvim
 
 
