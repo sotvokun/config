@@ -48,7 +48,7 @@ local key_bindings = {
   { key='j', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Down') },
   { key='k', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Up') },
   { key='l', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Right') },
-  { key='q', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentPane() },
+  { key='q', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentPane({ confirm=false }) },
 
   { 
     key='c', 
@@ -57,7 +57,7 @@ local key_bindings = {
   },
   { key='[', mods='LEADER', action=wezterm.action.ActivateTabRelative(-1) },
   { key=']', mods='LEADER', action=wezterm.action.ActivateTabRelative( 1) },
-  { key='x', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentTab() }
+  { key='x', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentTab({ confirm=false }) }
 }
 
 local macos_bindings = {
