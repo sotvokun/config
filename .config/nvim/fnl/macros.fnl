@@ -63,7 +63,7 @@
         result {}]
       (do 
         (each [i v (ipairs list_)] 
-          (when (odd? i) 
+          (when (= 1 (% i 2)) 
             (tset result (. list_ i) (. list_ (+ i 1)))))
         result)))
 
