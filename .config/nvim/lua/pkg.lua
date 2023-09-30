@@ -23,7 +23,15 @@ github.com/tpope/vim-commentary
 github.com/suy/vim-context-commentstring
 github.com/gpanders/nvim-parinfer
 github.com/tommcdo/vim-lion
-# github.com/bakpakin/fennel.vim
+
+# Language Support
+github.com/sotvokun/fennel.vim
+
+# Enhanced
+github.com/vijaymarupudi/nvim-fzf
+
+# github.com/anuvyklack/hydra.nvim
+# github.com/lambdalisue/fern.vim
 
 # LSP
 
@@ -38,11 +46,6 @@ github.com/tommcdo/vim-lion
 # github.com/hrsh7th/cmp-buffer      opt
 # github.com/hrsh7th/cmp-path        opt
 # github.com/dcampos/cmp-snippy      opt
-
-# Enhanced
-
-# github.com/anuvyklack/hydra.nvim
-# github.com/lambdalisue/fern.vim
 
 ]]
 
@@ -145,9 +148,9 @@ function _rmdir(path)
             'rm', '-rf', path
         }))
     else
-        vim.print(vim.fn.system({
-            'rmdir', path, '/s', '/q'
-        }))
+        path_ = string.gsub(path, '/', '\\')
+        local cmd = string.format('rmdir /S /Q "%s"', path_)
+        vim.print(vim.fn.system(cmd))
     end
 end
 

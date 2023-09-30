@@ -1,7 +1,7 @@
 " ------------------------------------------------
 "  init-tiny.vim
 "  Created:  2023-05-18
-"  Modified: 2023-05-18
+"  Modified: 2023-09-30
 " ------------------------------------------------
 
 " Options
@@ -59,6 +59,11 @@ if has('win32') || has('wsl')
 		\ }
 endif
 
+" - Grep
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --smart-case
+    set grepformat=%f:%l:%c:%m
+endif
 
 " Keymaps
 " - Leader key
@@ -128,7 +133,7 @@ nnoremap <c-p> :
 nnoremap d<c-w> <cmd>q<cr>
 nnoremap d<c-t> <cmd>tabclose<cr>
 nnoremap dq <cmd>bdel<cr>
-nnoremap <esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
+nnoremap <silent><esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
 
 
 " Builtin Plugins and Component

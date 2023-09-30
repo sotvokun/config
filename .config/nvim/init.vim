@@ -1,23 +1,18 @@
 " ------------------------------------------------ 
 "  init.vim
 "  Created:  2023-05-18
-"  Modified: 2023-05-27
+"  Modified: 2023-09-30
 " ------------------------------------------------
 
+
+" Commands
+" -----------------------
 command! -nargs=1 -complete=file
-	\ RequireSource
-	\ execute 'source ' . fnameescape(stdpath('config') . '/<args>')
-
-if exists('g:vscode')
-    RequireSource init-vscode.vim
-    let g:__mode = 'vscode'
-else
-    RequireSource init-tiny.vim
-    let g:__mode = 'term'
-endif
+    \ RequireSource
+    \ execute 'source ' . fnameescape(stdpath('config') . '/<args>')
 
 
-" Load moonwalk
+" Initialize moonwalk
 " -----------------------
 lua (function ()
     \ local fennel = require('fennel')
@@ -29,9 +24,11 @@ lua (function ()
     \ end)()
 
 
-" Load modules
+" Load configurations
 " -----------------------
-if !exists('g:vscode')
-    " lua require 'lsp'
-    " lua require 'completion'
-endif
+if exists('g:vscode')
+    RequireSource vscode/init.vim
+    finish
+end
+
+RequireSource init-tiny.vim
