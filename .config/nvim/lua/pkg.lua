@@ -29,9 +29,9 @@ github.com/sotvokun/fennel.vim
 
 # Enhanced
 github.com/vijaymarupudi/nvim-fzf
+github.com/stevearc/oil.nvim
 
-# github.com/anuvyklack/hydra.nvim
-# github.com/lambdalisue/fern.vim
+github.com/anuvyklack/hydra.nvim
 
 # LSP
 

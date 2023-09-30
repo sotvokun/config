@@ -49,7 +49,7 @@
 
 (fn parse-vimgrep-line [line]
   (let [parts [(string.match line "(.-):(%d+):(%d+):.*")]
-        filename (first parts)
+        filename (head parts)
         row (tonumber (. parts 2))
         col (tonumber (. parts 3))]
     {: filename 
@@ -57,10 +57,10 @@
      : col}))
 
 (fn handler-edit [path-list]
-  (vim.cmd (string.format "edit %s" (first path-list))))
+  (vim.cmd (string.format "edit %s" (head path-list))))
 
 (fn handler-edit-start-ln [path-list]
-  (let [{: filename : row} (parse-vimgrep-line (first path-list))]
+  (let [{: filename : row} (parse-vimgrep-line (head path-list))]
     (vim.cmd (string.format "edit +%d %s" row filename))))
 
 
