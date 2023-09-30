@@ -22,7 +22,7 @@
 (tset fzf 
       :default_options 
       {:border false
-       :fzf_cli_args "--layout=reverse --ansi --info=inline-right"})
+       :fzf_cli_args "--layout=reverse --ansi --info=inline-right "})
 
 (local fzf-action (. (require :fzf.actions) :action))
 
@@ -71,7 +71,7 @@
 (fn file-provider []
   (let [contents "fd --type file"
         handler handler-edit]
-    [contents handler]))
+    [contents handler "--prompt=\"Files> \""]))
 
 (fn buf-provider []
   (let [buf-ids (vim.api.nvim_list_bufs)
@@ -80,7 +80,7 @@
         buf-rel (icollect [_ v (ipairs buf-paths)]
                   (vim.fn.fnamemodify v ":~:."))
         handler (fn [path] (vim.cmd (.. "buffer " (. path 1))))]
-    [buf-rel handler]))
+    [buf-rel handler "--prompt=\"Buffers> \""]))
 
 (fn oldfiles-provider []
   (let [oldfiles vim.v.oldfiles
@@ -88,14 +88,14 @@
         is-in-cwd (fn [p] (vim.startswith p cwd))
         contents (vim.tbl_filter is-in-cwd oldfiles)
         handler handler-edit]
-    [contents handler]))
+    [contents handler "--prompt=\"History> \""]))
 
 (fn build-rg-provider [input]
   (fn []
     (let [input_ (vim.fn.shellescape input)
           rgcmd (string.format "rg --vimgrep --no-heading --color ansi %s" input_)
           handler handler-edit-start-ln]
-      [rgcmd handler])))
+      [rgcmd handler "--prompt=\"Rg> \""])))
 
 
 ;; Commands
