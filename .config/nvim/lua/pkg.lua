@@ -40,13 +40,12 @@ github.com/lewis6991/gitsigns.nvim
 
 # LSP
 
-# github.com/neovim/nvim-lspconfig                opt sync
-# github.com/williamboman/mason.nvim              opt sync
-# github.com/williamboman/mason-lspconfig.nvim    opt sync
-# github.com/hrsh7th/cmp-nvim-lsp                 opt sync
+github.com/williamboman/mason.nvim  sync
 
 
 # Completion
+
+github.com/mfussenegger/nvim-lsp-compl
 
 # github.com/hrsh7th/nvim-cmp        opt
 # github.com/hrsh7th/cmp-buffer      opt
