@@ -24,14 +24,19 @@ github.com/suy/vim-context-commentstring
 github.com/gpanders/nvim-parinfer
 github.com/tommcdo/vim-lion
 
+
 # Language Support
+
 github.com/sotvokun/fennel.vim
 
+
 # Enhanced
+
 github.com/vijaymarupudi/nvim-fzf
 github.com/stevearc/oil.nvim
-
 github.com/anuvyklack/hydra.nvim
+github.com/lewis6991/gitsigns.nvim
+
 
 # LSP
 
@@ -39,6 +44,7 @@ github.com/anuvyklack/hydra.nvim
 # github.com/williamboman/mason.nvim              opt sync
 # github.com/williamboman/mason-lspconfig.nvim    opt sync
 # github.com/hrsh7th/cmp-nvim-lsp                 opt sync
+
 
 # Completion
 
