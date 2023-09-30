@@ -78,12 +78,37 @@
 ;; --------------------
 
 (fn command [name cmd ...]
+  """
+  usage:
+  (command :HelloWorld (fn [] (vim.print \"Hello world\")))
+
+  with options:
+  (command :HelloWorld (fn [args] args.args) :nargs 1 :bang true)
+  """
   (assert-compile (string? name))
   `(vim.api.nvim_create_user_command 
      ,name 
      ,cmd
      (list->table ,[...])))
 
+(fn keymap [mod lhs rhs ...]
+  """
+  usage:
+  (keymap [n] \"-\" :<cmd>Oil<cr>)
+
+  with options:
+  (keymap [n] \"-\" :<cmd>Oil<cr> :desc \"Open parent directory\")
+  """
+  (assert-compile (list? mod))
+  (assert-compile (string? lhs))
+  (assert-compile (string? rhs))
+  (let [mods (tostring (. mod 1))]
+    `(vim.keymap.set
+       (vim.split (tostring ,mods) "")
+       ,lhs
+       ,rhs
+       (list->table ,[...]))))
+       
 
 ;; Export
 ;; --------------------
@@ -106,4 +131,5 @@
  : list->table
  : with-module
  
- : command}
+ : command
+ : keymap}
