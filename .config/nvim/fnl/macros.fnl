@@ -2,15 +2,41 @@
 ;; --------------------
 
 (fn nil? [val]
-  `(= nil ,val))
+  `(or (= :nil (type ,val))
+       (and (= :table (type ,val))
+            (= 0 (length (vim.tbl_keys ,val))))))
+
+(fn number? [val]
+  `(= :number (type ,val)))
+
+(fn string? [val]
+  `(= :string (type ,val)))
+
+(fn boolean? [val]
+  `(= :boolean (type ,val)))
+
+(fn table? [val]
+  `(= :table (type ,val)))
+
+(fn list? [val]
+  `(vim.tbl_islist ,val))
+
+(fn quote? [val]
+  `(and (table? ,val)
+        (< 1 (length ,val))
+        (table? (. ,val 1))
+        (= 1 (length (. ,val 1)))
+        (= :quote (tostring (. ,val 1)))))
 
 (fn executable? [expr]
   `(= 1 (vim.fn.executable ,expr)))
 
 (fn even? [val]
+  (assert-compile (number? val))
   `(= 0 (% ,val 2)))
 
 (fn odd? [val]
+  (assert-compile (number? val))
   `(= 1 (% ,val 2)))
 
 
@@ -47,20 +73,28 @@
        (true ,binding)
        (do ,...))))
 
+
 ;; VIM
 ;; --------------------
 
-(fn define-command [name cmd ?opts]
+(fn command [name cmd ...]
+  (assert-compile (string? name))
   `(vim.api.nvim_create_user_command 
-     ,(tostring name)
-     ,cmd 
-     ,(or ?opts {})))
+     ,name 
+     ,cmd
+     (list->table ,[...])))
 
 
 ;; Export
 ;; --------------------
 
 {: nil?
+ : number?
+ : string?
+ : boolean?
+ : table?
+ : list?
+ : quote?
  : executable?
  : even?
  : odd?
@@ -72,4 +106,4 @@
  : list->table
  : with-module
  
- : define-command}
+ : command}

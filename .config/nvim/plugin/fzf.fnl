@@ -99,10 +99,10 @@
 ;; Commands
 ;; --------------------
 
-(define-command Files (coroutine-wrap (picker-pane file-provider)))
-(define-command Buffers (coroutine-wrap (picker-pane buf-provider)))
-(define-command History (coroutine-wrap (picker-pane oldfiles-provider)))
-(define-command Rg 
+(command :Files (coroutine-wrap (picker-pane file-provider)))
+(command :Buffers (coroutine-wrap (picker-pane buf-provider)))
+(command :History (coroutine-wrap (picker-pane oldfiles-provider)))
+(command :Rg 
   (fn [args]
     ((coroutine.wrap (picker-pane (build-rg-provider args.args)))))
-  {:nargs 1})
+  :nargs 1)
