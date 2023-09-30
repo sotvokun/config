@@ -33,7 +33,7 @@ github.com/sotvokun/fennel.vim
 # Enhanced
 
 github.com/vijaymarupudi/nvim-fzf
-github.com/stevearc/oil.nvim
+github.com/echasnovski/mini.files
 github.com/lewis6991/gitsigns.nvim
 
 
