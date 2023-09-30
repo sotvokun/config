@@ -617,7 +617,7 @@ hi! link gitcommitUnmergedArrow  gitcommitUnmergedFile
 "exe "hi! gitcommitOverflow"
 "exe "hi! gitcommitBlank"
 " }}}
-"
+
 " html highlighting "{{{
 " ---------------------------------------------------------------------
 exe "hi! htmlTag"           .s:fmt_none .s:fg_base01 .s:bg_none
@@ -645,6 +645,13 @@ exe "hi! texMathMatcher" . s:fg_yellow .s:bg_back   .s:fmt_none
 exe "hi! texMathMatcher" . s:fg_yellow .s:bg_back   .s:fmt_none
 exe "hi! texRefLabel"    . s:fg_yellow .s:bg_back   .s:fmt_none
 "}}}
+
+" fennel highlighting "{{{
+" ---------------------------------------------------------------------
+hi! link FennelParen NONE
+hi! link FennelSpecialForm Statement
+hi! link FennelKeyword FennelString
+" }}}"
 
 " ruby highlighting "{{{
 " ---------------------------------------------------------------------
