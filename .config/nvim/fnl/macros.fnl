@@ -108,7 +108,27 @@
        ,lhs
        ,rhs
        (list->table ,[...]))))
-       
+
+(fn augroup [name ...]
+  """
+  usage:
+  (augroup v3)
+  """
+  `(vim.api.nvim_create_augroup 
+     ,(tostring name)
+     (list->table ,[...])))
+
+(fn autocmd [group events ...]
+  """
+  usage:
+  (autocmd group-name [BufEnter BufWinEnter]
+    :pattern [\"*.c\"])
+  """
+  (let [events_ (icollect [_ v (ipairs events)] (tostring v))
+        opts (list->table [...])]
+    (do
+      (tset opts :group (tostring group))
+      `(vim.api.nvim_create_autocmd ,events_ ,opts))))
 
 ;; Export
 ;; --------------------
@@ -132,4 +152,6 @@
  : with-module
  
  : command
- : keymap}
+ : keymap
+ : augroup
+ : autocmd}
