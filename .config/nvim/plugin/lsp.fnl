@@ -31,16 +31,10 @@
 
       ; textDocument/inlayHint
       (when (client.supports_method :textDocument/inlayHint)
-        (keymap [n] "<leader>qh" #(vim.lsp.inlay_hint buf) :buffer buf :desc "Toggle inlay hint"))
+        (keymap [n] "<leader>qh" #(vim.lsp.inlay_hint buf) :buffer buf :desc "Toggle inlay hint")))))
 
       ; textDocument/completion
-      (when (client.supports_method :textDocument/completion)
-        (with-module [compl :lsp_compl]
-          (vim.cmd "set completeopt+=noinsert")
-          (let [{: expand_snippet} (require :snippy)]
-            (set compl.expand_snippet expand_snippet))
-          (keymap [i] :<cr> #(if (compl.accept_pum) :<c-y> :<cr>) :expr true :buffer true)
-          (compl.attach client buf {}))))))
+      ; - Inject by MiniCompletion
 
 (autocmd
   lsp# [LspDetach]
@@ -48,8 +42,6 @@
   (fn [{: buf :data {: client_id}}]
     (do
       (tset vim.b buf :lsp nil)
-      (with-module [compl :lsp_compl]
-        (compl.detach client_id buf))
       (autocmd lsp# [*] :buffer buf))))
 
 ; (autocmd lsp# [LspProgress] :pattern "*" :command "redrawstatus")

@@ -44,7 +44,7 @@ github.com/williamboman/mason.nvim  sync
 
 # Completion
 
-github.com/mfussenegger/nvim-lsp-compl
+github.com/echasnovski/mini.completion
 
 # github.com/hrsh7th/nvim-cmp        opt
 # github.com/hrsh7th/cmp-buffer      opt
