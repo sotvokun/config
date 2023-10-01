@@ -34,6 +34,7 @@ github.com/sotvokun/fennel.vim
 
 github.com/echasnovski/mini.files
 github.com/lewis6991/gitsigns.nvim
+github.com/nvim-lualine/lualine.nvim
 
 
 # LSP
