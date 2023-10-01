@@ -907,6 +907,11 @@ else
 endif
 "}}}
 
+" MiniFiles "{{{
+" ---------------------------------------------------------------------
+hi! link MiniFilesNormal Normal
+" }}}
+
 " Utility autocommand "{{{
 " ---------------------------------------------------------------------
 " In cases where Solarized is initialized inside a terminal vim session and
