@@ -914,6 +914,11 @@ endif
 hi! link MiniFilesNormal Normal
 " }}}
 
+" MiniPick "{{{
+" ---------------------------------------------------------------------
+hi! link MiniPickNormal Normal
+" }}}"
+
 " Utility autocommand "{{{
 " ---------------------------------------------------------------------
 " In cases where Solarized is initialized inside a terminal vim session and
