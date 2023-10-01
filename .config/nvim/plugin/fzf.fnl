@@ -1,49 +1,23 @@
+(local 
+  [has-requirement 
+   {: picker-pane 
+    : picker-win}] (require :fzf-helper))
 
 ;; Health Check
 ;; --------------------
 
-(when (not (executable? "fzf"))
+(when (not has-requirement)
   (do
     (vim.notify 
       "[fzf.fnl] necessary executable `fzf` does not exists"
       vim.log.levels.WARN)
     (lua "return")))
 
-(when (not (pcall require "fzf"))
-  (do
-    (vim.notify
-      "[fzf.fnl] dependency plugin 'github.com/vijaymarupudi/nvim-fzf' does not exists"
-      vim.log.levels.WARN)
-    (lua "return")))
-
-(local fzf (require :fzf))
-(tset fzf 
-      :default_options 
-      {:border false
-       :fzf_cli_args "--layout=reverse --ansi --info=inline-right "})
-
-(local fzf-action (. (require :fzf.actions) :action))
-
 
 ;; Utils
 ;; --------------------
 
-(macro coroutine-wrap [func]
-  `(fn [] ((coroutine.wrap ,func))))
-
-(fn picker-pane [provider ?opts]
-  (let [[contents handler fzf-args] (provider)]
-    (fn []
-      (do
-        (vim.cmd "horizontal new | set nonu")
-        (let [result (fzf.provided_win_fzf contents fzf-args ?opts)]
-          (when result (handler result)))))))
-
-(fn picker-win [provider ?opts]
-  (let [[contents handler fzf-args] (provider)]
-    (fn []
-      (let [result (fzf.fzf contents fzf-args ?opts)]
-        (when result (handler result))))))
+(macro coroutine-wrap [func] `(fn [] ((coroutine.wrap ,func))))
 
 (fn parse-vimgrep-line [line]
   (let [parts [(string.match line "(.-):(%d+):(%d+):.*")]
@@ -99,7 +73,7 @@
 ;; Commands
 ;; --------------------
 
-(command :Files (coroutine-wrap (picker-pane file-provider)))
+(command :Files (coroutine-wrap (picker-win file-provider)))
 (command :Buffers (coroutine-wrap (picker-pane buf-provider)))
 (command :History (coroutine-wrap (picker-pane oldfiles-provider)))
 (command :Rg 
