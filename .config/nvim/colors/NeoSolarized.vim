@@ -398,6 +398,8 @@ endif
 
 exe "hi! Normal"         .s:fmt_none   .s:fg_base0  .s:bg_back
 
+exe "hi! NormalFloat"    .s:fmt_none   .s:fg_base03  .s:bg_base01
+
 exe "hi! Comment"        .s:fmt_ital   .s:fg_base01 .s:bg_none
 "       *Comment         any comment
 
