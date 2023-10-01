@@ -32,6 +32,9 @@
 
 (fn start [config]
   (do
+    ; TODO REMOVE WHEN NEOVIM 0.10.0 READY
+    (when (nil? vim.uv)
+      (tset vim :uv vim.loop))
     (when (and (executable? (head config.cmd))
                (not= vim.g.lsp.autostart false)
                (= vim.bo.buftype "")
