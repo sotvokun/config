@@ -1,5 +1,5 @@
 (local lsp-server
-  {:cmd ["typescript-language-server.cmd" "--stdio"]
+  {:cmd ["typescript-language-server" "--stdio"]
    :root ["package.json" "tsconfig.json" "jsconfig.json"]})
 
 (with-module [lsp :lsp]

@@ -35,6 +35,17 @@
     ; TODO REMOVE WHEN NEOVIM 0.10.0 READY
     (when (nil? vim.uv)
       (tset vim :uv vim.loop))
+    (when (= 1 (vim.fn.has "win32"))
+      (let [name (head config.cmd)
+            cmd (.. name ".cmd")
+            bat (.. name ".bat")
+            ps1 (.. name ".ps1")
+            exe (.. name ".exe")
+            setup (fn [n] (tset config.cmd 1 n))]
+        (if (executable? cmd) (setup cmd)
+            (executable? bat) (setup bat)
+            (executable? ps1) (setup ps1)
+            (executable? exe) (setup exe))))
     (when (and (executable? (head config.cmd))
                (not= vim.g.lsp.autostart false)
                (= vim.bo.buftype "")
