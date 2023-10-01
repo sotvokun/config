@@ -46,11 +46,6 @@ github.com/williamboman/mason.nvim  sync
 
 github.com/echasnovski/mini.completion
 
-# github.com/hrsh7th/nvim-cmp        opt
-# github.com/hrsh7th/cmp-buffer      opt
-# github.com/hrsh7th/cmp-path        opt
-# github.com/dcampos/cmp-snippy      opt
-
 ]]
 
 
