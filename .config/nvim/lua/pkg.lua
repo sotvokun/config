@@ -40,6 +40,7 @@ github.com/nvim-lualine/lualine.nvim
 # LSP
 
 github.com/williamboman/mason.nvim  sync
+github.com/github/copilot.vim       sync
 
 
 # Completion
