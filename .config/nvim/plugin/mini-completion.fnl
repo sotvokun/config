@@ -26,4 +26,5 @@
   (keymap [is] "<tab>" (fn []
                         (if (= 1 (vim.fn.pumvisible)) (tab-fn)
                           (with-key :<tab>)))
-          :expr true))
+          :expr true)
+  (keymap [i] "<c-k>" #(MiniCompletion.complete_twostage)))

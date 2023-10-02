@@ -26,10 +26,27 @@
           (snippy.expand))))
     (tset MiniPick.registry :snippet (fn [local-opts] (snippy-picker local-opts))))
 
+  ;; oldfiles
+  (fn oldfiles-picker [local-opts opts]
+    (let [cwd (vim.fn.getcwd)
+          oldfiles (icollect [_ p (ipairs vim.v.oldfiles)]
+                      (when (and (vim.startswith p cwd)
+                                 (= 1 (vim.fn.filereadable p)))
+                        (vim.fn.fnamemodify p ":~:.")))]
+      (do
+        (local source {:name "Oldfiles" :items oldfiles})
+        (local opts_ 
+          (vim.tbl_deep_extend :force 
+                               (or opts {}) 
+                               {: source}))
+        (local item (MiniPick.start opts_)))))
+  (tset MiniPick.registry :oldfiles (fn [local-opts] (oldfiles-picker local-opts)))
+
   
   (keymap [n] :<c-g>f "<cmd>Pick files<cr>" :silent true)
   (keymap [n] :<c-g>b "<cmd>Pick buffers<cr>" :silent true)
   (keymap [n] :<c-g>/ "<cmd>Pick grep_live<cr>" :silent true)
   (keymap [n] :<c-g>? "<cmd>Pick grep<cr>" :silent true)
   (keymap [in] "<c-g>]" "<cmd>Pick snippet<cr>" :silent true)
-  (keymap [n] :<c-g><c-g> "<cmd>Pick resume<cr>" :silent true))
+  (keymap [n] :<c-g><c-g> "<cmd>Pick resume<cr>" :silent true)
+  (keymap [n] :<c-g><c-f> "<cmd>Pick oldfiles<cr>" :silent true))

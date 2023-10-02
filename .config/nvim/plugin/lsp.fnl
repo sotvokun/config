@@ -19,10 +19,12 @@
       (tset vim.b buf :lsp client.name)
 
       ; Keymap
+      (keymap [n] "gD" vim.lsp.buf.declaration :buffer buf)
+      (keymap [n] "gd" vim.lsp.buf.definition :buffer buf)
       (keymap [n] "gr" vim.lsp.buf.references :buffer buf)
       (keymap [i] "<c-q>" vim.lsp.buf.signature_help :buffer buf)
       (keymap [n] "gR" vim.lsp.buf.rename :buffer buf)
-      (keymap [n] "<c-cr>" vim.lsp.buf.code_action :buffer buf)
+      (keymap [n] "g<space>" vim.lsp.buf.code_action :buffer buf)
       (keymap [n] "K" vim.lsp.buf.hover :buffer buf)
 
       ; textDocument/documentHighlight

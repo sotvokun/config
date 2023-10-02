@@ -1,7 +1,7 @@
 " ------------------------------------------------
 "  init-tiny.vim
 "  Created:  2023-05-18
-"  Modified: 2023-09-30
+"  Modified: 2023-10-02
 " ------------------------------------------------
 
 " Options
@@ -134,6 +134,7 @@ nnoremap d<c-w> <cmd>q<cr>
 nnoremap d<c-t> <cmd>tabclose<cr>
 nnoremap dq <cmd>bdel<cr>
 nnoremap <silent><esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
+nnoremap zS <cmd>Inspect<cr>
 
 
 " Builtin Plugins and Component

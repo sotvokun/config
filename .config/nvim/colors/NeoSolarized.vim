@@ -655,6 +655,11 @@ hi! link FennelSpecialForm Statement
 hi! link FennelKeyword FennelString
 " }}}"
 
+" php highlighting "{{{
+" ---------------------------------------------------------------------
+hi! link phpParent NONE
+" }}}"
+
 " ruby highlighting "{{{
 " ---------------------------------------------------------------------
 exe "hi! rubyDefine"     . s:fg_base1  .s:bg_back   .s:fmt_bold
