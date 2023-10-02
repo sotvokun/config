@@ -14,7 +14,7 @@ set list
 set listchars=tab:\|\ ,extends:>,precedes:\<
 set title
 colorscheme darkblue
-silent! colorscheme neosolarized
+silent! colorscheme NeoSolarized
 
 
 " - File & Encoding
