@@ -14,7 +14,7 @@ set list
 set listchars=tab:\|\ ,extends:>,precedes:\<
 set title
 colorscheme darkblue
-silent! colorscheme neosolarized
+silent! colorscheme NeoSolarized
 
 
 " - File & Encoding
@@ -51,12 +51,18 @@ set smartcase
 " - Clipboard
 set clipboard+=unnamedplus
 if has('win32') || has('wsl')
-	let g:clipboard = {
-		\ 'name': 'win32yank',
-		\ 'copy': { '+': 'win32yank.exe -i --crlf', '*': 'win32yank.exe -i --crlf' },
-		\ 'paste': { '+': 'win32yank.exe -o --lf', '*': 'win32yank.exe -o --lf' },
-		\ 'cache_enabled': 0
-		\ }
+    let s:win32yank = 'win32yank'
+    if has('wsl')
+        let s:win32yank_winpath = system('/mnt/c/Windows/System32/where.exe win32yank')
+        let s:win32yank = 
+            \ '/mnt/c' . trim(substitute(s:win32yank_winpath[2:], '\\', '/', 'g'))
+    endif
+    let g:clipboard = {
+        \ 'name': 'win32yank',
+        \ 'copy': { '+': s:win32yank .' -i --crlf', '*': s:win32yank .' -i --crlf' },
+        \ 'paste': { '+': s:win32yank .' -o --lf', '*': s:win32yank .' -o --lf' },
+        \ 'cache_enabled': 0
+        \ }
 endif
 
 " - Grep
