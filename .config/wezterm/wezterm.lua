@@ -57,7 +57,9 @@ local key_bindings = {
   },
   { key='[', mods='LEADER', action=wezterm.action.ActivateTabRelative(-1) },
   { key=']', mods='LEADER', action=wezterm.action.ActivateTabRelative( 1) },
-  { key='x', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentTab({ confirm=false }) }
+  { key='x', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentTab({ confirm=false }) },
+  { key='c', mods='CTRL|SHIFT', action=wezterm.action.CopyTo('Clipboard') },
+  { key='v', mods='CTRL|SHIFT', action=wezterm.action.PasteFrom('Clipboard') }
 }
 
 local macos_bindings = {
