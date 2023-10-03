@@ -13,15 +13,15 @@ end
 
 -- Keybindings
 
-local leader_key = { key='a', mods='CTRL', timeout_milliseconds=500 }
+local leader_key = { key='`', mods='CTRL', timeout_milliseconds=500 }
 
 local key_bindings = {
   -- Fix Leader Key
   { 
-    key='a', 
+    key='`', 
     mods='LEADER|CTRL', 
     action=wezterm.action.SendKey({
-      key='a',
+      key='`',
       mods='CTRL'
     })
   },
