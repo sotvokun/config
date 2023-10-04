@@ -1,7 +1,0 @@
-snippet mkShell
-	{pkgs ? import <nixpkgs> {}}:
-	pkgs.mkShell {
-		packages = [
-			${1}
-		];
-	}

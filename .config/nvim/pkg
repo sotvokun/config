@@ -1,0 +1,34 @@
+# Core
+
+github.com/kylechui/nvim-surround
+github.com/jiangmiao/auto-pairs
+github.com/dcampos/nvim-snippy
+github.com/tpope/vim-fugitive
+github.com/ggandor/leap.nvim
+github.com/tpope/vim-abolish
+github.com/tpope/vim-commentary
+github.com/suy/vim-context-commentstring
+github.com/tommcdo/vim-lion
+github.com/gpanders/nvim-parinfer
+
+
+# Language Support
+
+github.com/sotvokun/fennel.vim
+
+
+# Enhanced
+
+github.com/echasnovski/mini.files       opt branch:stable
+github.com/lewis6991/gitsigns.nvim      opt
+
+
+# LSP
+
+github.com/williamboman/mason.nvim      opt sync
+
+
+# Completion
+
+github.com/echasnovski/mini.completion  opt branch:stable
+github.com/github/copilot.vim           opt sync

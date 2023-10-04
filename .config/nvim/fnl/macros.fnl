@@ -73,6 +73,9 @@
        (true ,binding)
        (do ,...))))
 
+(fn vscode-incompatible! []
+  `(when vim.g.vscode (lua :return)))
+
 
 ;; VIM
 ;; --------------------
@@ -150,6 +153,7 @@
  : tail
  : list->table
  : with-module
+ : vscode-incompatible!
  
  : command
  : keymap

@@ -11,11 +11,7 @@ set cursorline
 set signcolumn=yes
 set number
 set list
-set listchars=tab:\|\ ,extends:>,precedes:\<
-set title
-colorscheme darkblue
-silent! colorscheme NeoSolarized
-
+set listchars=tab:\│\ ,extends:>,precedes:\<
 
 " - File & Encoding
 set fileencoding=utf-8
@@ -26,27 +22,26 @@ set encoding=utf-8
 
 " - Editing
 set expandtab
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set smartindent
 
 " - Fold
 set foldlevel=99
 set foldlevelstart=99
-set foldenable
 set foldmethod=indent
 
 " - Misc
 set nowrap
-set lazyredraw
 set undofile
+set noswapfile
 set timeoutlen=400
-set updatetime=750
+set updatetime=250
 set splitbelow
 set splitright
 set ignorecase
 set smartcase
+set wildignorecase
+
+" Enable indent-heuristic to make vimdiff more closely match git diff
+set diffopt+=indent-heuristic,linematch:60
 
 " - Clipboard
 set clipboard+=unnamedplus
@@ -111,13 +106,6 @@ cnoremap <c-b> <left>
 inoremap <c-k> <c-n>
 inoremap <c-s-k> <c-k>
 
-" - [MODE] Quick Setup
-nnoremap <leader>qq <cmd>nohl<cr>
-nnoremap <leader>qr <cmd>set relativenumber!<cr>
-nnoremap <leader>qw <cmd>set wrap!<cr>
-nnoremap <leader>qs <cmd>set spell!<cr>
-nnoremap <leader>ql :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
-
 " - Sensible
 nnoremap ]q <cmd>cnext<cr>
 nnoremap [q <cmd>cprev<cr>
@@ -130,12 +118,7 @@ nnoremap gb <cmd>b#<cr>
 " - Terminal
 tnoremap <esc> <c-\><c-n>
 
-" - [MODE] New Mode
-nnoremap <leader>et <cmd>tabnew<cr>
-nnoremap <leader>ee <cmd>enew<cr>
-
 " - Misc
-nnoremap <c-p> :
 nnoremap d<c-w> <cmd>q<cr>
 nnoremap d<c-t> <cmd>tabclose<cr>
 nnoremap dq <cmd>bdel<cr>
@@ -152,36 +135,42 @@ let g:netrw_winsize=20
 
 " Autocmds
 " - set nocursorline when switch window
-augroup svim_cursorline
-    au!
-    autocmd WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
+augroup svim_init
+        au!
+
+        " open terminal and enter insert mode automatically
+        autocmd TermOpen term://* startinsert
+
+        " highlight yanked text
+        autocmd TextYankPost * lua vim.highlight.on_yank {higroup="Visual", timeout=150, on_visual=true}
+
+        " Show cursor only in current window
+        autocmd WinEnter,FocusGained * set cursorline
+        autocmd WinLeave,FocusLost * set nocursorline
+
+        " mkdir before write file
+        autocmd BufWritePre,FileWritePre * 
+                \ if @% !~# '\(://\)' 
+                \ | call mkdir(expand('<afile>:p:h'), 'p')
+                \ | endif
+
+        " exit help file with q
+        autocmd BufEnter * 
+                \ if (&filetype ==# "help")||(&filetype ==# "qf")
+                \ | nnoremap <buffer> q <cmd>q<cr> 
+                \ | endif
+
 augroup END
-
-" - mkdir for write file
-function! s:mkdir_pre_write(path)
-    if isdirectory(a:path) == 0
-        call mkdir(a:path, 'p')
-    endif
-endfunction
-augroup svim_mkdir
-    au!
-    autocmd BufWritePre * call s:mkdir_pre_write(expand('<afile>:p:h'))
-augroup END
-
-
-" Commands
-command! -nargs=0 SourceInit source $MYVIMRC
 
 
 " Functions
 function! SvimUnmapCompl()
-  iunmap <expr><c-n>
-  iunmap <expr><c-p>
-  iunmap <c-k>
-  iunmap <c-s-k>
+        iunmap <expr><c-n>
+        iunmap <expr><c-p>
+        iunmap <c-k>
+        iunmap <c-s-k>
 
-  " set them as defalut behavior without completion
-  inoremap <c-n> <down>
-  inoremap <c-p> <up>
+        " set them as defalut behavior without completion
+        inoremap <c-n> <down>
+        inoremap <c-p> <up>
 endfunction

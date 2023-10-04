@@ -1,4 +1,5 @@
-(with-module [pick :pick]
+(vscode-incompatible!)
+(with-module [pick :mini.pick]
   (pick.setup)
 
   ;; Snippets
