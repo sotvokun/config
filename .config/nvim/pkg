@@ -19,16 +19,16 @@ github.com/sotvokun/fennel.vim
 
 # Enhanced
 
-github.com/echasnovski/mini.files       opt branch:stable
-github.com/lewis6991/gitsigns.nvim      opt
+github.com/echasnovski/mini.files       branch:stable
+github.com/lewis6991/gitsigns.nvim
 
 
 # LSP
 
-github.com/williamboman/mason.nvim      opt sync
+github.com/williamboman/mason.nvim      sync
 
 
 # Completion
 
-github.com/echasnovski/mini.completion  opt branch:stable
+github.com/echasnovski/mini.completion  branch:stable
 github.com/github/copilot.vim           opt sync

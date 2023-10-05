@@ -1,8 +1,7 @@
 (vscode-incompatible!)
 
 (with-module [gitsigns :gitsigns]
-  (gitsigns.setup 
-    {:signcolumn (not= 1 (vim.fn.exists "g:vscode"))})
+  (gitsigns.setup) 
   
   (keymap [nv] :<leader>gs "<cmd>Gitsigns stage_hunk<cr>")
   (keymap [nv] :<leader>gS "<cmd>Gitsigns stage_buffer<cr>")

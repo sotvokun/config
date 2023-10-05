@@ -9,6 +9,10 @@
 vnoremap < <gv
 vnoremap > >gv
 
+" -- Folding
+nnoremap zc <cmd>call VSCodeCall("editor.fold")<cr>
+nnoremap zo <cmd>call VSCodeCall("editor.unfold")<cr>
+
 " -- VsCodeCommentary Instead vim-commentary
 xmap gc  <Plug>VSCodeCommentary
 nmap gc  <Plug>VSCodeCommentary
