@@ -12,6 +12,9 @@ set signcolumn=yes
 set number
 set list
 set listchars=tab:\│\ ,extends:>,precedes:\<
+colorscheme neosolarized
+set statusline=%{%v:lua.require'statusline'.statusline()%}
+set noshowmode
 
 " - File & Encoding
 set fileencoding=utf-8

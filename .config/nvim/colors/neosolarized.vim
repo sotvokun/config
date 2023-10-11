@@ -134,7 +134,7 @@ hi clear
 if exists("syntax_on")
   syntax reset
 endif
-let colors_name = "NeoSolarized"
+let colors_name = "neosolarized"
 
 "}}}
 
@@ -922,6 +922,16 @@ hi! link MiniFilesNormal Normal
 " MiniPick "{{{
 " ---------------------------------------------------------------------
 hi! link MiniPickNormal Normal
+" }}}"
+
+" StatusLine "{{{
+" ---------------------------------------------------------------------
+exe "hi! StatusLineModeInsert"           . s:fg_red     . s:bg_base1  . s:fmt_bold
+exe "hi! StatusLineModeVisual"           . s:fg_violet  . s:bg_base1  . s:fmt_bold
+exe "hi! StatusLineModeReplace"          . s:fg_red     . s:bg_base1  . s:fmt_bold
+exe "hi! StatusLineModeTerminal"         . s:fg_red     . s:bg_base1  . s:fmt_bold
+exe "hi! StatusLineModeCommand"          . s:fg_orange  . s:bg_base1  . s:fmt_bold
+exe "hi! StatusLineModeShell"            . s:fg_orange  . s:bg_base1  . s:fmt_bold
 " }}}"
 
 " Utility autocommand "{{{
