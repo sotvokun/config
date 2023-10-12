@@ -138,11 +138,21 @@ local function moonwalk()
     vim.schedule(vim.loader.enable)
 end
 
+local function moonwalk_clean()
+    vim.loader.disable()
+    clear()
+    vim.schedule(vim.loader.enable)
+end
+
 
 -- Usercommand ------------------------------------------------------------------------------------
 
 vim.api.nvim_create_user_command("Moonwalk", moonwalk, {
     desc = "Compile all fennel files to lua"
+})
+
+vim.api.nvim_create_user_command("MoonwalkClean", moonwalk_clean, {
+    desc = "Clean all compiled lua files"
 })
 
 
