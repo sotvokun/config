@@ -15,13 +15,16 @@ github.com/gpanders/nvim-parinfer
 # Language Support
 
 github.com/sotvokun/fennel.vim
+github.com/posva/vim-vue
 
 
 # Enhanced
 
 github.com/echasnovski/mini.files       branch:stable
+github.com/echasnovski/mini.clue        branch:stable
 github.com/lewis6991/gitsigns.nvim
 github.com/nvim-treesitter/nvim-treesitter      sync
+github.com/akinsho/toggleterm.nvim
 
 
 # LSP
@@ -32,4 +35,4 @@ github.com/williamboman/mason.nvim      sync
 # Completion
 
 github.com/echasnovski/mini.completion  branch:stable
-github.com/github/copilot.vim           opt sync
+github.com/zbirenbaum/copilot.lua       opt sync

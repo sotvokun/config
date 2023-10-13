@@ -303,6 +303,7 @@ exe "hi! link LuaSpecialValue NeosolarizedKeyword"
 exe "hi! link vimSep NeosolarizedParen"
 exe "hi! link vimParenSep NeosolarizedParen"
 exe "hi! vimContinue"           . s:attr_none   . s:fg_dim     . s:bg_none
+exe "hi! link vimUserFunc NONE"
 
 " lua
 exe "hi! link luaFunction NeosolarizedKeyword"

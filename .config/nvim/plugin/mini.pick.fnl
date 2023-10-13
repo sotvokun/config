@@ -44,10 +44,10 @@
   (tset MiniPick.registry :oldfiles (fn [local-opts] (oldfiles-picker local-opts)))
 
   
-  (keymap [n] :<c-g>f "<cmd>Pick files<cr>" :silent true)
-  (keymap [n] :<c-g>b "<cmd>Pick buffers<cr>" :silent true)
-  (keymap [n] :<c-g>/ "<cmd>Pick grep_live<cr>" :silent true)
-  (keymap [n] :<c-g>? "<cmd>Pick grep<cr>" :silent true)
-  (keymap [in] "<c-g>]" "<cmd>Pick snippet<cr>" :silent true)
-  (keymap [n] :<c-g><c-g> "<cmd>Pick resume<cr>" :silent true)
-  (keymap [n] :<c-g><c-f> "<cmd>Pick oldfiles<cr>" :silent true))
+  (keymap [n] :<leader>f "<cmd>Pick files<cr>"     :silent true :desc "Open file picker")
+  (keymap [n] :<leader>b "<cmd>Pick buffers<cr>"   :silent true :desc "Open buffer picker")
+  (keymap [n] :<leader>/ "<cmd>Pick grep_live<cr>" :silent true :desc "Open live grep")
+  (keymap [n] :<leader>? "<cmd>Pick grep<cr>"      :silent true :desc "Open grep")
+  (keymap [n] "<leader>]" "<cmd>Pick snippet<cr>"  :silent true :desc "Open snippet picker")
+  (keymap [n] :<leader>o "<cmd>Pick oldfiles<cr>"  :silent true :desc "Open oldfiles picker")
+  (keymap [n] "<leader>'" "<cmd>Pick resume<cr>"   :silent true :desc "Open last picker"))

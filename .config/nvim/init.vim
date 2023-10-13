@@ -21,9 +21,8 @@ end
 
 RequireSource init.start.vim
 augroup init#
-        autocmd VimEnter * PaqPackAdd * !copilot.vim 
+        autocmd VimEnter * PaqPackAdd * !copilot.lua
         autocmd InsertEnter * 
-                \ if exists(":Copilot") == 0 && exists("g:vscode") != 1
-                \ | packadd copilot.vim 
-                \ | endif
+                \ packadd copilot.lua
+                \ | runtime after/plugin/copilot.lua
 augroup END

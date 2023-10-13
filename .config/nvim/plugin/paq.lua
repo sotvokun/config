@@ -54,25 +54,30 @@ end
 
 -- Setup ------------------------------------------------------------------------------------------
 
-local ok, paq = pcall(require, "paq")
-if not ok then
-    return
-end
+vim.api.nvim_create_augroup("paq#", {})
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+    callback = function()
+        local ok, paq = pcall(require, "paq")
+        if not ok then
+            return
+        end
 
-local pkgs = parse_manifest()
-local paq_requires = vim.tbl_map(function(p)
-    local ret = {
-        name = p.name,
-        opt = p.opt,
-        pin = (not p.sync),
-        url = p.remote
-    }
-    if p.branch ~= "" then
-        ret.branch = p.branch
+        local pkgs = parse_manifest()
+        local paq_requires = vim.tbl_map(function(p)
+            local ret = {
+                name = p.name,
+                opt = p.opt,
+                pin = (not p.sync),
+                url = p.remote
+            }
+            if p.branch ~= "" then
+                ret.branch = p.branch
+            end
+            return ret
+        end, pkgs)
+        paq(paq_requires)
     end
-    return ret
-end, pkgs)
-paq(paq_requires)
+})
 
 
 -- User command -----------------------------------------------------------------------------------
@@ -89,6 +94,7 @@ paq(paq_requires)
 --      EXAMPLE: packadd all packages exclude 'foo' and 'bar'.  `:PaqPackAdd * !foo !bar`
 -- ]]
 vim.api.nvim_create_user_command("PaqPackAdd", function(args)
+    local pkgs = parse_manifest()
     local fargs = args.fargs
     local optpkgs = vim.tbl_filter(function(p) 
         return p.opt
