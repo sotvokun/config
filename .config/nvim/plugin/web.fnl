@@ -33,3 +33,29 @@
            #(tset vim.b :minicompletion_config
                  {:lsp_completion
                   {:process_items lsp-process-items}})))
+
+; - vue language server
+(with-module [lsp :lsp]
+  (local filetypes ["vue"])
+
+  (local volar-options {:typescript {:tsdk ""}})
+
+  (fn find-tsserver-lib [root]
+    (let [node-module-path (vim.fs.normalize (.. root "/node_modules"))
+          lib-path (vim.fs.normalize (.. node-module-path "/typescript/lib"))]
+      (if (= 1 (vim.fn.isdirectory lib-path)) lib-path
+          "")))
+
+  (fn before-start [config]
+    (vim.tbl_extend :force config
+                    {:init_options
+                     {:typescript {:tsdk (find-tsserver-lib config.root_dir)}}}))
+
+  ; TODO - the tsdk may should be optional or fallback to global tsserver
+
+  (lsp.register {:name "volar"
+                 :cmd ["vue-language-server" "--stdio"]
+                 :root ["package.json"]
+                 :filetype filetypes
+                 :init_options volar-options
+                 :before_start before-start}))

@@ -4,6 +4,8 @@
 "  Modified: 2023-10-02
 " ------------------------------------------------
 
+let $VIMHOME = stdpath('config')
+
 " Options
 " - Faces
 set termguicolors
@@ -12,9 +14,11 @@ set signcolumn=yes
 set number
 set list
 set listchars=tab:\│\ ,extends:>,precedes:\<
+
 colorscheme neosolarized
 set statusline=%{%v:lua.require'statusline'.statusline()%}
 set noshowmode
+set guicursor=n-v-c-sm:block-Cursor,i-ci-ve:ver25-lCursor,r-cr-o:hor20
 
 " - File & Encoding
 set fileencoding=utf-8

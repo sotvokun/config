@@ -45,9 +45,12 @@
         root-dir (or (find-root-dir config.root) uv.cwd)
         capabilities (make-capabilities)
         handlers (make-handlers)
+        before-start config.before_start
         
         client-config (vim.tbl_extend :keep 
-                                      (vim.tbl_extend :force config {:filetype nil})
+                                      (vim.tbl_extend :force 
+                                                      config 
+                                                      {:filetype nil :before_start nil})
                                       {:root_dir root-dir
                                        :on_init on-init
                                        :capabilities capabilities
@@ -57,7 +60,8 @@
                    (let [is-autostart (not= false vim.lsp.start)
                          is-executable (= 1 (vim.fn.executable (head config.cmd)))]
                      (when (and is-autostart is-executable)
-                       (vim.lsp.start client-config))))]
+                       (vim.lsp.start (if before-start (before-start client-config) 
+                                          client-config)))))]
                          
     (autocmd lsp#FileType [FileType] 
              :pattern filetype
