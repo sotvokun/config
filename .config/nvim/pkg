@@ -34,5 +34,8 @@ github.com/williamboman/mason.nvim      sync
 
 # Completion
 
-github.com/echasnovski/mini.completion  branch:stable
-github.com/zbirenbaum/copilot.lua       opt sync
+github.com/hrsh7th/cmp-nvim-lsp         sync
+github.com/hrsh7th/cmp-buffer           sync
+github.com/dcampos/cmp-snippy           sync
+github.com/hrsh7th/nvim-cmp             sync
+github.com/zbirenbaum/copilot.lua       sync

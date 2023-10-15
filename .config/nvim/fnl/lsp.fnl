@@ -21,8 +21,12 @@
 
 (fn make-capabilities []
   (let [capabilities (vim.lsp.protocol.make_client_capabilities)
-        generalPositionEnc {:general {:positionEncoding [:utf-8 :utf-16]}}]
-    (vim.tbl_deep_extend :keep capabilities generalPositionEnc)))
+        generalPositionEnc {:general {:positionEncoding [:utf-8 :utf-16]}}
+        (cmp-ok cmp) (pcall require :cmp_nvim_lsp)]
+    (vim.tbl_deep_extend :keep 
+                         capabilities 
+                         generalPositionEnc
+                         (if cmp-ok (cmp.default_capabilities) {}))))
 
 (fn make-handlers []
   {"textDocument/signatureHelp" signature-help
