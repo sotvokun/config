@@ -133,6 +133,13 @@
       (tset opts :group (tostring group))
       `(vim.api.nvim_create_autocmd ,events_ ,opts))))
 
+(fn feedkeys [keys ?mode]
+  (assert-compile (string? keys))
+  `(vim.api.nvim_feedkeys (vim.api.nvim_replace_termcodes ,keys true true true)
+                          ,(or ?mode :ni)
+                          true))
+
+
 ;; Export
 ;; --------------------
 
@@ -158,4 +165,5 @@
  : command
  : keymap
  : augroup
- : autocmd}
+ : autocmd
+ : feedkeys}
