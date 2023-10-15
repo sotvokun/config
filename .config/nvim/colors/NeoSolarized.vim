@@ -273,6 +273,11 @@ exe "hi! FloatBorder"           . s:attr_none   . s:fg_dim     . s:bg_dim
 
 " }}}
 
+" Diagnostic highlightings {{{
+" ------------------------------------------------
+exe "hi! DiagnosticUnnecessary"         . s:attr_underl . s:fg_dim     . s:bg_none
+" }}}
+
 " Terminal colors {{{
 " ------------------------------------------------
 
@@ -414,6 +419,9 @@ exe "hi! link fugitiveUnstagedHeading fugitiveHeader"
 exe "hi! link fugitiveUntrackedHeading fugitiveHeader"
 exe "hi! fugitiveHelpTag"       . s:attr_none  . s:fg_dim       . s:bg
 exe "hi! fugitiveSymbolicRef"   . s:attr_none  . s:fg_cyan      . s:bg_none
+
+" indentline
+exe "hi! link IndentLine Comment"
 
 " }}}
 

@@ -36,7 +36,7 @@ set foldlevelstart=99
 set foldmethod=indent
 
 " - Misc
-set wrap
+set showbreak=↳\ 
 set undofile
 set noswapfile
 set timeoutlen=400
