@@ -1,4 +1,9 @@
+; terminal.fnl
+; | Terminal (toggleterm)
+
 (vscode-incompatible!)
+
+; Terminal =====================================
 
 (with-module [toggleterm :toggleterm]
   (toggleterm.setup)

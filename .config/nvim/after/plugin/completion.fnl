@@ -1,12 +1,7 @@
-; completion.fnl - The configuration of completions included lsp and copilot
+; completion.fnl- The configurations for completion
+; | Completion (cmp)
 
 (vscode-incompatible!)
-
-; Copilot ======================================
-
-(with-module [copilot :copilot]
-  (local suggestion {:auto_trigger true :keymap false})
-  (copilot.setup {: suggestion}))
 
 ; Completion ===================================
 

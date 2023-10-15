@@ -103,6 +103,7 @@ let s:attr_undero = " gui="   . "undercurl"     . " cterm=" . "undercurl"
 let s:attr_rever  = " gui="   . "reverse"       . " cterm=" . "reverse"
 let s:attr_strik  = " gui="   . "strikethrough" . " cterm=" . "strikethrough"
 let s:attr_reverb = " gui="   . "reverse,bold"  . " cterm=" . "reverse,bold"
+let s:attr_underlb= " gui="   . "underline,bold". " cterm=" . "underline,bold"
 
 let s:sp_none    = " guisp=" . s:gui_none
 let s:sp_base04  = " guisp=" . s:gui_base04
@@ -381,6 +382,38 @@ exe "hi! link cmakeVariable NONE"
 exe "hi! cmakeVariableValue"    . s:attr_bold   . s:fg         . s:bg_none
 exe "hi! cmakeGeneratorExpressions"
                         \       . s:attr_none   . s:fg_blue    . s:bg_none
+
+" }}}
+
+" Extensions highlightings {{{
+" ------------------------------------------------
+" git
+exe "hi! gitDiff"               . s:attr_none   . s:fg_dim       . s:bg_none
+exe "hi! gitKeyword"            . s:attr_bold   . s:fg_emphasis  . s:bg_none
+exe "hi! link gitIdentityKeyword gitKeyword"
+exe "hi! gitHash"               . s:attr_none   . s:fg_blue      . s:bg_none
+exe "hi! gitIdentity"           . s:attr_underlb. s:fg           . s:bg_none
+exe "hi! gitEmail"              . s:attr_underl . s:fg           . s:bg_none
+exe "hi! link gitEmailDelimiter gitEmail"
+exe "hi! gitDate"               . s:attr_none   . s:fg_dim       . s:bg_none
+
+" diff
+exe "hi! diffFile"              . s:attr_reverb . s:fg           . s:bg_hl
+exe "hi! link diffAdded DiffAdd"
+exe "hi! diffOldFile"           . s:attr_bold   . s:fg_dim       . s:bg_none
+exe "hi! diffNewFile"           . s:attr_bold   . s:fg           . s:bg_none
+exe "hi! diffIndexLine"         . s:attr_none   . s:fg_blue      . s:bg_none
+exe "hi! diffLine"              . s:attr_bold   . s:fg_orange    . s:bg_none
+exe "hi! diffSubname"           . s:attr_none   . s:fg           . s:bg_none
+
+" fugitive
+exe "hi! link fugitiveHeader gitKeyword"
+exe "hi! link fugitiveHeading fugitiveHeader"
+exe "hi! link fugitiveStagedHeading fugitiveHeader"
+exe "hi! link fugitiveUnstagedHeading fugitiveHeader"
+exe "hi! link fugitiveUntrackedHeading fugitiveHeader"
+exe "hi! fugitiveHelpTag"       . s:attr_none  . s:fg_dim       . s:bg
+exe "hi! fugitiveSymbolicRef"   . s:attr_none  . s:fg_cyan      . s:bg_none
 
 " }}}
 

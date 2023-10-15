@@ -1,4 +1,17 @@
+; ui.fnl - The configuration for user interface
+; | UI (dressing)
+; | Tips (mini.clue)
+
 (vscode-incompatible!)
+
+; UI ===========================================
+
+(with-module [dressing :dressing]
+  (dressing.setup {:input {:border "single"}
+                   :select {:builtin {:border "single"}}}))
+
+
+; Tips =========================================
 
 (with-module [clue :mini.clue]
   (local builtins clue.gen_clues)
@@ -30,6 +43,7 @@
   (set-clue :ic :<c-r>)
   (set-clue :n  :<c-w>)
   (set-clue :nx :z)
+  (set-map-desc :n :zS "Inspect items under cursor")
 
   ; Leader
   (set-clue :nx "<leader>"

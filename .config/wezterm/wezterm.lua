@@ -85,8 +85,9 @@ configuration = {
 
   -- Font
   font = wezterm.font_with_fallback ({
-    { family = 'Iosevka Pragmatus' } ,
-    'Source Han Sans'
+    { family = 'Iosevka Pragmatus' },
+    'Source Han Sans',
+    { family = 'Symbols Nerd Font Mono', scale = 0.7 }
   }),
   -- freetype_load_target = 'Normal',
   -- freetype_render_target = 'HorizontalLcd',

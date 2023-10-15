@@ -25,6 +25,7 @@ github.com/echasnovski/mini.clue        branch:stable
 github.com/lewis6991/gitsigns.nvim
 github.com/nvim-treesitter/nvim-treesitter      sync
 github.com/akinsho/toggleterm.nvim
+github.com/stevearc/dressing.nvim       sync
 
 
 # LSP

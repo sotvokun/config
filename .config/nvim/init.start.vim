@@ -36,7 +36,7 @@ set foldlevelstart=99
 set foldmethod=indent
 
 " - Misc
-set nowrap
+set wrap
 set undofile
 set noswapfile
 set timeoutlen=400
@@ -46,6 +46,8 @@ set splitright
 set ignorecase
 set smartcase
 set wildignorecase
+set exrc
+set title
 
 " Enable indent-heuristic to make vimdiff more closely match git diff
 set diffopt+=indent-heuristic,linematch:60
@@ -85,6 +87,10 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
 " - Editing
+" -- Moving on wrapped lines
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+
 " -- Better indenting
 vnoremap < <gv
 vnoremap > >gv
@@ -120,15 +126,16 @@ nnoremap ]b <cmd>bn<cr>
 nnoremap [b <cmd>bp<cr>
 nnoremap ]t <cmd>tabnext<cr>
 nnoremap [t <cmd>tabprev<cr>
-nnoremap gb <cmd>b#<cr>
+nnoremap g. `I
 
 " - Terminal
-tnoremap <esc> <c-\><c-n>
+tnoremap <esc><esc> <c-\><c-n>
 
 " - Misc
 nnoremap d<c-w> <cmd>q<cr>
 nnoremap d<c-t> <cmd>tabclose<cr>
-nnoremap dq <cmd>bdel<cr>
+nnoremap dq <cmd>bdelete<cr>
+nnoremap dx <cmd>Bdelete<cr>
 nnoremap <silent><esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
 nnoremap zS <cmd>Inspect<cr>
 
@@ -161,11 +168,14 @@ augroup svim_init
                 \ | call mkdir(expand('<afile>:p:h'), 'p')
                 \ | endif
 
-        " exit help file with q
-        autocmd BufEnter * 
-                \ if (&filetype ==# "help")||(&filetype ==# "qf")
-                \ | nnoremap <buffer> q <cmd>q<cr> 
-                \ | endif
+        " quickly quit help and quickfix window
+        autocmd FileType help nnoremap <buffer> q <cmd>quit<cr>
+        autocmd FileType qf 
+                \ nnoremap <buffer> q <cmd>quit<cr>
+                \ | setlocal nonumber
+
+        " save the last position that content changed
+        autocmd InsertLeave * execute 'normal! mI'
 
 augroup END
 

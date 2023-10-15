@@ -1,3 +1,8 @@
+; snippet.fnl - The configurations for snippet support
+; | Snippet (snippy)
+
+; Snippet ======================================
+
 (with-module [snippy :snippy]
   (local local-snippet-dir (if vim.g.vscode ".vscode/snippets" ".snippets"))
   (snippy.setup {:local_snipet_dir local-snippet-dir})
