@@ -30,4 +30,5 @@
            :callback 
            #(let [{: buf} $1]
               (keymap [n] :q "<cmd>q<cr>" :desc "Quit" :buffer buf)
+              (keymap [n] :<esc> "<cmd>q<cr>" :desc "Quit" :buffer buf)
               (vim.api.nvim_set_option_value "number" false {: buf}))))

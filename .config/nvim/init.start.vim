@@ -138,6 +138,8 @@ nnoremap dq <cmd>bdelete<cr>
 nnoremap dx <cmd>Bdelete<cr>
 nnoremap <silent><esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
 nnoremap zS <cmd>Inspect<cr>
+nnoremap <leader>et <cmd>tabnew<cr>
+nnoremap <leader>eb <cmd>enew<cr>
 
 
 " Builtin Plugins and Component

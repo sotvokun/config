@@ -14,7 +14,7 @@
 
 ; Pairs ========================================
 
-(tset vim.g :AutoPairsMapCR 0)
+(tset vim.g :AutoPairsMapCR 1)
 (tset vim.g :AutoPairsMapSpace 0)
 
 
