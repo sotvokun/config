@@ -1,49 +1,47 @@
-" ------------------------------------------------
-"  init-vscode.vim
-"  Created:  2023-07-25
-"  Modified: 2023-07-25
-" ------------------------------------------------
+" Section: Basic keymap
+"    Part: Leader-Key
+nnoremap <space> <nop>
+let g:mapleader=' '
 
-" - Editing
-" -- Better indenting
-vnoremap < <gv
-vnoremap > >gv
+"    Part: Fix keymap behavior
+nnoremap zc <cmd>call VSCodeCall('editor.fold')<cr>
+nnoremap zo <cmd>call VSCodeCall('editor.unfold')<cr>
 
-" -- Folding
-nnoremap zc <cmd>call VSCodeCall("editor.fold")<cr>
-nnoremap zo <cmd>call VSCodeCall("editor.unfold")<cr>
-
-" -- VsCodeCommentary Instead vim-commentary
-xmap gc  <Plug>VSCodeCommentary
-nmap gc  <Plug>VSCodeCommentary
-omap gc  <Plug>VSCodeCommentary
-nmap gcc <Plug>VSCodeCommentaryLine
-
-" - Sensible
-
-nnoremap ]q <cmd>call VSCodeCall("editor.action.marker.nextInFiles")<cr>
-nnoremap [q <cmd>call VSCodeCall("editor.action.marker.prevInFiles")<cr>
-nnoremap ]b <cmd>call VSCodeCall("workbench.action.nextEditor")<cr>
-nnoremap [b <cmd>call VSCodeCall("workbench.action.previousEditor")<cr>
-nnoremap ]t <cmd>call VSCodeCall("workbench.action.focusNextGroup")<cr>
-nnoremap [t <cmd>call VSCodeCall("workbench.action.focusPreviousGroup")<cr>
-
-" - Git
+"    Part: Git
+noremap <leader>gs <cmd>call VSCodeCall('git.stageSelectedRanges')<cr>
+noremap <leader>gu <cmd>call VSCodeCall('git.unstageSelectedRanges')<cr>
 nnoremap ]g <cmd>call VSCodeCall("workbench.action.editor.nextChange")<cr>
 nnoremap [g <cmd>call VSCodeCall("workbench.action.editor.previousChange")<cr>
 
-" - Misc
-nnoremap <esc> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw<cr>
+"    Part: VsCodeCommentary Instead vim-commentary
+xmap gc <Plug>VSCodeCommentary
+nmap gc <Plug>VSCodeCommentary
+omap gc <Plug>VSCodeCommentary
+nmap gcc <Plug>VSCodeCommentaryLine
+
+"    Part: Sensible
+nnoremap ]t <cmd>call VSCodeCall('workbench.action.nextEditorInGroup')<cr>
+nnoremap [t <cmd>call VSCodeCall('workbench.action.previousEditorInGroup')<cr>
+
+"    Part: Window
+nnoremap <c-j> :call VSCodeNotify('workbench.action.navigateDown')<cr>
+nnoremap <c-k> :call VSCodeNotify('workbench.action.navigateUp')<cr>
+nnoremap <c-h> :call VSCodeNotify('workbench.action.navigateLeft')<cr>
+nnoremap <c-l> :call VSCodeNotify('workbench.action.navigateRight')<cr>
+
+"    Part: Misc
+" <esc> refresh, dsiable highlight
+nnoremap <silent> <esc> <cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><cmd>redraw<cr>
+
+" save file with ctrl-s
+inoremap <c-s> <cmd>call VSCodeCall('workbench.action.files.save')<cr>
+
+" goto last insert position (see autocmd for storage last insert)
+nnoremap g. `I
 
 
-" - LSP supports
-nnoremap gR <cmd>call VSCodeCall("editor.action.rename")<cr>
+" Section: Clipboard
 
-" - Workbench
-nnoremap <c-g><c-g> <cmd>call VSCodeCall("workbench.view.explorer")<cr>
-
-" - Settings
-" -- Clipboard
 set clipboard+=unnamedplus
 if has('win32') || has('wsl')
     let s:win32yank = 'win32yank'
@@ -59,3 +57,15 @@ if has('win32') || has('wsl')
         \ 'cache_enabled': 0
         \ }
 endif
+
+
+" Section: Autocmds
+
+augroup vscode#
+    au!
+
+    " save the last position that content changed
+    autocmd InsertLeave * execute 'normal! mI'
+augroup END
+
+" vim: expandtab shiftwidth=4

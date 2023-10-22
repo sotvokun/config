@@ -1,43 +1,21 @@
 # Core
 
-github.com/kylechui/nvim-surround
 github.com/jiangmiao/auto-pairs
-github.com/dcampos/nvim-snippy
+github.com/tpope/vim-surround
 github.com/tpope/vim-fugitive
-github.com/ggandor/leap.nvim
-github.com/tpope/vim-abolish
 github.com/tpope/vim-commentary
 github.com/suy/vim-context-commentstring
 github.com/tommcdo/vim-lion
-github.com/gpanders/nvim-parinfer
+github.com/tpope/vim-abolish
+github.com/tpope/vim-repeat
+github.com/justinmk/vim-sneak
+github.com/hrsh7th/vim-vsnip
+github.com/airblade/vim-gitgutter
+github.com/voldikss/vim-floaterm
 
 
-# Language Support
+# Language support
 
-github.com/sotvokun/fennel.vim
-github.com/posva/vim-vue
-github.com/mattn/emmet-vim
+github.com/bhurlow/vim-parinfer
+github.com/bakpakin/fennel.vim
 
-
-# Enhanced
-
-github.com/echasnovski/mini.files       branch:stable
-github.com/echasnovski/mini.clue        branch:stable
-github.com/lewis6991/gitsigns.nvim
-github.com/nvim-treesitter/nvim-treesitter      sync
-github.com/akinsho/toggleterm.nvim
-github.com/stevearc/dressing.nvim       sync
-
-
-# LSP
-
-github.com/williamboman/mason.nvim      sync
-
-
-# Completion
-
-github.com/hrsh7th/cmp-nvim-lsp         sync
-github.com/hrsh7th/cmp-buffer           sync
-github.com/dcampos/cmp-snippy           sync
-github.com/hrsh7th/nvim-cmp             sync
-github.com/zbirenbaum/copilot.lua       sync

@@ -420,9 +420,24 @@ exe "hi! link fugitiveUntrackedHeading fugitiveHeader"
 exe "hi! fugitiveHelpTag"       . s:attr_none  . s:fg_dim       . s:bg
 exe "hi! fugitiveSymbolicRef"   . s:attr_none  . s:fg_cyan      . s:bg_none
 
-" indentline
-exe "hi! link IndentLine Comment"
+" statusline
+exe "hi! StatusLineModeVisual"  . s:attr_reverb. s:fg           . s:bg_hl
+exe "hi! StatusLineModeInsert"  . s:attr_reverb. s:fg_orange    . s:bg_hl
+exe "hi! StatusLineModeReplace" . s:attr_reverb. s:fg_orange    . s:bg_hl
+exe "hi! StatusLineModeCommand" . s:attr_reverb. s:fg_red       . s:bg_hl
+exe "hi! StatusLineModeShell"   . s:attr_reverb. s:fg_red       . s:bg_hl
+exe "hi! StatusLineModeTerminal". s:attr_reverb. s:fg_blue      . s:bg_hl
 
+" vim-sneak
+exe "hi! Sneak"                 . s:attr_reverb. s:fg_magenta   . s:bg_hl
+exe "hi! SneakLabel"            . s:attr_reverb. s:fg_magenta   . s:bg_hl
+exe "hi! link SneakLabelMask Normal"
+exe "hi! SneakLabelMask"        . s:attr_none  . s:fg_none      . s:bg_none
+
+" floaterm
+exe "hi! link Floaterm Normal"
+exe "hi! Floaterm"              . s:attr_none  . s:fg           . s:bg_dim
+exe "hi! link FloatermNC Floaterm"
 " }}}
 
-" vim: foldmethod=marker foldlevel=0
+" vim: foldmethod=marker foldlevel=0 expandtab
