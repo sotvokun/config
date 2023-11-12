@@ -19,3 +19,8 @@ github.com/voldikss/vim-floaterm
 github.com/bhurlow/vim-parinfer
 github.com/bakpakin/fennel.vim
 
+
+# Fuzziy Finder
+
+github.com/junegunn/fzf
+github.com/junegunn/fzf.vim
