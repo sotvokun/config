@@ -14,8 +14,15 @@ github.com/airblade/vim-gitgutter
 github.com/voldikss/vim-floaterm
 
 
-# Language support
+# Completion
 
-github.com/bhurlow/vim-parinfer
-github.com/bakpakin/fennel.vim
+github.com/hrsh7th/nvim-cmp
+github.com/hrsh7th/cmp-path
+github.com/hrsh7th/cmp-buffer
+github.com/hrsh7th/cmp-vsnip
 
+
+# Fuzziy Finder
+
+github.com/junegunn/fzf
+github.com/junegunn/fzf.vim
