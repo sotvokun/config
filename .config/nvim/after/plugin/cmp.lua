@@ -4,6 +4,7 @@
 -- - cmp-path
 -- - cmp-buffer
 -- - cmp-vsnip
+-- - copilot.vim
 
 if vim.g.vscode then return end
 

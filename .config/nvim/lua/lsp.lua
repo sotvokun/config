@@ -9,7 +9,10 @@ local M = {}
 
 -- Options
 
-M.auto_start = false
+if not vim.g.lsp_auto_start then
+    vim.g.lsp_auto_start = true
+end
+M.auto_start = vim.g.lsp_auto_start
 
 
 -- Register
