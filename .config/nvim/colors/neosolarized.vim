@@ -438,6 +438,10 @@ exe "hi! SneakLabelMask"        . s:attr_none  . s:fg_none      . s:bg_none
 exe "hi! link Floaterm Normal"
 exe "hi! Floaterm"              . s:attr_none  . s:fg           . s:bg_dim
 exe "hi! link FloatermNC Floaterm"
+
+" copilot
+exe "hi! link CopilotSuggestion Comment"
+
 " }}}
 
 " vim: foldmethod=marker foldlevel=0 expandtab

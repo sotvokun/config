@@ -10,6 +10,9 @@ if vim.g.vscode then return end
 local ok, cmp = pcall(require, 'cmp')
 if not ok then return end
 
+local copilot_ready =
+    vim.fn.exists(':Copilot') ~= 0 and vim.fn['copilot#Enabled']()
+
 -- Configurations
 
 --- Snippets
@@ -56,6 +59,14 @@ function setup_mappings()
             end
         elseif vim.fn['vsnip#available'](1) == 1 then
             feedkey('<Plug>(vsnip-expand-or-jump)', '')
+        elseif copilot_ready then
+            vim.api.nvim_feedkeys(
+                vim.fn['copilot#Accept'](
+                    vim.api.nvim_replace_termcodes('<Tab>', true, true, true)
+                ),
+                'n',
+                true
+            )
         else
             fallback()
         end
@@ -80,6 +91,17 @@ function setup_mappings()
         end
     end
 
+    local i_c_e_fn = function(fallback)
+        local copilot_suggestion = vim.fn['copilot#GetDisplayedSuggestion']()
+        if cmp.visible() then
+            cmp.abort()
+        elseif string.len(copilot_suggestion.uuid) ~= 0 then
+            feedkey('<Plug>(copilot-dismiss)', '')
+        else
+            fallback()
+        end
+    end
+
     return {
         ['<tab>'] = cmp.mapping(tab_fn, {'i', 's'}),
         ['<s-tab>'] = cmp.mapping(shift_tab_fn, {'i', 's'}),
@@ -87,7 +109,7 @@ function setup_mappings()
             i = i_cr_fn,
             s = cmp.mapping.confirm({ select = true })
         }),
-        ['<c-e>'] = cmp.mapping.abort(),
+        ['<c-e>'] = cmp.mapping(i_c_e_fn, {'i', 's'}),
         ['<c-n>'] = cmp.mapping.select_next_item({
             behavior = cmp.SelectBehavior.Select
         }),
@@ -103,9 +125,6 @@ end
 cmp.setup({
     completion = {
         completeopt = 'menu,menuone,noinsert'
-    },
-    experimental = {
-        ghost_text = true
     },
     snippet = setup_snippets(),
     sources = setup_sources(),

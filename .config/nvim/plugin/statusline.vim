@@ -109,6 +109,15 @@ function! StatusLineCompMode()
         return '%#' . s:mode_hl(l:mode) . '#' . s:mode[l:mode] . '%*'
 endfunction
 
+function! StatusLineLspClients()
+    let l:clients = v:lua.require'lsp'.util.client_names()
+    if len(l:clients) == 0
+        return ''
+    else
+        return ' [' . join(l:clients, ' ') . ']'
+    endif
+endfunction
+
 " Section: Setup
 
 set statusline=
@@ -116,6 +125,7 @@ set statusline+=\ %{StatusLineCompFilename()}
 set statusline+=\ %{StatusLineCompModified()}%{StatusLineCompReadonly()}
 set statusline+=%=
 set statusline+=%{%StatusLineCompMode()%}
+set statusline+=%{StatusLineLspClients()}
 set statusline+=\ %{StatusLineCompFiletype()}%{StatusLineCompFileformat()}%{StatusLineCompFileencoding()}
 set statusline+=\ %10{StatusLineCompLocation()}
 set statusline+=\ 
