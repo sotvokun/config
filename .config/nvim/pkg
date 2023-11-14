@@ -21,7 +21,7 @@ github.com/hrsh7th/nvim-cmp
 github.com/hrsh7th/cmp-path
 github.com/hrsh7th/cmp-buffer
 github.com/hrsh7th/cmp-vsnip
-github.com/github/copilot.vim
+github.com/github/copilot.vim        opt
 
 
 # Language Server

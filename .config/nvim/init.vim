@@ -166,4 +166,11 @@ augroup init
     autocmd InsertLeave * execute 'normal! mI'
 augroup END
 
+" Section: Optional Plugins
+
+augroup post_init
+    au!
+    autocmd VimEnter * PkgAdd copilot.vim
+augroup END
+
 " vim: expandtab shiftwidth=4

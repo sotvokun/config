@@ -11,9 +11,6 @@ if vim.g.vscode then return end
 local ok, cmp = pcall(require, 'cmp')
 if not ok then return end
 
-local copilot_ready =
-    vim.fn.exists(':Copilot') ~= 0 and vim.fn['copilot#Enabled']()
-
 -- Configurations
 
 --- Snippets
@@ -51,6 +48,9 @@ function setup_mappings()
     end
 
     local tab_fn = function(fallback)
+        local copilot_ready =
+            vim.fn.exists(':Copilot') ~= 0 and vim.fn['copilot#Enabled']()
+
         if cmp.visible() then
             local entry = cmp.get_selected_entry()
             if not entry then
