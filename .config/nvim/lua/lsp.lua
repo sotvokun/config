@@ -6,124 +6,73 @@
 local get_clients = vim.lsp.get_active_clients
 local M = {}
 
-
--- Options
-
-if not vim.g.lsp_auto_start then
-    vim.g.lsp_auto_start = true
-end
-M.auto_start = vim.g.lsp_auto_start
-
-
--- Register
+-- Functions
 
 M.registered = {}
 
-
---- Register a language-server
--- @param opt           The options that based on `vim.lsp.start_client()`, and
---                      it extended with the following fields:
---                      - `filetypes`: associating the language-server with
---                        given filetypes. When `vim.g.lsp_auto_start` is true,
---                        the language-server will start and create a client
---                        with `FileType` autocmd.
+--- Register a language server
+-- @param opts:     options for setup language-server client, the options
+--                  should be santizible by `lsp.util.santize_option()`.
+--
 function M.register(opts)
     local name = opts.name
-    if not opts.name then return end
-
-    local filetypes = opts.filetypes
-    local filetypes_type = type(filetypes)
-
-    if not (filetypes_type == 'string' 
-        or (filetypes_type == 'table' and vim.tbl_islist(filetypes))) then
+    if not name then
+        error('name is required')
+    end
+    if M.registered[name] then
         return
     end
-
-    M.registered[name] = vim.deepcopy(opts)
+    M.registered[name] = M.util.santize_option(opts)
 end
 
-
---- Register or start a language-server
--- @param opt           The options that based on `vim.lsp.start_client()`, and
---                      it extended with the following fields:
---                      - `filetypes`: associating the language-server with
---                        given filetypes. When `vim.g.lsp_auto_start` is true,
---                        the language-server will start and create a client
---                        with `FileType` autocmd.
-function M.start(opts)
-    local name = opts.name
-    if not opts.name then return end
-
-    local start_opt = M.registered[name]
-    if not start_opt then
-        M.register(opts)
-    end
-
-    if M.auto_start or M.util.check_status(name) then
-        vim.lsp.start(opts)
-    end
-end
-
-
---- Start a registered language-server by name
--- @param name          Registered language-server name
-function M.start_by_name(name)
-    if (M.registered[name] == nil) then
-        return
-    end
-    vim.lsp.start(M.registered[name])
-end
-
-
---- Stop a actived language-server client by its name
--- @param name          The name of server client
-function M.stop_by_name(name)
-    vim.lsp.stop_client(vim.tbl_filter(function(o)
-        return o.name == name
-    end, get_clients()))
-end
-
-
---- Stop a actived language-server
--- @param filter        The filter to stop actived client, it could be the
---                      following contents:
---                      - `nil`: stop all actived clients
---                      - `string`: the name of clients
---                      - `number`: the id of clients
---                      - `list`: the id and name to stop
+--- Start a registered language server by name
+-- @param name:     the name of registered language server
 --
-function M.stop(filter)
+function M.start_by_name(name)
+    local opts = M.registered[name]
+    if not opts then
+        error('name is not registered')
+    end
+    vim.lsp.start(vim.deepcopy(opts))
+end
+
+--- Stop a registered language server by name
+-- @param name:     the name of registered language server
+--
+function M.stop_by_name(name)
+    local opts = M.registered[name]
+    if not opts then
+        error('name is not registered')
+    end
     local clients = get_clients()
-    local filter_type = type(filter)
-
-    if filter_type == 'nil' then
-        vim.lsp.stop_client(clients)
-    end
-
-    if filter_type == 'number' then
-        vim.lsp.stop_client(filter)
-    end
-
-    if filter_type == 'string' then
-        M.stop_by_name(filter)
-    end
-
-    if filter_type == 'table' then
-        for _, val in ipairs(filter) do
-            local val_type = type(val)
-            if val_type == 'number' then
-                vim.lsp.stop_client(val)
-            elseif val_type == 'string' then
-                M.stop_by_name(val)
-            end
+    for _, client in ipairs(clients) do
+        if client.name == name then
+            client.stop()
         end
     end
 end
 
 
--- Utils
+-- Util
 
 M.util = {}
+
+--- Sanitize options for language-server client
+-- @param opt:      options for setup language-server client, the most fields
+--                  are same as `vim.lsp.start_client`, but there has some new
+--                  fields:
+--                  - root_pattern: the pattern files or folders to find the
+--                    root directory of project.
+function M.util.santize_option(opt)
+    opt = vim.deepcopy(opt)
+    if opt.root_pattern then
+        opt.root_dir = M.util.root_pattern(opt.root_pattern)
+    end
+    if type(opt.filetypes) == 'string' then
+        opt.filetypes = {opt.filetypes}
+    end
+    return opt
+end
 
 --- Get all registered names
 function M.util.registered_names()
@@ -132,7 +81,11 @@ end
 
 --- find root_dir by pass the marked files or folders
 function M.util.root_pattern(items)
-    if type(items) == 'string' then
+    local items_type = type(items)
+    if items_type ~= 'string' and not vim.tbl_islist(items) then
+        error('items must be string or list')
+    end
+    if items_type == 'string' then
         items = {items}
     end
     return vim.fs.dirname(vim.fs.find(items, {
@@ -152,6 +105,17 @@ function M.util.check_status(name)
     return #(vim.tbl_filter(function(n)
         return n == name
     end, M.util.client_names())) ~= 0
+end
+
+--- Get registered language-server client options by filetype
+function M.util.get_registered_by_filetype(filetype)
+    local clients = {}
+    for _, opt in pairs(M.registered) do
+        if vim.tbl_contains(opt.filetypes, filetype) then
+            table.insert(clients, opt)
+        end
+    end
+    return clients
 end
 
 return M
