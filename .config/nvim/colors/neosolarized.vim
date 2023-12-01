@@ -295,7 +295,7 @@ let g:terminal_color_7 = s:gui_base2
 " Language specific highlightings {{{
 " ------------------------------------------------
 
-" Common 
+" Common
 exe "hi! NeosolarizedParen"     . s:attr_none   . s:fg         . s:bg_none
 exe "hi! NeosolarizedKeyword"   . s:attr_bold   . s:fg_emphasis. s:bg_none
 exe "hi! NeosolarizedIdentifier". s:attr_none   . s:fg_blue    . s:bg_none
@@ -318,6 +318,23 @@ exe "hi! link luaFunction NeosolarizedKeyword"
 exe "hi! link javaScriptBraces NeosolarizedParen"
 exe "hi! link javaScriptIdentifier NeosolarizedKeyword"
 exe "hi! link javaScriptFunction NeosolarizedKeyword"
+
+exe "hi! @include.javascript"   . s:attr_none   . s:fg_green   . s:bg_none
+
+exe "hi! link @constant.javascript NeosolarizedIdentifier"
+
+exe "hi! link @parameter.javascript NONE"
+
+exe "hi! javaScript.ext.SecondaryKeyword"
+                        \       . s:attr_bold   . s:fg_green   . s:bg_none
+exe "hi! link @keyword.return.javascript javaScript.ext.SecondaryKeyword"
+exe "hi! link @keyword.operator.javascript javaScript.ext.SecondaryKeyword"
+
+exe "hi! link @type.javascript NeosolarizedIdentifier"
+
+exe "hi! link @tag.javascript NeosolarizedIdentifier"
+exe "hi! link @tag.delimiter.javascript htmlTag"
+exe "hi! link @tag.attribute.javascript htmlArg"
 
 " typescript
 exe "hi! link typescriptVariable NeosolarizedKeyword"
@@ -345,6 +362,7 @@ exe "hi! link phpParent NeosolarizedParen"
 exe "hi! link phpStructure NeosolarizedKeyword"
 exe "hi! link phpStorageClass NeosolarizedKeyword"
 exe "hi! link phpMemberSelector Operator"
+exe "hi! phpBoolean"            . s:attr_none   . s:fg_magenta . s:bg_none
 
 " json
 exe "hi! link jsonBraces NeosolarizedParen"
@@ -363,6 +381,12 @@ exe "hi! link htmlTagN htmlTagName"
 exe "hi! link htmlArg NONE"
 exe "hi! link javaScript NONE"
 
+" vue
+exe "hi! link @tag.vue NeosolarizedIdentifier"
+exe "hi! link @tag.delimiter.vue htmlTag"
+exe "hi! link @tag.attribute.vue htmlArg"
+exe "hi! link @method.vue @tag.attribute.vue"
+
 " css
 exe "hi! link cssBraces NeosolarizedParen"
 exe "hi! link cssAtRule NeosolarizedParen"
@@ -376,6 +400,9 @@ exe "hi! link cssSelectorOp NONE"
 exe "hi! link cssAttrComma NONE"
 exe "hi! link cssAttributeSelector cssElementName"
 exe "hi! cssMediaType"          . s:attr_none   . s:fg_blue    . s:bg_none
+exe "hi! @punctuation.delimiter.css"
+                        \       . s:attr_bold   . s:fg         . s:bg_none
+" exe "hi! link @property.css @punctuation.delimiter.css"
 
 " editorconfig
 exe "hi! dosiniHeader"          . s:attr_bold   . s:fg_orange  . s:bg_none
@@ -388,6 +415,12 @@ exe "hi! cmakeVariableValue"    . s:attr_bold   . s:fg         . s:bg_none
 exe "hi! cmakeGeneratorExpressions"
                         \       . s:attr_none   . s:fg_blue    . s:bg_none
 
+" }}}
+
+" Tree-sitter highlightings {{{
+" ------------------------------------------------
+exe "hi! link @punctuation NONE"
+exe "hi! link @keyword NeosolarizedKeyword"
 " }}}
 
 " Extensions highlightings {{{
@@ -441,6 +474,12 @@ exe "hi! link FloatermNC Floaterm"
 
 " copilot
 exe "hi! link CopilotSuggestion Comment"
+
+" fern
+exe "hi! FernRootText"          . s:attr_bold  . s:fg_magenta   . s:bg_none
+exe "hi! FernRootSymbol"        . s:attr_bold  . s:fg_magenta   . s:bg_none
+
+exe "hi! link FernLeafSymbol NonText"
 
 " }}}
 

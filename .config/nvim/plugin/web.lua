@@ -40,15 +40,28 @@ end
 local lsp = require('lsp')
 
 --- Javascript and Typescript
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = vim.g.web_filetype_script,
-    callback = function(arg)
-        vim.lsp.start({
-            name = 'tsserver',
-            cmd = { 'typescript-language-server', '--stdio' },
-            root_dir = lsp.utils.root_pattern({'package.json'})
-        })
-    end
+
+lsp.register({
+    name = 'tsserver',
+    filetypes = vim.g.web_filetype_script,
+    cmd = { 'typescript-language-server', '--stdio' },
+    root_pattern = { 'package.json' }
+})
+
+lsp.register({
+    name = 'cssls',
+    filetypes = vim.g.web_filetype_style,
+    cmd = { 'vscode-css-language-server', '--stdio' },
+    root_pattern = { 'package.json' },
+    capabilities = {
+        textDocument = {
+            completion = {
+                completionItem = {
+                    snippetSupport = true
+                }
+            }
+        }
+    }
 })
 
 -- vim: et sw=4 cc=80

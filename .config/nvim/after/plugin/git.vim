@@ -13,7 +13,7 @@ nnoremap ]g <Plug>(GitGutterNextHunk)
 nnoremap [g <Plug>(GitGutterPrevHunk)
 
 nnoremap <leader>gs <Plug>(GitGutterStageHunk)
-nnoremap <leader>gu <Plug>(GitGutterUndoHunk)
+nnoremap <leader>gx <Plug>(GitGutterUndoHunk)
 nnoremap <leader>gS <cmd>Git stage %<cr>
 
 nnoremap <leader>gg <cmd>Git<cr>

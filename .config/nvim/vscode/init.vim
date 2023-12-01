@@ -36,8 +36,9 @@ nnoremap <silent> <esc> <cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync f
 " save file with ctrl-s
 inoremap <c-s> <cmd>call VSCodeCall('workbench.action.files.save')<cr>
 
-" goto last insert position (see autocmd for storage last insert)
-nnoremap g. `I
+" to make <c-g> more useful, to set <c-g> to <c-g><c-g>
+nnoremap <c-g> <nop>
+nnoremap <c-g><c-g> <cmd>file<cr>
 
 
 " Section: Clipboard
@@ -63,9 +64,6 @@ endif
 
 augroup vscode#
     au!
-
-    " save the last position that content changed
-    autocmd InsertLeave * execute 'normal! mI'
 augroup END
 
 " vim: expandtab shiftwidth=4

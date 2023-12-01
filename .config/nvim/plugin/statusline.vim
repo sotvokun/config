@@ -110,7 +110,7 @@ function! StatusLineCompMode()
 endfunction
 
 function! StatusLineLspClients()
-    let l:clients = v:lua.require'lsp'.util.client_names()
+    let l:clients = v:lua.require'lsp'.util.client_names(bufnr('%'))
     if len(l:clients) == 0
         return ''
     else

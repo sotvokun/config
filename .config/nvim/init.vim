@@ -116,9 +116,6 @@ vnoremap > >gv
 " <esc> refresh, dsiable highlight
 nnoremap <silent> <esc> <cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>syntax sync fromstart<cr><cmd>redraw<cr>
 
-" goto last insert position (see autocmd for storage last insert)
-nnoremap g. `I
-
 " save file with ctrl-s
 inoremap <c-s> <cmd>update<cr>
 
@@ -134,6 +131,10 @@ nnoremap zS <cmd>Inspect<cr>
 
 " quickly insert lua command
 nnoremap g: :=
+
+" to make <c-g> more useful, to set <c-g> to <c-g><c-g>
+nnoremap <c-g> <nop>
+nnoremap <c-g><c-g> <cmd>file<cr>
 
 
 " Section: Autocommands
@@ -161,9 +162,6 @@ augroup init
     autocmd FileType help,qf
             \ nnoremap <buffer> q <cmd>quit<cr>
             \ | setlocal nonumber
-
-    " save the last position that content changed
-    autocmd InsertLeave * execute 'normal! mI'
 augroup END
 
 " Section: Optional Plugins

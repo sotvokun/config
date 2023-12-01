@@ -52,6 +52,30 @@ function M.stop_by_name(name)
     end
 end
 
+--- Stop all language server clients
+function M.stop_all()
+    vim.lsp.stop_client(get_clients(), true)
+end
+
+--- Restart a registered language server by name
+-- @param name:     the name of registered language server
+--
+function M.restart_by_name(name)
+    local opts = M.registered[name]
+    if not opts then
+        error('name is not registered')
+    end
+    local clients = get_clients()
+    for _, client in ipairs(clients) do
+        if client.name == name then
+            client.stop()
+            vim.defer_fn(function()
+                M.start_by_name(name)
+            end, 500)
+        end
+    end
+end
+
 
 -- Util
 
@@ -71,12 +95,26 @@ function M.util.santize_option(opt)
     if type(opt.filetypes) == 'string' then
         opt.filetypes = {opt.filetypes}
     end
+    if type(opt.capabilities) == 'table' then
+        opt.capabilities = vim.tbl_deep_extend(
+            'keep', opt.capabilities, M.util.setup_capabilities()
+        )
+    else
+        opt.capabilities = M.util.setup_capabilities()
+    end
     return opt
 end
 
 --- Get all registered names
 function M.util.registered_names()
     return vim.tbl_keys(M.registered)
+end
+
+--- Get all started names
+function M.util.started_names()
+    return vim.tbl_filter(function(name)
+        return vim.tbl_contains(M.util.client_names(), name)
+    end, M.util.registered_names())
 end
 
 --- find root_dir by pass the marked files or folders
@@ -94,10 +132,11 @@ function M.util.root_pattern(items)
 end
 
 --- Get all client names
-function M.util.client_names()
+function M.util.client_names(bufnr)
+    local output = bufnr and get_clients({bufnr = bufnr}) or get_clients()
     return vim.tbl_map(function(o)
         return o.name
-    end, get_clients())
+    end, output)
 end
 
 --- Check language-server with name is started
@@ -116,6 +155,18 @@ function M.util.get_registered_by_filetype(filetype)
         end
     end
     return clients
+end
+
+-- Setup capabilities
+function M.util.setup_capabilities()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+    if cmp_nvim_lsp_ok then
+        capabilities = vim.tbl_deep_extend(
+            'keep', capabilities, cmp_nvim_lsp.default_capabilities()
+        )
+    end
+    return capabilities
 end
 
 return M

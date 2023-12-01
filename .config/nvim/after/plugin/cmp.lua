@@ -31,7 +31,7 @@ function setup_sources()
     }
 
     if pcall(require, 'cmp_nvim_lsp') then
-        table.insert(source_list, { name = 'nvim_lsp' })
+        table.insert(source_list, 2, { name = 'nvim_lsp' })
     end
 
     return cmp.config.sources(source_list)
