@@ -1,7 +1,17 @@
-local lsp = require('lsp')
-local global_node_modules_path = nil
+if vim.b.did_ftplugin then
+    return
+end
+
+
+-- Load HTML ftplugin for vue files
+
+vim.cmd('runtime! ftplugin/html.vim')
+
 
 -- LSP Setup
+
+local lsp = require('lsp')
+local global_node_modules_path = nil
 
 local function get_global_node_modules()
     if global_node_modules_path ~= nil then
@@ -73,9 +83,3 @@ lsp.register({
         }
     }
 })
-
--- Treesitter
-
-if not vim.g.vscode then
-    vim.cmd("TSBufEnable highlight")
-end

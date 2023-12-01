@@ -1,3 +1,8 @@
+if exists('b:did_ftplugin')
+  finish
+endif
+
+
 setlocal nonumber
 
 nmap <buffer><silent> <Plug>(fern-action-open-and-close)
@@ -16,7 +21,7 @@ nnoremap <buffer> <c-t> <Plug>(fern-action-open:tabedit)
 nnoremap <buffer> g. <Plug>(fern-action-hidden:toggle)
 
 nnoremap <buffer> r <Plug>(fern-action-rename)
-nnoremap <buffer> d <Plug>(fern-action-remove=)
+nnoremap <buffer> D <Plug>(fern-action-remove=)
 nnoremap <buffer> y <Plug>(fern-action-clipboard-copy)
 nnoremap <buffer> x <Plug>(fern-action-clipboard-move)
 nnoremap <buffer> p <Plug>(fern-action-clipboard-paste)

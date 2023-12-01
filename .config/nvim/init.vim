@@ -107,6 +107,8 @@ nnoremap <expr> ]b '<cmd>' . v:count1 . 'bnext<cr>'
 nnoremap <expr> [b '<cmd>' . v:count1 . 'bprevious<cr>'
 nnoremap <expr> ]t '<cmd>+' . v:count1 . 'tabnext<cr>'
 nnoremap <expr> [t '<cmd>-' . v:count1 . 'tabnext<cr>'
+nnoremap <expr> ]q '<cmd>' . v:count1 . 'cnext<cr>'
+nnoremap <expr> [q '<cmd>' . v:count1 . 'cprevious<cr>'
 
 "    Part: better indenting
 vnoremap < <gv
@@ -135,6 +137,7 @@ nnoremap g: :=
 " to make <c-g> more useful, to set <c-g> to <c-g><c-g>
 nnoremap <c-g> <nop>
 nnoremap <c-g><c-g> <cmd>file<cr>
+nnoremap <c-g>q <cmd>copen<cr>
 
 
 " Section: Autocommands

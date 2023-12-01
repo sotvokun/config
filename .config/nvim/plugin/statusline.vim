@@ -43,8 +43,9 @@ function! s:get_floaterm_title()
 endfunction
 
 function! StatusLineCompFilename()
+    let l:winwidth = winwidth('%')
     let l:bufname = bufname('%')
-    let l:filename = fnamemodify(l:bufname, ':p:h')
+    let l:filename = fnamemodify(l:bufname, '%:p:h')
     let l:isfile = &buftype == '' && filereadable(l:filename)
 
     if l:bufname == ''
@@ -52,7 +53,7 @@ function! StatusLineCompFilename()
     endif
 
     if l:isfile
-        return len(l:bufname) > 60 ? pathshorten(l:bufname) : l:bufname
+        return (len(l:bufname) > 60 || l:winwidth < 100) ? pathshorten(l:bufname) : l:bufname
     elseif &buftype == 'help'
         return fnamemodify(l:bufname, ':t')
     elseif &filetype == 'floaterm'
@@ -118,9 +119,23 @@ function! StatusLineLspClients()
     endif
 endfunction
 
+function! StatusLineDissessionStatus()
+    if !exists('g:loaded_dissession')
+        return ""
+    endif
+    if g:dissession_ready && v:this_session == ''
+        return '%#DissessionReady#' . '○ ' . '%*'
+    elseif g:dissession_ready && v:this_session != ''
+        return '%#DissessionLoaded#' . '● ' . '%*'
+    else
+        return ""
+    endif
+endfunction
+
 " Section: Setup
 
 set statusline=
+set statusline+=%{%StatusLineDissessionStatus()%}
 set statusline+=\ %{StatusLineCompFilename()}
 set statusline+=\ %{StatusLineCompModified()}%{StatusLineCompReadonly()}
 set statusline+=%=

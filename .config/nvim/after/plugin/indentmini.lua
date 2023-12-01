@@ -1,0 +1,3 @@
+require('indentmini').setup({
+    char = '┊',
+})

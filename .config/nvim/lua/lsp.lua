@@ -33,7 +33,7 @@ function M.start_by_name(name)
     if not opts then
         error('name is not registered')
     end
-    vim.lsp.start(vim.deepcopy(opts))
+    return vim.lsp.start(vim.deepcopy(opts))
 end
 
 --- Stop a registered language server by name
@@ -68,9 +68,13 @@ function M.restart_by_name(name)
     local clients = get_clients()
     for _, client in ipairs(clients) do
         if client.name == name then
+            local buffers = vim.tbl_keys(client.attached_buffers)
             client.stop()
             vim.defer_fn(function()
-                M.start_by_name(name)
+                local client_id = M.start_by_name(name)
+                for _, bufnr in ipairs(buffers) do
+                    vim.lsp.buf_attach_client(bufnr, client_id)
+                end
             end, 500)
         end
     end

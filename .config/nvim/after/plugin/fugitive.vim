@@ -1,19 +1,5 @@
-" git.vim
-"
-" - vim-fugitive
-" - gitsigns.nvim
+if exists('g:vscode') | finish | endif
 
-if exists('g:vscode')
-    finish
-endif
-
-let g:gitgutter_map_keys = 0
-
-nnoremap ]g <Plug>(GitGutterNextHunk)
-nnoremap [g <Plug>(GitGutterPrevHunk)
-
-nnoremap <leader>gs <Plug>(GitGutterStageHunk)
-nnoremap <leader>gx <Plug>(GitGutterUndoHunk)
 nnoremap <leader>gS <cmd>Git stage %<cr>
 
 nnoremap <leader>gg <cmd>Git<cr>
@@ -27,5 +13,3 @@ augroup git#
             \ nnoremap <buffer> q <cmd>quit<cr>
             \ | setlocal nonumber
 augroup END
-
-" vim: et sw=4

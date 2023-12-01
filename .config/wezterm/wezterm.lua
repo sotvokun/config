@@ -17,9 +17,9 @@ local leader_key = { key='`', mods='CTRL', timeout_milliseconds=500 }
 
 local key_bindings = {
   -- Fix Leader Key
-  { 
+  {
     key='`', 
-    mods='LEADER|CTRL', 
+    mods='LEADER|CTRL',
     action=wezterm.action.SendKey({
       key='`',
       mods='CTRL'
@@ -30,19 +30,19 @@ local key_bindings = {
   { key='e', mods='CTRL|ALT', action=wezterm.action.ActivateCommandPalette },
 
   -- MUX
-  { 
-    key='s', 
-    mods='LEADER', 
+  {
+    key='s',
+    mods='LEADER',
     action=wezterm.action.SplitVertical({
       domain='CurrentPaneDomain'
-    }) 
+    })
   },
-  { 
-    key='v', 
-    mods='LEADER', 
+  {
+    key='v',
+    mods='LEADER',
     action=wezterm.action.SplitHorizontal({
       domain='CurrentPaneDomain'
-    }) 
+    })
   },
   { key='h', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Left') },
   { key='j', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Down') },
@@ -50,9 +50,9 @@ local key_bindings = {
   { key='l', mods='LEADER', action=wezterm.action.ActivatePaneDirection('Right') },
   { key='q', mods='LEADER|CTRL', action=wezterm.action.CloseCurrentPane({ confirm=false }) },
 
-  { 
-    key='c', 
-    mods='LEADER', 
+  {
+    key='c',
+    mods='LEADER',
     action=wezterm.action.SpawnTab('CurrentPaneDomain')
   },
   { key='[', mods='LEADER', action=wezterm.action.ActivateTabRelative(-1) },
@@ -93,6 +93,8 @@ configuration = {
   -- freetype_render_target = 'HorizontalLcd',
   -- freetype_load_flags = 'MONOCHROME',
   font_size = 12,
+  line_height = 1.1,
+  front_end = 'OpenGL',
 
   -- Tab
   use_fancy_tab_bar = false,

@@ -481,6 +481,9 @@ exe "hi! FernRootSymbol"        . s:attr_bold  . s:fg_magenta   . s:bg_none
 
 exe "hi! link FernLeafSymbol NonText"
 
+" IndentMini
+exe "hi! link IndentLine Comment"
+
 " }}}
 
 " vim: foldmethod=marker foldlevel=0 expandtab

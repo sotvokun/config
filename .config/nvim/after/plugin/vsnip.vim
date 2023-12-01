@@ -1,7 +1,3 @@
-" snippet.vim
-"
-" - vsnip
-
 let g:vsnip_snippet_dir = stdpath('config') . '/snippets'
 
 inoremap <expr> <c-]> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<c-]>'

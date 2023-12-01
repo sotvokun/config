@@ -1,10 +1,4 @@
-" terminal.vim
-"
-" - vim-floaterm
-
-if exists('g:vscode')
-    finish
-endif
+if exists('g:vscode') | finish | endif
 
 
 " Section: Settings
@@ -37,5 +31,3 @@ function! s:setup_mappings()
     nnoremap <buffer> <c-t>a <cmd>FloatermNew<cr>
     nnoremap <buffer> <c-t>d <cmd>FloatermKill<cr>
 endfunction
-
-" vim: et sw=4

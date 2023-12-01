@@ -1,11 +1,4 @@
-" lsp.vim
-"
-" - lsp.vim
-" - vim.lsp
-
-if exists('g:vscode')
-    finish
-endif
+if exists('g:vscode') | finish | endif
 
 augroup LspMapping
     au!
