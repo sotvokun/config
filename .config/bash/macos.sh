@@ -31,4 +31,9 @@ if [[ $(uname) == "Darwin" ]]; then
         export PATH="/opt/homebrew/opt/php@8.1/bin:$PATH"
         export PATH="/opt/homebrew/opt/php@8.1/sbin:$PATH"
     fi
+
+    # LLVM
+    if [ -d '/opt/homebrew/opt/llvm' ]; then
+        export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+    fi
 fi
