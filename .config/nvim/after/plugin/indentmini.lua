@@ -1,3 +1,0 @@
-require('indentmini').setup({
-    char = '┊',
-})
