@@ -23,6 +23,7 @@ github.com/mbbill/undotree
 github.com/voldikss/vim-floaterm
 github.com/justinmk/vim-dirvish
 github.com/dstein64/vim-startuptime
+github.com/junegunn/gv.vim
 
 
 # Fuzziy Finder
