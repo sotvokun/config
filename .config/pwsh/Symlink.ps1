@@ -40,12 +40,3 @@ Function Ensure-Junction {
 
 # neovim
 Ensure-Junction -Target "~/.config/nvim" $ENV:LOCALAPPDATA/nvim
-
-# vscode
-Ensure-Symlink `
-    -Target "~/.config/vscode/settings.json" `
-    -Link "~/scoop/apps/vscode/current/data/user-data/User/settings.json"
-
-Ensure-Symlink `
-    -Target "~/.config/vscode/keybindings.json" `
-    -Link "~/scoop/apps/vscode/current/data/user-data/User/keybindings.json"
