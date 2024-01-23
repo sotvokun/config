@@ -85,8 +85,7 @@ configuration = {
 
   -- Font
   font = wezterm.font_with_fallback ({
-    { family = 'Iosevka Pragmatus' },
-    'Source Han Sans',
+    { family = 'Sarasa Term SC' },
     { family = 'Symbols Nerd Font Mono', scale = 0.7 }
   }),
   -- freetype_load_target = 'Normal',
