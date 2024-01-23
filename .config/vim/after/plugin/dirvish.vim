@@ -18,4 +18,4 @@ nnoremap <c-g>d <cmd>Dirvish<cr>
 
 " Sort directories, dotfiles, first
 " https://github.com/justinmk/vim-dirvish/issues/89#issuecomment-488564543
-let g:dirvish_mode = ':sort | sort ,^.*[^/]$, r'
+let g:dirvish_mode = ':sort | sort ,^.*[^/\\]$, r'

@@ -1,5 +1,5 @@
 if exists('g:loaded_fzf_after')
-	finish
+    finish
 endif
 let g:loaded_fzf_after = 1
 
@@ -27,6 +27,12 @@ endfunction
 
 
 " Section: Settings
+
+" FIX THE COLORSCHEME MATCHING ON WINDOWS
+" REFERENCE: https://github.com/junegunn/fzf.vim/issues/1152#issuecomment-1295758951
+if has('win32')
+    let g:fzf_force_termguicolors = 1
+endif
 
 if executable('rg')
     let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore-vcs --hidden --glob "!.git/*"'

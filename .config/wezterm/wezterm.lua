@@ -28,6 +28,7 @@ local key_bindings = {
 
   { key='F11', mods='ALT', action=wezterm.action.ToggleFullScreen },
   { key='e', mods='CTRL|ALT', action=wezterm.action.ActivateCommandPalette },
+  { key='0', mods='CTRL|ALT', action=actions.ResetFontSize },
 
   -- MUX
   {
@@ -67,6 +68,19 @@ local macos_bindings = {
   { key='v', mods='CMD', action=wezterm.action.PasteFrom('Clipboard') },
 }
 
+local mouse_bindings = {
+  {
+    event = {Down={streak=1, button={WheelUp=1}}},
+    mods = 'CTRL|ALT',
+    action = actions.IncreaseFontSize,
+  },
+  {
+    event = {Down={streak=1, button={WheelDown=1}}},
+    mods = 'CTRL|ALT',
+    action = actions.DecreaseFontSize,
+  },
+}
+
 -- Configurations
 
 configuration = {
@@ -93,7 +107,7 @@ configuration = {
   -- freetype_load_flags = 'MONOCHROME',
   font_size = 12,
   line_height = 1.1,
-  front_end = 'OpenGL',
+  front_end = 'WebGpu',
 
   -- Tab
   use_fancy_tab_bar = false,
@@ -116,6 +130,8 @@ elseif (string.match(wezterm.target_triple, 'darwin')) then
     table.insert(configuration.keys, v)
   end
 end
+
+configuration.mouse_bindings = mouse_bindings
 
 return configuration
 -- vim: sw=2:ts=2
