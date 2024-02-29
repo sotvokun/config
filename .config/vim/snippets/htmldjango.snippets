@@ -1,0 +1,23 @@
+extends html
+
+snippet block
+	{% block ${1} %}
+	${2}
+	{% endblock %}
+	${3}
+snippet if
+	{% if ${1} %}
+		${2}
+	{% endif %}
+snippet ifel
+	{% if ${1} %}
+		${2}
+	{% else %}
+		${3}
+	{% endif %}
+snippet for
+	{% for ${1} in ${2} %}
+		${3}
+	{% endfor %}
+snippet include
+	{% include "${1}" %}
