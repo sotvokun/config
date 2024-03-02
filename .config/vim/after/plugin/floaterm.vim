@@ -1,5 +1,5 @@
 if exists('g:loaded_floaterm_after')
-	finish
+    finish
 endif
 let g:loaded_floaterm_after = 1
 
@@ -8,6 +8,10 @@ let g:loaded_floaterm_after = 1
 
 let g:floaterm_wintype = 'split'
 let g:floaterm_height = 0.35
+
+if has('win32')
+    let g:floaterm_shell = 'powershell'
+endif
 
 
 " Section: Mappings

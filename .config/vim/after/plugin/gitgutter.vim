@@ -14,6 +14,8 @@ let g:gitgutter_map_keys = 0
 nnoremap ]g <Plug>(GitGutterNextHunk)
 nnoremap [g <Plug>(GitGutterPrevHunk)
 
-nnoremap <leader>gs <Plug>(GitGutterStageHunk)
-nnoremap <leader>gx <Plug>(GitGutterUndoHunk)
-nnoremap <leader>gP <Plug>(GitGutterPreviewHunk)
+
+nnoremap gs <nop>
+nnoremap gss <Plug>(GitGutterStageHunk)
+nnoremap gsx <Plug>(GitGutterUndoHunk)
+nnoremap gsp <Plug>(GitGutterPreviewHunk)

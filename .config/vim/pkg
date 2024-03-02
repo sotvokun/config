@@ -40,10 +40,6 @@ github.com/hrsh7th/nvim-cmp          !nvim opt
 github.com/hrsh7th/cmp-path          !nvim
 github.com/hrsh7th/cmp-buffer        !nvim
 github.com/hrsh7th/cmp-vsnip         !nvim
-
-
-# Language Server
-
 github.com/hrsh7th/cmp-nvim-lsp      !nvim
 
 

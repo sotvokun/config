@@ -40,6 +40,13 @@ set fileencodings=ucs-bom,utf-8,gbk,gb18030,big,euc-jp,latin1
 set updatetime=500
 set timeoutlen=500
 set noshowmode
+set sessionoptions+=localoptions
+
+"   Part: grep
+if executable('rg')
+	set grepprg=rg\ --vimgrep\ --no-heading\ --no-ignore-vcs\ --hidden\ --glob=!.git/
+	set grepformat=%f:%l:%c:%m
+endif
 
 
 " Section: Keymap
@@ -94,6 +101,10 @@ nnoremap [B <cmd>bfirst<cr>
 vnoremap < <gv
 vnoremap > >gv
 
+"    Part: formatting
+nnoremap gqq mzgggqG`z
+nnoremap gq? <cmd>set formatprg?<cr>
+
 "    Part: Misc
 
 " replay @q macro
@@ -138,6 +149,6 @@ augroup init
 
 	if has('nvim')
 		" Enter insert mode automatically
-		autocmd TermOpen term://* startinsert
+		autocmd TermOpen term://* setlocal nonumber | startinsert
 	endif
 augroup END

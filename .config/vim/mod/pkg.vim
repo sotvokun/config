@@ -157,7 +157,7 @@ function! s:parse_line(str)
 			let l:pkg['sync'] = 1
 		else
 			for var_attr in g:pkg_allow_attributes
-				let l:pattern = printf('\^%s:\(.*\)$', var_attr)
+				let l:pattern = printf('^%s:\zs.*\ze$', var_attr)
 				let match = matchstr(attr, l:pattern)
 				if match != ''
 					let pkg[var_attr] = match

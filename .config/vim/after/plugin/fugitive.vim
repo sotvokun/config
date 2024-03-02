@@ -3,8 +3,8 @@ if exists('g:loaded_fugitive_after')
 endif
 let g:loaded_fugitive_after = 1
 
-
-nnoremap <leader>gS <cmd>Git stage %<cr>
+nnoremap gs <nop>
+nnoremap gS <cmd>Git stage %<cr>
 nnoremap <leader>gg <cmd>Git<cr>
 nnoremap <leader>gcc <cmd>Git commit<cr>
 nnoremap <leader>gca <cmd>Git commit --amend<cr>

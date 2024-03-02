@@ -106,6 +106,16 @@ function M.util.santize_option(opt)
     else
         opt.capabilities = M.util.setup_capabilities()
     end
+    if type(opt.cmd) == 'table' and vim.fn.has('win32') == 1 then
+        local exe = opt.cmd[1]
+        if vim.fn.executable(exe .. '.exe') == 1 then
+            opt.cmd[1] = exe .. '.exe'
+        elseif vim.fn.executable(exe .. '.cmd') == 1 then
+            opt.cmd[1] = exe .. '.cmd'
+        else
+            opt.cmd[1] = exe
+        end
+    end
     return opt
 end
 
@@ -171,6 +181,31 @@ function M.util.setup_capabilities()
         )
     end
     return capabilities
+end
+
+-- Convert language server registry to coc.nvim style
+function M.util.coc_serialize(name)
+    local opt = M.registered[name]
+    if not opt then
+        error('name is not registered')
+    end
+    local command = ''
+    local args = {}
+    if opt.cmd and vim.tbl_islist(opt.cmd) then
+        command = opt.cmd[1]
+        args = vim.list_slice(opt.cmd, 2)
+    elseif opt.cmd and type(opt.cmd) == 'string' then
+        command = opt.cmd
+    end
+    return {
+        command = command,
+        args = args,
+        filetypes = opt.filetypes,
+        initializationOptions = opt.init_options and opt.init_options or {},
+        rootPatterns = opt.root_pattern and opt.root_pattern or {},
+        settings = opt.settings and opt.settings or {},
+        cwd = opt.root_dir and opt.root_dir or vim.fn.getcwd()
+    }
 end
 
 return M
