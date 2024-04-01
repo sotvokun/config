@@ -45,9 +45,9 @@ if exists('g:python_venv_bin') && !empty(g:python_venv_bin) && filereadable(g:py
 endif
 
 call LspRegister({
-    \ 'name': 'pyright',
+    \ 'name': 'delance',
     \ 'filetypes': ['python'],
-    \ 'cmd': ['pyright-langserver', '--stdio'],
+    \ 'cmd': ['delance-langserver', '--stdio'],
     \ 'root_pattern': ['.git', '.venv', 'setup.py', 'setup.cfg', 'requirements.txt', 'pyrightconfig.json', 'pyproject.toml'],
     \ 'settings': {
     \   'python': python_settings,
