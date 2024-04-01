@@ -7,6 +7,7 @@ let g:loaded_spoon_after = 1
 " Section: Key mappings
 
 nnoremap <leader>s <cmd>SpoonSave<cr>
+nnoremap <leader>l <cmd>SpoonList<cr>:SpoonSelect 
 nnoremap ]1 <cmd>SpoonNext<cr>
 nnoremap [1 <cmd>SpoonPrev<cr>
 nnoremap <leader>1 <cmd>SpoonSelect 1<cr>

@@ -94,7 +94,7 @@ function! spoon#delete_by_index(n)
 		return
 	endif
 	let keys = keys(g:spoon_data)
-	if a:n < 0 || a:n >= len(keys)
+	if a:n < 0 || a:n > len(keys)
 		return
 	endif
 	unlet g:spoon_data[keys[a:n - 1]]
@@ -137,11 +137,11 @@ function! spoon#select(n)
 		return
 	endif
 	let keys = keys(g:spoon_data)
-	if a:n < 0 || a:n >= len(keys)
+	if a:n < 0 || a:n > len(keys)
 		echo '[spoon] invalid number'
 		return
 	endif
-	call spoon#switch(keys[a:n] - 1)
+	call spoon#switch(keys[a:n - 1])
 endfunction
 
 
