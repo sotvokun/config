@@ -36,4 +36,10 @@ if [[ $(uname) == "Darwin" ]]; then
     if [ -d '/opt/homebrew/opt/llvm' ]; then
         export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
     fi
+
+    # ASDF-GO
+    if [ -d "$ASDF_DIR/installs/golang" ]; then
+        local version=$(asdf_current_version golang)
+        export PATH="$ASDF_DIR/installs/golang/${version}/packages/bin:$PATH"
+    fi
 fi
