@@ -46,10 +46,6 @@ if exists('g:loaded_lsp')
 endif
 let g:loaded_lsp = 1
 
-if !has('nvim')
-    finish
-endif
-
 
 " Section: Variables
 "    Part: g:lsp_engine
