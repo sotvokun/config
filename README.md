@@ -1,22 +1,13 @@
-Configuration File Repository for Windows and Unix-like Systems
-
-**USAGE**<br/>
-1. copy or clone this repository in somewhere you like.
-2. execute powershell script for windows, or shell script for unix-like system.
-
-**FOR SHELL SCRIPTS**<br/>
-```sh
-# for unix-like shells
-for filename in $HOME/.config/bash/*.sh; do
-    . "$filename"
-done
+POSIX
+```shell
+git clone --bare https://github.com/sotvokun/config <local-path>
+alias dotfiles='git --work-tree=$HOME --git-dir=<local-path>'
+echo "*" > $HOME/.gitignore
 ```
 
-```ps1
-# for powershell in windows
-Foreach ($item in (Get-ChildItem "$ENV:USERPROFILE/.config/pwsh"))
-{
-    . "$($item.FullName)"
-}
+Microsoft Windows
+```powershell
+git clone --bare https://github.com/sotvokun/config <local-path>
+function dotfiles { iex "git --work-tree=$($env:USERPROFILE) --git-dir=<local-path> $($args -join ' ')" }
+echo "*" > $env:USERPROFILE/.gitignore
 ```
-
