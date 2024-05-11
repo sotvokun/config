@@ -1,15 +1,48 @@
-#!/usr/bin/env bash
+# ~/.bashrc: executed by bash(2) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
 
 
+# NOTE: if not running interactively, don't do anything
+# NOTE: DO NOT CHANGE THE SPACES TO TAB
+case $- in
+	*i*) ;;
+	*) return;;
+esac
+
+
+# options
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s histappend
+shopt -s checkwinsize
+
+case "$TERM" in
+	xterm-color|*-256color) color_prompt=yes;;
+esac
+
+
+# ~/.local/bin
 if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
 export PATH
 
 
+# bash_completion: programmable completion
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+
+# asdf
 if [[ -d "$HOME/.asdf" ]]; then
 	. "$HOME/.asdf/asdf.sh"
-
 	if [[ $SHELL =~ bash ]]; then
 		. "$HOME/.asdf/completions/asdf.bash"
 	fi
@@ -41,6 +74,8 @@ else
 	export PROMPT="%f%B%n@%m%b %F{2}%~%f${NEWLINE}$ "
 fi
 
+
+alias ls='ls --color=auto'
 
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
 
