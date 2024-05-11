@@ -1,5 +1,6 @@
 [core]
 	autocrlf = false
+	excludesFile = ~/.gitexcludes
 [init]
 	defaultBranch = master
 [user]
