@@ -35,5 +35,3 @@ if (Test-Path $local_path)
 {
 	. "${local_path}"
 }
-
-# vim: ft=ps1 ts=4
