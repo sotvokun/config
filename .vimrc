@@ -249,6 +249,6 @@ for s:dir in ['view', 'undo', 'backup']
 endfor
 
 "   Part: integrate to neovim
-if filereadable(s:nvim_cfg_path . '/init-vim.vim')
-	source s:nvim_cfg_path . '/init-vim.vim'
+if filereadable(fnamemodify(s:nvim_cfg_path, ':p:h') . '/init-vim.vim')
+	execute printf('source %s/%s', s:nvim_cfg_path, 'init-vim.vim')
 endif
