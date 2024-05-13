@@ -193,15 +193,13 @@ silent! packadd! editorconfig
 " Section: Advanced
 "    Part: 1. make current vimrc file as a module for neovim configuration
 "          2. neovim does not need the following settings
-let s:nvim_cfg_path = '~/.config/nvim'
+let s:nvim_cfg_path = $HOME . '/.config/nvim'
 if has('nvim')
 	let s:nvim_mod_preference_path = printf("%s/%s", s:nvim_cfg_path, '/mod/preference.vim')
-	if !filereadable(s:nvim_mod_preference_path)
-		call mkdir(fnamemodify(s:nvim_mod_preference_path, ':p:h'), 'p')
-		call writefile(
-			\ readfile(fnamemodify(expand('<sfile>'), ':p')),
-			\ fnamemodify(s:nvim_mod_preference_path, ':p'))
-	endif
+	call mkdir(fnamemodify(s:nvim_mod_preference_path, ':p:h'), 'p')
+	call writefile(
+		\ readfile(fnamemodify(expand('<sfile>'), ':p')),
+		\ fnamemodify(s:nvim_mod_preference_path, ':p'))
 	finish
 endif
 
@@ -213,10 +211,10 @@ if has('win32')
 	set packpath-=$HOME/vimfiles/after
 
 	let s:vim_data_path = $LOCALAPPDATA . '/vim-data'
-	execute printf('setglobal runtimepath^=%s', s:vim_data_path)
-	execute printf('setglobal runtimepath+=%s/after', s:vim_data_path)
-	execute printf('setglobal packpath^=%s', s:vim_data_path)
-	execute printf('setglobal packpath+=%s/after', s:vim_data_path)
+	execute printf('setglobal runtimepath^=%s/site', s:vim_data_path)
+	execute printf('setglobal runtimepath+=%s/site/after', s:vim_data_path)
+	execute printf('setglobal packpath^=%s/site', s:vim_data_path)
+	execute printf('setglobal packpath+=%s/site/after', s:vim_data_path)
 endif
 if has('unix')
 	let s:is_darwin = system('uname -s') =~ 'Darwin'
@@ -227,11 +225,13 @@ if has('unix')
 		set packpath-=$HOME/.vim/after
 	endif
 	let s:vim_data_path = $HOME . '/.local/share/vim'
-	execute printf('setglobal runtimepath^=%s', s:vim_data_path)
-	execute printf('setglobal runtimepath+=%s/after', s:vim_data_path)
-	execute printf('setglobal packpath^=%s', s:vim_data_path)
-	execute printf('setglobal packpath+=%s/after', s:vim_data_path)
+	execute printf('setglobal runtimepath^=%s/site', s:vim_data_path)
+	execute printf('setglobal runtimepath+=%s/site/after', s:vim_data_path)
+	execute printf('setglobal packpath^=%s/site', s:vim_data_path)
+	execute printf('setglobal packpath+=%s/site/after', s:vim_data_path)
 endif
+execute printf('setglobal runtimepath^=%s', s:nvim_cfg_path)
+execute printf('setglobal runtimepath+=%s/after', s:nvim_cfg_path)
 if !isdirectory(s:vim_data_path)
 	call mkdir(s:vim_data_path, 'p')
 endif
@@ -247,6 +247,10 @@ for s:dir in ['view', 'undo', 'backup']
 	endif
 	execute printf('setglobal %sdir=%s', s:dir, s:dir_path)
 endfor
+
+"   Part: set stdpath
+let $VIM_STDPATH_CONFIG = s:nvim_cfg_path
+let $VIM_STDPATH_DATA = s:vim_data_path
 
 "   Part: integrate to neovim
 if filereadable(fnamemodify(s:nvim_cfg_path, ':p:h') . '/init-vim.vim')
