@@ -183,7 +183,7 @@ augroup END
 
 
 " Section: netrw
-let g:netrw_banner=0
+let g:netrw_banner = 0
 
 
 " Section: built-in packages
@@ -256,3 +256,6 @@ let $VIM_STDPATH_DATA = s:vim_data_path
 if filereadable(fnamemodify(s:nvim_cfg_path, ':p:h') . '/init-vim.vim')
 	execute printf('source %s/%s', s:nvim_cfg_path, 'init-vim.vim')
 endif
+
+"   Part: after all settings
+let g:netrw_home = $VIM_STDPATH_DATA
