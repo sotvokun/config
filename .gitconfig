@@ -5,7 +5,7 @@
 	defaultBranch = master
 [user]
 	name = sotvokun
-	email = sotvokun@outlook.com
+	email = sotvokun#outlook.com
 [pull]
 	rebase = true
 [alias]
