@@ -1,7 +1,11 @@
-[experimental]
-autoMemoryReclaim=gradual
+[wsl2]
 networkingMode=mirrored
-dnsTunneling=true
 firewall=true
 autoProxy=true
+dnsTunneling=true
+
+
+[experimental]
+autoMemoryReclaim=gradual
 sparseVhd=true
+hostAddressLoopback=true

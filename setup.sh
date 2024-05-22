@@ -4,6 +4,7 @@
 if [[ "$(uname)" == 'Windows_NT' ]]; then
 	cp "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1" \
 		"$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
+	cp .wslconfig "$HOME/.wslconfig"
 else
 	if [[ "$SHELL" =~ 'bash' ]]; then
 		cp .profile "$HOME/.bashrc"
