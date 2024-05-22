@@ -18,17 +18,6 @@ function prompt
 }
 
 
-# Junction 
-(@{	#Path #Target
-	"${env:LOCALAPPDATA}\nvim" = "${env:USERPROFILE}\.config\nvim"
-}).GetEnumerator() | ForEach-Object {
-	if (!(Test-Path "$($_.Key)"))
-	{
-		[void](New-Item -ItemType Junction -Path "$($_.Key)" -Target "$($_.Value)")
-	}
-}
-
-
 # Local Profile
 $local_path = "$(Split-Path -Parent $PROFILE)\Microsoft.PowerShell_profile.local.ps1"
 if (Test-Path $local_path)

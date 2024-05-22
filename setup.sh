@@ -17,7 +17,17 @@ fi
 cat .gitconfig | sed 's/\#/\@/g' > "$HOME/.gitconfig"
 cp .gitexcludes "$HOME/.gitexcludes"
 
-cp .vimrc "$HOME/.vimrc"
+# vim
+if [[ "$(uname)" == 'Windows_NT' ]]; then
+	echo 'source ~/.config/nvim/init.vim' > "$HOME/_vimrc"
+else
+	echo 'source ~/.config/nvim/init.vim' > "$HOME/.vimrc"
+fi
 
+# neovim for windows
+if [[ "$(uname)" == 'Windows_NT' ]]; then
+	ln -sf "$HOME/.config/nvim/" "$HOME/AppData/Local/nvim"
+fi
 
+# configs
 cp -rf .config "$HOME/"
