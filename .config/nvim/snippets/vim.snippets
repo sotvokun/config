@@ -1,0 +1,15 @@
+snippet exists_let
+	if exists('${1}')
+		${2}
+	endif
+	let ${1} = 1
+snippet did_ftplugin
+	if exists('b:did_${1:$TM_FILENAME_BASE}_ftplugin')
+		finish
+	endif
+	let b:did_${1:$TM_FILENAME_BASE}_ftplugin = 1
+	${2}
+snippet intro
+	" ${1:$RELATIVE_FILEPATH} - ${2}
+	"
+

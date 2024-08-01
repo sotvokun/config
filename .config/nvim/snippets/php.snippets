@@ -1,0 +1,18 @@
+snippet <?
+	<?php
+
+snippet namespace
+	namespace ${VIM: substitute(fnamemodify(expand('%:r:p'), ':h'), '/', '\\', 'g')};
+snippet class
+	class ${VIM: expand('%:t:r')}${1}
+	{
+		${2}
+	}
+snippet ~class
+	<?php
+	namespace ${VIM: substitute(fnamemodify(expand('%:r:p'), ':h'), '/', '\\', 'g')};
+
+	class ${VIM: expand('%:t:r')}${1}
+	{
+		${2}
+	}

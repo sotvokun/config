@@ -1,0 +1,26 @@
+{
+  "languageserver": {
+    "ts-langserver": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+      "rootPatterns": ["tsconfig.json", "jsconfig.json", ".git"],
+      "initializationOptions": {
+        "host": "neovim",
+        "preferences": {
+          "quotePreference": "single"
+        }
+      }
+    },
+    "gopls": {
+      "command": "gopls",
+      "args": [],
+      "filetypes": ["go"],
+      "rootPatterns": ["go.mod", ".git"],
+      "initializationOptions": {
+        "usePlaceholders": true,
+        "completeUnimported": true
+      }
+    }
+  }
+}
