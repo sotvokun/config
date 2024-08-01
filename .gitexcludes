@@ -13,3 +13,5 @@ Desktop.ini
 Network Trash Folder
 Temporary Items
 .apdisk
+# Development environment configurations
+.rgignore
