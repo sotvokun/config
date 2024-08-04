@@ -21,6 +21,6 @@ cp .gitexcludes "$HOME/.gitexcludes"
 cp -rf .config "$HOME/"
 
 # symbolic link for neovim on Windows
-if [[ "$(uname)" == 'Windows_NT' ]]; then
+if [[ "$(uname)" == 'Windows_NT' && ! -h "$HOME/AppData/Local/nvim" ]]; then
 	ln -s "$HOME/.config/nvim" "$HOME/AppData/Local/nvim"
 fi
