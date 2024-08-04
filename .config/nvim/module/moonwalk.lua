@@ -57,7 +57,7 @@ vim.g.loaded_moonwalk = true
 -- Constant
 
 local FENNEL_VERSION = '1.5.0'
-local FENNEL_URL = string.format('https://fennel-lang.org/downloads/fennel-%s.tar.gz', FENNEL_VERSION)
+local FENNEL_URL = string.format('https://fennel-lang.org/downloads/fennel-%s.lua', FENNEL_VERSION)
 local FENNEL_PATH = vim.fs.normalize(string.format(
 	'%s/site/pack/moonwalk/start/moonwalk/lua/fennel.lua',
 	vim.fn.stdpath('data')
@@ -109,7 +109,52 @@ end
 local _hooks = vim.tbl_extend('keep', vim.g.moonwalk_hooks, DEFAULT_HOOKS)
 
 
--- Functions
+-- Main Functions
+-- __main__ for lua
+if arg[0] ~= nil then
+	local cmd = 'help'
+	if #arg >= 1 then
+		cmd = arg[1]
+	end
+	if cmd == 'help' then
+		local msg = [[%s {help|version|update}]]
+		print(string.format(msg, arg[0]))
+		return 0
+	end
+	if cmd == 'version' then
+		local ok, fennel = pcall(require, 'fennel')
+		if not ok then
+			print("[moonwalk.lua] no installed fennel")
+			return 0
+		end
+		print(string.format("[moonwalk.lua] fennel version %s", fennel.version))
+		return 0
+	end
+	if cmd == 'update' then
+		local ok, fennel = pcall(require, 'fennel')
+		if ok and fennel.version == FENNEL_VERSION then
+			print(string.format('[moonwalk.lua] fennel version latest'))
+			return 0
+		end
+
+		if vim.system == nil then
+			print(string.format('[moonwalk.lua] moonwalk.lua needs 0.10 for update'))
+		end
+
+		vim.fn.mkdir(vim.fn.fnamemodify(FENNEL_PATH, ':h'), 'p')
+		print(string.format('Downloading fennel %s', FENNEL_VERSION))
+		do
+			local job = vim.system({
+				'curl', '-sS', '-o', FENNEL_PATH, FENNEL_URL
+			}):wait(10000)
+			assert(job.code == 0, job.stderr)
+		end
+		print(string.format('complete'))
+		return 0
+	end
+end
+
+-- Library Functions
 
 --- compie one fennel content to lua
 -- @param path        fennel file path
@@ -263,63 +308,4 @@ vim.api.nvim_create_autocmd('SourceCmd', {
 -- As a plugin beahviour
 if not (vim.uv or vim.loop).fs_stat(STATE_MARK) then
 	vim.cmd.Moonwalk()
-end
-
--- __main__ for lua
-if arg[0] ~= nil then
-	local cmd = 'help'
-	if #arg >= 1 then
-		cmd = arg[1]
-	end
-	if cmd == 'help' then
-		local msg = [[%s {help|version|update}]]
-		print(string.format(msg, arg[0]))
-		return 0
-	end
-	if cmd == 'version' then
-		local ok, fennel = pcall(require, 'fennel')
-		if not ok then
-			print("[moonwalk.lua] no installed fennel")
-			return 0
-		end
-		print(string.format("[moonwalk.lua] fennel version %s", fennel.version))
-		return 0
-	end
-	if cmd == 'update' then
-		local ok, fennel = pcall(require, 'fennel')
-		if ok and fennel.version == FENNEL_VERSION then
-			print(string.format('[moonwalk.lua] fennel version latest'))
-			return 0
-		end
-
-		if vim.system == nil then
-			print(string.format('[moonwalk.lua] moonwalk.lua needs 0.10 for update'))
-		end
-
-		local tmpdir = vim.fn.fnamemodify(vim.fn.tempname(), ':h')
-		vim.fn.mkdir(tmpdir, 'p')
-		print(string.format('Downloading fennel %s', FENNEL_VERSION))
-		print(string.format('save at %s', tmpdir))
-		do
-			local job = vim.system({
-				'curl', '-sS', '-o', string.format('%s/fennel.tar.gz', tmpdir), FENNEL_URL
-			}):wait(10000)
-			assert(job.code == 0, job.stderr)
-		end
-		do
-			local job = vim.system({
-				'tar', '-C', tmpdir, '-xf', string.format('%s/fennel.tar.gz', tmpdir)
-			}):wait()
-			assert(job.code == 0, job.stderr)
-		end
-		do
-			local content = vim.fn.readfile(string.format(
-				'%s/fennel-%s/fennel.lua', tmpdir, FENNEL_VERSION
-			))
-			vim.fn.mkdir(vim.fn.fnamemodify(FENNEL_PATH, ':h'), 'p')
-			vim.fn.writefile(content, FENNEL_PATH)
-		end
-		print(string.format('complete'))
-		return 0
-	end
 end
