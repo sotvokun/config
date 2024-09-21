@@ -18,6 +18,13 @@ function prompt
 }
 
 
+# vfox intergarte
+if (Get-Command "vfox.exe" -ErrorAction SilentlyContinue)
+{
+	Invoke-Expression "$(vfox activate pwsh)"
+}
+
+
 # Local Profile
 $local_path = "$(Split-Path -Parent $PROFILE)\Microsoft.PowerShell_profile.local.ps1"
 if (Test-Path $local_path)

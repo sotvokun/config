@@ -23,6 +23,17 @@ fi
 export PATH
 
 
+# MacOS
+if [[ "$(uname)" == "Darwin" ]]; then
+	# alias for remove com.apple.quarantine
+	alias rm_quarantine='xattr -d com.apple.quarantine'
+	# homebrew
+	if [ -f '/opt/homebrew/bin/brew' ]; then
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+	fi
+fi
+
+
 # bash_completion: programmable completion
 if [[ "$SHELL" =~ 'bash' && "$(uname)" != 'Darwin' ]]; then
 	if ! shopt -oq posix; then
@@ -48,14 +59,11 @@ if [[ -d "$HOME/.asdf" ]]; then
 fi
 
 
-# MacOS
-if [[ "$(uname)" == "Darwin" ]]; then
-	# alias for remove com.apple.quarantine
-	alias rm_quarantine='xattr -d com.apple.quarantine'
-	# homebrew
-	if [ -f '/opt/homebrew/bin/brew' ]; then
-		eval "$(/opt/homebrew/bin/brew shellenv)"
-	fi
+# vfox
+if [[ -n $(command -v vfox) ]]; then
+	SHELL_BASENAME="$(basename $SHELL)"
+	__VFOX_ACTIVATE_SHELL="$(vfox activate $SHELL_BASENAME)"
+	source <(echo $__VFOX_ACTIVATE_SHELL)
 fi
 
 
