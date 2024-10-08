@@ -90,6 +90,7 @@ set sessionoptions-=options
 set sessionoptions+=localoptions
 set modeline
 set laststatus=2
+set virtualedit=all
 
 "    Part: grep
 if executable('rg')
@@ -178,6 +179,9 @@ nnoremap ? ms?
 " free <c-g>
 nnoremap <c-g> <nop>
 nnoremap <c-g><c-g> <cmd>file<cr>
+
+" delete multiple spaces but keep one
+nnoremap dz<space> ciw<space><esc>
 
 " neovim compatible
 nnoremap Y y$

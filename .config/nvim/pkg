@@ -9,7 +9,6 @@ github.com/hrsh7th/vim-vsnip
 
 
 # enhance
-github.com/mbbill/undotree
 github.com/voldikss/vim-floaterm
 
 
@@ -36,8 +35,6 @@ github.com/tpope/vim-sleuth
 github.com/dstein64/vim-startuptime
 github.com/skywind3000/asyncrun.vim
 github.com/skywind3000/asynctasks.vim
-github.com/skywind3000/vim-quickui
-github.com/skywind3000/vim-navigator
 github.com/chrisbra/Colorizer
 
 # completion
