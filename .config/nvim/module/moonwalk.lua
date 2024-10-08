@@ -56,7 +56,7 @@ vim.g.loaded_moonwalk = true
 
 -- Constant
 
-local FENNEL_VERSION = '1.5.0'
+local FENNEL_VERSION = '1.5.1'
 local FENNEL_URL = string.format('https://fennel-lang.org/downloads/fennel-%s.lua', FENNEL_VERSION)
 local FENNEL_PATH = vim.fs.normalize(string.format(
 	'%s/site/pack/moonwalk/start/moonwalk/lua/fennel.lua',
