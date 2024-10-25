@@ -68,8 +68,6 @@ if has('termguicolors')
 	set background=dark
 	silent! colorscheme lunaperche
 	silent! colorscheme mercury
-else
-	silent! colorscheme habamax
 endif
 
 if has('syntax')
@@ -90,13 +88,22 @@ set sessionoptions-=options
 set sessionoptions+=localoptions
 set modeline
 set laststatus=2
-set virtualedit=all
 
 "    Part: grep
 if executable('rg')
 	set grepprg=rg\ --vimgrep\ --no-heading\ --no-ignore-vcs\ --hidden\ --glob=!.git/
 	set grepformat=%f:%l:%c:%m
 endif
+
+"    Part: clipboard
+if has('nvim')
+	set clipboard=unnamedplus
+elseif !has('nvim') && has('unnamedplus')
+	set clipboard=unnamedplus
+else
+	set clipboard=unnamed
+endif
+
 
 "    Part: builtin package
 "       A: netrw
@@ -134,8 +141,10 @@ inoremap <c-f> <right>
 inoremap <c-b> <left>
 inoremap <m-f> <s-left>
 inoremap <m-b> <s-right>
+
 inoremap <expr> <c-n> pumvisible() ? "\<c-n>" : "\<down>"
 inoremap <expr> <c-p> pumvisible() ? "\<c-p>" : "\<up>"
+
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
 cnoremap <c-f> <right>
@@ -149,7 +158,8 @@ inoremap <c-x>p <c-p>
 cnoremap <c-x><c-a> <c-a>
 cnoremap <c-x><c-f> <c-f>
 
-"    Part: unimpaired
+"    Part: misc
+" unimpaired
 nnoremap <expr> ]b '<cmd>' . v:count1 . 'bnext<cr>'
 nnoremap <expr> [b '<cmd>' . v:count1 . 'bprevious<cr>'
 nnoremap <expr> ]t '<cmd>+' . v:count1 . 'tabnext<cr>'
@@ -157,14 +167,12 @@ nnoremap <expr> [t '<cmd>-' . v:count1 . 'tabnext<cr>'
 nnoremap <expr> [q '<cmd>' . v:count1 . 'cnext<cr>'
 nnoremap <expr> ]q '<cmd>' . v:count1 . 'cprevious<cr>'
 
-"    Part: better indenting
+" better indenting
 vnoremap < <gv
 vnoremap > >gv
 
-"    Part: terminal
+" terminal
 tnoremap <esc> <c-\><c-n>
-
-"    Part: misc
 
 " replay @q macro
 nnoremap Q @q
@@ -183,19 +191,22 @@ nnoremap <c-g><c-g> <cmd>file<cr>
 " delete multiple spaces but keep one
 nnoremap dz<space> ciw<space><esc>
 
-" neovim compatible
-nnoremap Y y$
-inoremap <c-u> <c-g>u<c-u>
-inoremap <c-w> <c-g>u<c-w>
-xnoremap * y/\V<c-r>"<cr>
-xnoremap # y?\V<c-r>"<cr>
-nnoremap & :&&<cr>
+" others
+if !has('nvim')
+	nnoremap Y y$
+	inoremap <c-u> <c-g>u<c-u>
+	inoremap <c-w> <c-g>u<c-w>
+	xnoremap * y/\V<c-r>"<cr>
+	xnoremap # y?\V<c-r>"<cr>
+	nnoremap & :&&<cr>
+endif
 
 if has('nvim')
-	nnoremap zS <cmd>Inspect<cr>
+	nnoremap zI <cmd>Inspect<cr>
 endif
 
 " Section: Autocmd
+"
 augroup init
 	au!
 
@@ -229,17 +240,18 @@ command! -nargs=1 Load execute printf('source %s/<args>', s:home)
 
 
 " Section: Load module
-silent! Load module/vimpath.vim
-silent! Load module/clipboard.vim
+"silent! Load module/vimpath.vim
 
-let g:pkg_manifest = VimPath('config') . '/pkg'
-let g:pkg_provider = 'plug'
-let g:pkg_provider_option = { 'path': VimPath('data') . '/plugged' }
+" let g:pkg_manifest = VimPath('config') . '/pkg'
+" let g:pkg_provider = 'plug'
+" let g:pkg_provider_option = { 'path': VimPath('data') . '/plugged' }
+" silent! Load module/pkg.vim
+
+"if has('nvim')
+"	silent! Load module/moonwalk.lua
+"endif
+
 silent! Load module/pkg.vim
-
-if has('nvim')
-	silent! Load module/moonwalk.lua
-endif
 
 silent! Load module/lsp.vim
 

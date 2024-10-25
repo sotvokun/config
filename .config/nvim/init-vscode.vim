@@ -6,16 +6,7 @@ if exists('g:loaded_vscode_init')
 endif
 let g:loaded_vscode_init = 1
 
-
-" Section: compatible
-function! VimPath(type)
-	return stdpath(a:type)
-endfunction
-
-
-" Section: Module
-execute 'source ' . VimPath('config') . '/module/clipboard.vim'
-
+command! -nargs=1 Load execute printf('source %s/<args>', stdpath('config'))
 
 " Section: Mapping
 "    Part: Foldding
@@ -60,12 +51,8 @@ nnoremap F <Plug>Sneak_F
 nnoremap t <Plug>Sneak_t
 nnoremap T <Plug>Sneak_T
 
-call plug#begin()
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-surround'
-Plug 'tommcdo/vim-lion'
-Plug 'justinmk/vim-sneak'
-Plug 'hrsh7th/vim-vsnip'
-call plug#end()
+let g:pkg_manifest = stdpath('config') . '/pkg.code'
+
+silent! Load module/pkg.vim
 
 runtime after/plugin/vsnip.vim

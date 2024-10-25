@@ -38,20 +38,20 @@ github.com/skywind3000/asynctasks.vim
 github.com/chrisbra/Colorizer
 
 # completion
-github.com/github/copilot.vim        opt sync
-github.com/hrsh7th/nvim-cmp          !nvim opt
-github.com/hrsh7th/cmp-path          !nvim
-github.com/hrsh7th/cmp-buffer        !nvim
-github.com/hrsh7th/cmp-vsnip         !nvim
-github.com/hrsh7th/cmp-nvim-lsp      !nvim
+github.com/github/copilot.vim
+github.com/hrsh7th/nvim-cmp
+github.com/hrsh7th/cmp-path
+github.com/hrsh7th/cmp-buffer
+github.com/hrsh7th/cmp-vsnip
+github.com/hrsh7th/cmp-nvim-lsp
 
 
 # lsp
-github.com/j-hui/fidget.nvim         !nvim
-github.com/ojroques/nvim-lspfuzzy    !nvim
+github.com/j-hui/fidget.nvim
+github.com/ojroques/nvim-lspfuzzy
 
 # tree-sitter
-github.com/nvim-treesitter/nvim-treesitter          !nvim sync
+github.com/nvim-treesitter/nvim-treesitter
 
 
 # languages

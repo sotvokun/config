@@ -2,7 +2,7 @@
 "
 
 if exists('g:loaded_copilot_after')
-	after
+	finish
 endif
 let g:loaded_copilot_after = 1
 

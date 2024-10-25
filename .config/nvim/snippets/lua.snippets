@@ -1,0 +1,19 @@
+snippet exists_let
+	if vim.g.loaded_${1} then
+		return
+	end
+	vim.g.loaded_${1} = true
+snippet did_ftplugin
+	if vim.b.did_${1:$TM_FILENAME_BASE}_ftplugin then
+		return
+	end
+	vim.b.did_${1:$TM_FILENAME_BASE}_ftplugin = true
+snippet intro
+	-- ${1:$RELATIVE_FILEPATH} - ${2}
+	--
+snippet require
+	local ok, ${1:module} = pcall(require, '${1:module}')
+	if not ok then
+		return
+	end
+

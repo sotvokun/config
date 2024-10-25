@@ -1,94 +1,50 @@
 " pkg.vim
 "
-" pkg.vim is a minimal "frontend" for vim/neovim plugin managers,
-" it defined a unified DSL to describe plugins version and type.
-"
-" SUPPORTS:
+" pkg.vim is a vim-plug wrapper for managing packages with a manifest file.
 "
 " SYNTAX:
-"     <URL> [opt] [sync] [branch:xxx] [tag:xxxx] [commit:xxx] [name:xxx] [!vim]
-"           [!nvim]
+"    <url> [branch:xxx|tag:xxx|commit:xxx] [as:xxx] [on:xxx] [for:xxx] [frozen]
 "
 " ATTRIBUTES:
-"     opt
-"         installing plugin as optional, you should load it with `packadd`
-"     sync
-"         plugin should be synchronized with remote
-"     branch:xxx | tag:xxx | commit:xxx
-"         install plugin with specified branch/tag/commit
-"         (not all plugin managers implemented)
-"     name:xxx
-"         plugin with be installed with the specified name as alias,
-"         the default name is depended by plugin managers
-"     !vim
-"         installing plugin for vim only
-"     !nvim
-"         installing plugin for neovim only
-"     *key:value
-"         plugin manager specific attributes
+"    branch:xxx | tag:xxx | commit:xxx
+"       installing plugin with specific branch/tag/commit
+"    as:xxx
+"       installing plugin with the specified name as alias
+"    on:xxx
+"       on-demand loading plugin: commands or `<Plug>` mappings
+"    for:xxx
+"       on-demand loading plugin: filetypes
+"    frozen
+"       do not remove and do not update unless explicitly specified
 "
 " EXAMPLE:
-"      github.com/tpope/vim-fugitive
-"      github.com/williamboman/mason.nvim      sync
-"
-" USER COMMAND:
-"      PkgAdd
-"          `:PkgAdd`           packadd all optional packages
-"          `:PkgAdd foo`       packadd specified packages by pass package name
-"          `:PkgAdd foo bar`   also can add multiple packages
-"          `:PkgAdd *`         add all packages with pass the asterisk
-"          `:PkgAdd * !foo !bar`
-"                              add all packages excluding specified packages
-"
-" FUNCTIONS:
-"      pkg#initialize()
-"          Notify the plugin manager to handle plugins that defined in manifest.
-"          This function are usually put in user vimrc file. To make the
-"          plugin loaded before sourcing `/after` directory.
-"
-"      pkg#add(...)
-"          The implementation of `PkgAdd` usercommand.
-"
-" AUTOCMD:
-"      User PkgAddPre:<pkgname>
-"      User PkgAddPost:<pkgname>
-"          If you use `PkgAdd` usercommand to load optional package, there are
-"          two autocmd will be invoked before and after `packadd`. You could
-"          use this mechanism to implement lazy loading.
-"
-"          <pkgname> is transformed from any string to camel-case.
-"          The transformation looks like the following pipes:
-"          ```
-" pkgname | splitwith(['.', '-', '_']) | map(i -> upperfirst(i)) | join('')
-"          ```
-"          exmaple:
-"              vim-fugitive -> VimFugitive
-"              mason.nvim -> MasonNvim
+"    github.com/tpope/vim-fugitive
+"    github.com/williamboman/mason.nvim frozen
 "
 " VARIABLES:
-"      g:pkg_manifest
-"          The path of the plugin manifest file.
-"          default:
-"              nvim: stdpath('config') . '/pkg'
-"              vim: $HOME . '/.vim/pkg'
+"    g:pkg_manifest
+"       The path of the plugin manifest file.
+"       default:
+"           nvim: vim.fs.joinpath(stdpath('config'), 'pkg')
+"           vim (Linux/macOS): '~/.vim/pkg'
+"           vim (Windows): '~/vimfiles/pkg'
 "
-"      g:pkg_name_separator
-"          The separator to split plugin name to parts.
-"          (Default: [',', '-', '_', '.'])
+"    g:pkg_plug_directory
+"       Directory path for installing plugin.
+"       default:
+"           nvim: stdpath('data') . '/plugged'
+"           vim (Linux/macOS): '~/.vim/plugged'
+"           vim (Windows): '~/vimfiles/plugged'
 "
-"      g:pkg_allow_attributes
-"          The attributes that pkg can offer to plugin manager.
-"          (Default: ['branch', 'commit', 'name'])
-"          The default value of this variable is minimalist, you could add
-"          more supported attributes for your plugin manager.
-"          NOTE: `opt` and `sync` are always useable
+" REFERENCES:
+"    https://vi.stackexchange.com/a/37541
 "
-"      g:pkg_provider
-"          (Default: plug)
-"
-"      g:pkg_provider_option
-"          (Default: {})
-"
+
+if empty(globpath(&runtimepath, 'autoload/plug.vim'))
+	echoerr '[pkg.vim] requires vim-plug'
+	finish
+endif
+
 
 if exists('g:loaded_pkg')
 	finish
@@ -96,147 +52,109 @@ endif
 let g:loaded_pkg = 1
 
 
-" Section: variables
-
+" Section: Variables
+" 
 if !exists('g:pkg_manifest')
-	let g:pkg_manifest = has('nvim')
-		\ ? stdpath('config') . '/pkg'
-		\ : $HOME . '/.vim/pkg'
+	let g:pkg_manifest = ''
+	if has('nvim')
+		let g:pkg_manifest = stdpath('config') . '/pkg'
+	elseif has('win32')
+		let g:pkg_manifest = expand('~/vimfiles/pkg')
+	else
+		let g:pkg_manifest = expand('~/.vim/pkg')
+	endif
 endif
 
-if !exists('g:pkg_name_separator')
-	let g:pkg_name_separator = [',', '-', '_', '.']
-endif
-
-if !exists('g:pkg_allow_attributes')
-	let g:pkg_allow_attributes = ['branch', 'commit', 'name']
-endif
-
-if !exists('g:pkg_provider')
-	let g:pkg_provider = 'plug'
-endif
-
-if !exists('g:pkg_provider_option')
-	let g:pkg_provider_option = {}
-endif
+let s:allow_attributes = ['branch', 'commit', 'as', 'tag', 'on', 'for']
 
 
-" Section: functions
-
-function! s:parse_line(str)
-	let l:str = trim(a:str)
-	if l:str[0] == '#' || len(l:str) == 0
+" Section: Functions
+"
+function s:parse_line(str)
+	let str = trim(a:str)
+	if len(str) == 0 || str[0] == '#'
 		return v:null
 	endif
-	let l:parts = split(l:str, '\s\+', 1)
-	let l:pkg = {
-		\ 'name': '',
-		\ 'opt': 0,
-		\ 'sync': 0,
-		\ 'branch': '',
+	let parts = split(str, '\s\+', 1)
+
+	let pkg = {
+		\ 'as': '',
 		\ 'remote': '',
+		\ 'branch': '',
 		\ 'commit': '',
-		\ '_for': '',
-		\ '_attr': {},
+		\ 'tag': '',
+		\ 'on': '',
+		\ 'for': '',
+		\ 'frozen': 0,
 		\ }
-	let l:name_parts = split(l:parts[0], '\/', 1)
-	let l:pkg['name'] = l:name_parts[len(l:name_parts) - 1]
-	let l:pkg['remote'] = 'https://' . l:parts[0]
+	let pkg['remote'] = (parts[0] =~ '^github\.com/')
+				\ ? 'https://' . parts[0]
+				\ : parts[0]
 
-	for attr in l:parts[1:]
-		if attr[0] == '*'
-			let parts = split(attr[1:], ':')
-			let l:pkg['_attr'][parts[0]] = parts[1]
-		elseif attr == 'opt'
-			let l:pkg['opt'] = 1
-		elseif attr == '!vim'
-			let l:pkg['_for'] = 'vim'
-		elseif attr == '!nvim'
-			let l:pkg['_for'] = 'nvim'
-		elseif attr == 'sync'
-			let l:pkg['sync'] = 1
-		else
-			for var_attr in g:pkg_allow_attributes
-				let l:pattern = printf('^%s:\zs.*\ze$', var_attr)
-				let match = matchstr(attr, l:pattern)
-				if match != ''
-					let pkg[var_attr] = match
-					continue
-				endif
-			endfor
-		endif
-	endfor
-	return l:pkg
-endfunction
-
-function! s:parse_manifest()
-	if !filereadable(g:pkg_manifest)
-		return []
-	endif
-	let l:lines = readfile(g:pkg_manifest)
-	let l:pkgs = []
-	for line in l:lines
-		let l:pkg = s:parse_line(line)
-		if empty(l:pkg)
+	for attr_pair in parts[1:]
+		if attr_pair == 'fronze'
+			let pkg['frozen'] = 1
 			continue
 		endif
-		let l:pkgs += [l:pkg]
-	endfor
-	return l:pkgs
-endfunction
-
-
-function! s:transform_pkg_name(name)
-	let l:name = a:name
-	for sep in g:pkg_name_separator
-		let l:sep = sep == '-' || sep == '_'
-			\ ? sep
-			\ : printf('\\%s', sep)
-		let l:name = substitute(l:name, l:sep, ' ', 'g')
-	endfor
-	let l:parts = split(l:name, '\s+', 1)
-	let l:parts = map(parts, 'substitute(v:val, "^\\l", "\\u\\0", "")')
-	return join(l:parts, '')
-endfunction
-
-function! s:do_add(...)
-	let pkgs = s:parse_manifest()
-	let fargs = a:000
-	let optpkgs = filter(pkgs, {_, v -> v['opt'] == 1})
-	let optpkg_names = map(pkgs, {_, p -> p['name']})
-
-	let proc_pkgs = []
-	if len(fargs) == 0
-		let proc_pkgs = optpkg_names
-	else
-		for pkg in fargs
-			if pkg == '*'
-				let proc_pkgs += optpkg_names
-			elseif pkg[0] == '!'
-				let proc_pkgs = filter(
-					\ proc_pkgs,
-					\ {_, p -> p != p[1:]})
+		for attr in s:allow_attributes
+			let pattern = printf('^%s:\zs.*\ze$', attr)
+			let matched = trim(matchstr(attr_pair, pattern))
+			if len(matched) == 0
+				continue
+			endif
+			if stridx(matched, ',') > -1
+				let pkg[attr] = map(split(matched, ','), {_, s -> trim(s)})
 			else
-				let proc_pkgs += [pkg]
+				let pkg[attr] = matched
 			endif
 		endfor
+	endfor
+	return pkg
+endfunction
+
+function! s:parse_manifest(path)
+	if !filereadable(a:path)
+		return []
+	endif
+	let lines = readfile(a:path)
+	let pkgs = []
+	for line in lines
+		let pkg = s:parse_line(line)
+		if empty(pkg)
+			continue
+		endif
+		let pkgs += [pkg]
+	endfor
+	return pkgs
+endfunction
+
+function! s:setup()
+	let s:manifest = s:parse_manifest(g:pkg_manifest)
+	if exists('g:pkg_plug_directory')
+		call plug#begin(g:pkg_plug_directory)
+	else
+		call plug#begin()
 	endif
 
-	for pkg_name in proc_pkgs
-		let proc_pkg_name = s:transform_pkg_name(pkg_name)
-		silent! execute 'doautocmd User PkgAddPre:' . proc_pkg_name
-		execute 'packadd ' . pkg_name
-		silent! execute 'doautocmd User PkgAddPost:' . proc_pkg_name
+	for pkg in s:manifest
+		let opts = {}
+		for attr in s:allow_attributes
+			if len(get(pkg, attr, '')) > 0
+				let opts[attr] = pkg[attr]
+			endif
+		endfor
+		let cmd = empty(opts)
+					\ ? printf('Plug ''%s''', pkg['remote'])
+					\ : printf('Plug ''%s'', %s', pkg['remote'], opts)
+		execute cmd
 	endfor
+	call plug#end()
 endfunction
 
 
-" Section: commands
+" Section: Setup
+"
+call s:setup()
 
-command! -nargs=* PkgAdd call s:do_add(<f-args>)
 
-
-" Section: setup
-
-let s:Provider = function(printf('pkg#provider#%s', g:pkg_provider))
-call s:Provider(s:parse_manifest(), g:pkg_provider_option)
+" vim: ts=4 sw=4
