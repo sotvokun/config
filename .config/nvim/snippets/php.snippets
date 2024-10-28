@@ -2,7 +2,7 @@ snippet <?
 	<?php
 
 snippet namespace
-	namespace ${VIM: substitute(fnamemodify(expand('%:r:p'), ':h'), '/', '\\', 'g')};
+	namespace ${VIM: substitute(fnamemodify(expand('%:.:h'), ':h'), '/', '\\', 'g')};
 snippet class
 	class ${VIM: expand('%:t:r')}${1}
 	{
@@ -10,7 +10,7 @@ snippet class
 	}
 snippet ~class
 	<?php
-	namespace ${VIM: substitute(fnamemodify(expand('%:r:p'), ':h'), '/', '\\', 'g')};
+	namespace ${VIM: substitute(fnamemodify(expand('%:.:h'), ':h'), '/', '\\', 'g')};
 
 	class ${VIM: expand('%:t:r')}${1}
 	{
