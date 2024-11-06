@@ -12,6 +12,8 @@ if not ok then
 	return
 end
 
+local copilot_ok, copilot = pcall(require, 'copilot')
+
 
 -- Helper functions
 
@@ -24,15 +26,46 @@ local function feedkey(keys, mode)
 end
 
 local function copilot_ready()
-	return vim.fn.exists(':Copilot') ~= 0 and vim.fn['copilot#Enabled']()
+	-- for copilot.lua
+	return copilot_ok
+
+	-- -- for copilot.vim
+	-- return vim.fn.exists(':Copilot') ~= 0 and vim.fn['copilot#Enabled']()
 end
 
 local function copilot_has_suggestion()
 	if not copilot_ready() then
 		return false
 	end
-	local suggestion = vim.fn['copilot#GetDisplayedSuggestion']()
-	return suggestion.text ~= nil and string.len(suggestion.text) > 0
+
+	-- for copilot.lua
+	return require('copilot.suggestion').is_visible()
+
+	-- -- for copilot.vim
+	-- local suggestion = vim.fn['copilot#GetDisplayedSuggestion']()
+	-- return suggestion.text ~= nil and string.len(suggestion.text) > 0
+end
+
+local function copilot_accept()
+	-- for copilot.lua
+	require('copilot.suggestion').accept()
+
+	-- -- for copilot.vim
+	-- vim.api.nvim_feedkeys(
+	-- 	vim.fn['copilot#Accept'](
+	-- 		vim.api.nvim_replace_termcodes('<tab>', true, true, true)
+	-- 	),
+	-- 	'n',
+	-- 	true
+	-- )
+end
+
+local function copilot_dismiss()
+	-- for copilot.lua
+	require('copilot.suggestion').dismiss()
+
+	-- -- for copilot.vim
+	-- feedkey('<Plug>(copilot-dismiss)', '')
 end
 
 
@@ -72,14 +105,8 @@ local function map_tab(fallback)
 		end
 	elseif vim.fn['vsnip#available']() == 1 then
 		feedkey('<Plug>(vsnip-expand-or-jump)', '')
-	elseif copilot_ready() then
-		vim.api.nvim_feedkeys(
-			vim.fn['copilot#Accept'](
-				vim.api.nvim_replace_termcodes('<tab>', true, true, true)
-			),
-			'n',
-			true
-		)
+	elseif copilot_has_suggestion() then
+		copilot_accept()
 	else
 		fallback()
 	end
@@ -107,7 +134,7 @@ local function map_c_e(fallback)
 	if cmp.visible() then
 		cmp.abort()
 	elseif copilot_has_suggestion() then
-		feedkey('<Plug>(copilot-dismiss)', '')
+		copilot_dismiss()
 	else
 		fallback()
 	end

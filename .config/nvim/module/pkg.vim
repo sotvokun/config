@@ -16,6 +16,8 @@
 "       on-demand loading plugin: filetypes
 "    frozen
 "       do not remove and do not update unless explicitly specified
+"    do
+"       run command after installing plugin
 "
 " EXAMPLE:
 "    github.com/tpope/vim-fugitive
@@ -65,7 +67,7 @@ if !exists('g:pkg_manifest')
 	endif
 endif
 
-let s:allow_attributes = ['branch', 'commit', 'as', 'tag', 'on', 'for']
+let s:allow_attributes = ['branch', 'commit', 'as', 'tag', 'on', 'for', 'do']
 
 
 " Section: Functions

@@ -21,6 +21,7 @@ if vim.fn.executable('rg') == 1 then
 end
 
 fzf.setup({
+	fzf_colors = true,
 	winopts = {
 		border = 'none',
 		backdrop = 45,

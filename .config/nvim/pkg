@@ -10,6 +10,7 @@ github.com/hrsh7th/vim-vsnip
 
 # enhance
 github.com/voldikss/vim-floaterm
+github.com/nvim-lua/plenary.nvim
 
 
 # file explorer
@@ -37,12 +38,13 @@ github.com/skywind3000/asynctasks.vim
 github.com/chrisbra/Colorizer
 
 # completion
-github.com/github/copilot.vim
 github.com/hrsh7th/nvim-cmp
 github.com/hrsh7th/cmp-path
 github.com/hrsh7th/cmp-buffer
 github.com/hrsh7th/cmp-vsnip
 github.com/hrsh7th/cmp-nvim-lsp
+github.com/zbirenbaum/copilot.lua
+github.com/CopilotC-Nvim/CopilotChat.nvim branch:canary
 
 
 # lsp
