@@ -20,7 +20,7 @@ github.com/justinmk/vim-dirvish
 
 
 # fuzzy finder
-github.com/ibhagwan/fzf-lua
+github.com/ibhagwan/fzf-lua on:FzfLua
 
 # git
 github.com/tpope/vim-fugitive
