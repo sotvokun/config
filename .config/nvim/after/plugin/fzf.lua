@@ -26,6 +26,12 @@ fzf.setup({
 		border = 'none',
 		backdrop = 45,
 	},
+	files = {
+		rg_opts = [[--no-heading --no-ignore-vcs --hidden --glob=!.git/]]
+	},
+	grep = {
+		rg_opts = [[--no-heading --no-ignore-vcs --hidden --glob=!.git/]]
+	}
 })
 
 

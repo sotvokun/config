@@ -58,6 +58,7 @@ function! statusline#builtin#filename()
 	endif
 
 	if l:isfile
+		let l:bufname = fnamemodify(l:bufname, ':~:.')
 		return (len(l:bufname) > 60 && l:winwidth < 100) ? pathshorten(l:bufname) : l:bufname
 	elseif &buftype == 'help'
 		return fnamemodify(l:bufname, ':t')

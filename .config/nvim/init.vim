@@ -227,6 +227,10 @@ augroup init
 		\ | call mkdir(expand('<afile>:p:h'), 'p')
 		\ | endif
 
+	" disable line number for terminal buffer
+	autocmd BufEnter term://*
+		\ setlocal nonumber
+
 	" filetype: help, qf
 	autocmd FileType help,qf
 		\ setlocal nowrap
@@ -240,19 +244,8 @@ command! -nargs=1 Load execute printf('source %s/<args>', s:home)
 
 
 " Section: Load module
-"silent! Load module/vimpath.vim
-
-" let g:pkg_manifest = VimPath('config') . '/pkg'
-" let g:pkg_provider = 'plug'
-" let g:pkg_provider_option = { 'path': VimPath('data') . '/plugged' }
-" silent! Load module/pkg.vim
-
-"if has('nvim')
-"	silent! Load module/moonwalk.lua
-"endif
 
 silent! Load module/pkg.vim
-
 silent! Load module/lsp.vim
 
 if has('nvim') && exists('g:neovide')
