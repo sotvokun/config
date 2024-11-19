@@ -34,9 +34,6 @@ copilot.setup({
 local copilot_chat_ok, copilot_chat = pcall(require, 'CopilotChat')
 if copilot_chat_ok then
 	local cmp_ok, cmp = pcall(require, 'cmp')
-	if cmp_ok then
-		require('CopilotChat.integrations.cmp').setup()
-	end
 
 	local default_config = require('CopilotChat.config')
 
@@ -49,6 +46,7 @@ if copilot_chat_ok then
 	copilot_chat.setup({
 		debug = true,
 		show_help = false,
+		chat_complete = cmp_ok
 	})
 
 	vim.keymap.set('v', '<leader>cc', function ()
@@ -70,16 +68,11 @@ if copilot_chat_ok then
 			window = inline_window,
 		})
 		local actions = require('CopilotChat.actions')
-		local helps = actions.help_actions()
 		local prompts = actions.prompt_actions()
 
 		local prompts = {
 			prompt = 'Copilot Actions',
-			actions = vim.tbl_extend(
-				'force',
-				helps and helps.actions or {},
-				prompts.actions
-			),
+			actions = prompts.actions,
 		}
 		require('CopilotChat.integrations.fzflua').pick(prompts)
 	end)
