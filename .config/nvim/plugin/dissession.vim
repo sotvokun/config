@@ -4,9 +4,13 @@
 "
 " VARIABLES:
 "   g:dissession_dir            - path to session file directory
-"   g:dissession_ready          - 0 if no session file found, 1 otherwise
-"   g:dissession_session_file   - path to current session file
+"                                          nvim: stdpath('state')/sessions,
+"                                           vim: $HOME/.vim/sessions
+"                                    vim(win32): $USERPROFILE/vimfiles/sessions
+"   g:dissession_load_on_enter  - 1 to load session on enter, 0 otherwise
+"                                   (default: 1)
 "   g:dissession_save_on_exit   - 1 to save session on exit, 0 otherwise
+"                                   (default: 1)
 "
 " COMMANDS:
 "   DissessionSave              - save session file
@@ -22,13 +26,19 @@ let g:loaded_dissession = 1
 
 " Section: Variables
 
-let g:dissession_ready = 0
-let g:dissession_session_file = ''
-let g:dissession_save_on_exit = 1
+let g:dissession__ready = 0
+let g:dissession__session_file = ''
+
+if !exists('g:dissession_load_on_enter')
+	let g:dissession_load_on_enter = 1
+endif
+if !exists('g:dissession_save_on_exit')
+	let g:dissession_save_on_exit = 1
+endif
 if !exists('g:dissession_dir')
 	let g:dissession_dir = has('nvim')
 		\ ? stdpath('state') . '/sessions'
-		\ : $HOME . '/.vim/sessions'
+		\ : (has('win32') ? $USERPROFILE.'/vimfiles/sessions' : $HOME.'/.vim/sessions')
 endif
 
 
@@ -43,7 +53,11 @@ command! -nargs=0 DissessionPrune call dissession#prune()
 
 augroup dissession
 	autocmd!
-	autocmd VimEnter * call dissession#check()
+	autocmd VimEnter *
+		\ call dissession#check()
+		\ | if g:dissession__ready && g:dissession_load_on_enter
+		\ | call dissession#load()
+		\ | endif
 	autocmd VimLeavePre * 
 		\ if dissession#check() && g:dissession_save_on_exit
 		\ | call dissession#save()

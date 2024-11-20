@@ -12,8 +12,8 @@ function! dissession#check()
 		return 0
 	endif
 
-	let g:dissession_ready = 1
-	let g:dissession_session_file = session_filepath
+	let g:dissession__ready = 1
+	let g:dissession__session_file = session_filepath
 	return 1
 endfunction
 
@@ -26,29 +26,29 @@ function! dissession#save()
 	let session_filepath = fnameescape(g:dissession_dir . '/' . session_filename)
 	execute 'mksession! ' . session_filepath
 
-	let g:dissession_ready = 1
-	let g:dissession_session_file = session_filepath
+	let g:dissession__ready = 1
+	let g:dissession__session_file = session_filepath
 endfunction
 
 function! dissession#load()
-	if !g:dissession_ready
+	if !g:dissession__ready
 		echohl WarningMsg
 		echomsg 'No session file found'
 		echohl None
 	endif
 
-	let session_filepath = g:dissession_session_file
+	let session_filepath = g:dissession__session_file
 	execute 'source ' . session_filepath
 endfunction
 
 function! dissession#prune()
-	if !g:dissession_ready
+	if !g:dissession__ready
 		return
 	endif
 
-	let session_filepath = g:dissession_session_file
+	let session_filepath = g:dissession__session_file
 	call delete(session_filepath)
 
-	let g:dissession_ready = 0
-	let g:dissession_session_file = ''
+	let g:dissession__ready = 0
+	let g:dissession__session_file = ''
 endfunction
