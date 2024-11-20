@@ -75,6 +75,8 @@ if has('syntax')
 endif
 
 "    Part: misc
+"    REFERENCES:
+"     - https://github.com/neovim/neovim/issues/24542
 set autoread
 set autowrite
 set confirm
@@ -89,6 +91,9 @@ set sessionoptions+=localoptions
 set modeline
 set laststatus=2
 set updatetime=750
+if has('win32')
+	set isfname+=(,)
+endif
 
 "    Part: grep
 if executable('rg')
