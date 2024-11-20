@@ -1,8 +1,8 @@
 function! statusline#lsp#component()
-	if !exists('g:vlsps')
+	if !has('nvim')
 		return ''
 	endif
-	let clients = vlsp#get_clients()
+	let clients = map(v:lua.vim.lsp.get_clients(), {_, v -> v['name']})
 	if len(clients) == 0
 		return ''
 	else

@@ -85,7 +85,7 @@ local sources = {
 		{name = 'buffer'},
 		{name = 'path'}
 	}
-	local ok, nvim_lsp = pcall(require, 'nvim_lsp')
+	local ok, nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 	if ok then
 		table.insert(sources, {name = 'nvim_lsp'})
 	end

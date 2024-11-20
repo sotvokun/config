@@ -205,6 +205,7 @@ if has('nvim')
 	nnoremap zI <cmd>Inspect<cr>
 endif
 
+
 " Section: Autocmd
 "
 augroup init
@@ -245,9 +246,18 @@ command! -nargs=1 Load execute printf('source %s/<args>', s:home)
 
 " Section: Load module
 
-silent! Load module/pkg.vim
-silent! Load module/lsp.vim
+Load module/pkg.vim
 
-if has('nvim') && exists('g:neovide')
-	silent! Load module/neovide.vim
+if has('nvim')
+	lua do
+	\ local ok, cmp = pcall(require, 'cmp_nvim_lsp')
+	\ if ok then
+	\ 	vim.g.lsp = { capabilities = cmp.default_capabilities() }
+	\ end
+	\ end
+
+	Load module/lsp.lua
+	if exists('g:neovide')
+		silent! Load module/neovide.vim
+	endif
 endif
