@@ -88,6 +88,7 @@ set sessionoptions-=options
 set sessionoptions+=localoptions
 set modeline
 set laststatus=2
+set updatetime=750
 
 "    Part: grep
 if executable('rg')

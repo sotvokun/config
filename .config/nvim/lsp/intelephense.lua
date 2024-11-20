@@ -27,7 +27,7 @@ end
 
 return {
 	cmd = { 'intelephense', '--stdio' },
-	filetype = { 'php' },
+	filetypes = { 'php' },
 	root_dir = { 'composer.json', '.git' },
 	init_options = {
 		licenceKey = intelephense_license_key,

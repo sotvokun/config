@@ -82,15 +82,26 @@ local function config(server, opts)
 		return false, string.format('No LSP configuration found for %s', server)
 	end
 
-	local ft = cfg.filetype
+	if cfg.cmd
+		and ((type(cfg.cmd) == 'string' and string.len(cfg.cmd) > 0)
+		or (type(cfg.cmd) == 'table' and not vim.tbl_isempty(cfg.cmd)))
+	then
+		local original = type(cfg.cmd) == 'string' and cfg.cmd or cfg.cmd[1]
+		local execmd = vim.fn.exepath(original)
+		if string.len(execmd) > 0 then
+			cfg.cmd = type(cfg.cmd) == 'string' and execmd or { execmd, unpack(cfg.cmd, 2) }
+		end
+	end
+
+	local ft = cfg.filetypes
 	if not ft then
-		return false, string.format('Invalid LSP configuration for %s: field "filetype" is required', server)
+		return false, string.format('Invalid LSP configuration for %s: field "filetypes" is required', server)
 	end
 	if type(ft) == 'string' then
 		ft = { ft }
 	end
 	if type(ft) ~= 'table' then
-		return false, string.format('Invalid LSP configuration for %s: field "filetype" only can be string or table', server)
+		return false, string.format('Invalid LSP configuration for %s: field "filetypes" only can be string or table', server)
 	end
 
 	if type(cfg.root_dir) == 'table' then
@@ -148,4 +159,4 @@ local function setup()
 	end
 end
 
-setup()
+vim.schedule(setup)

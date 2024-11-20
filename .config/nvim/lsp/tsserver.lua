@@ -1,4 +1,4 @@
-local filetype = {
+local filetypes = {
 	'javascript',
 	'javascriptreact',
 	'javascript.jsx',
@@ -16,8 +16,10 @@ local init_options = {
 
 -- VUE INTEGRATION
 do
-	local local_node_modules = vim.trim(vim.system({'npm', 'root'}, { text = true }):wait().stdout)
-	local global_node_modules = vim.trim(vim.system({'npm', 'root', '-g'}, { text = true }):wait().stdout)
+	local node_package_manager = 'npm'
+	node_package_manager = vim.fn.has('win32') == 1 and 'npm.cmd' or 'npm'
+	local local_node_modules = vim.trim(vim.system({node_package_manager, 'root'}, { text = true }):wait().stdout)
+	local global_node_modules = vim.trim(vim.system({node_package_manager, 'root', '-g'}, { text = true }):wait().stdout)
 
 	local vue_langserver = function(scope) return vim.fs.joinpath(scope, '@vue', 'language-server') end
 
@@ -36,13 +38,13 @@ do
 
 	if type(tsserver_plugin.location) ~= 'nil' then
 		init_options.plugins = { tsserver_plugin }
-		table.insert(filetype, 'vue')
+		table.insert(filetypes, 'vue')
 	end
 end
 
 return {
 	cmd = { 'typescript-language-server', '--stdio' },
-	filetype = filetype,
+	filetypes = filetypes,
 	root_dir = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
 	init_options = init_options,
 }

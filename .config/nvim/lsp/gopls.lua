@@ -1,6 +1,6 @@
 return {
 	cmd = { 'gopls' },
-	filetype = { 'go' },
+	filetypes = { 'go' },
 	root_dir = { 'go.mod' },
 	init_options = {
 		usePlaceholders = true,
