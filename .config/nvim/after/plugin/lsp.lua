@@ -40,21 +40,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
 			end
 		end
 
-
 		if client.supports_method('textDocument/inlayHint') then
 			vim.keymap.set('n', 'zY', function()
 				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
 			end, { buffer = bufnr })
 		end
 
-		if client.supports_method('textDocument/formatting') then
-			vim.api.nvim_create_autocmd('BufWritePre', {
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.format({ bufnr = bufnr, id = client_id })
-				end
-			})
-		end
+		-- if client.supports_method('textDocument/formatting') then
+		-- 	vim.api.nvim_create_autocmd('BufWritePre', {
+		-- 		buffer = bufnr,
+		-- 		callback = function()
+		-- 			vim.lsp.buf.format({ bufnr = bufnr, id = client_id })
+		-- 		end
+		-- 	})
+		-- end
 
 		if client.supports_method('textDocument/documentHighlight') then
 			local group = vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
