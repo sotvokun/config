@@ -60,6 +60,6 @@ augroup dissession
 		\ | endif
 	autocmd VimLeavePre * 
 		\ if dissession#check() && g:dissession_save_on_exit
-		\ | call dissession#save()
+		\ | call dissession#save(1)
 		\ | endif
 augroup END
