@@ -87,7 +87,7 @@ local sources = {
 	}
 	local ok, nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 	if ok then
-		table.insert(sources, {name = 'nvim_lsp'})
+		table.insert(sources, 2, {name = 'nvim_lsp'})
 	end
 	return cmp.config.sources(sources)
 end
