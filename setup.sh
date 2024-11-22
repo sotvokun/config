@@ -17,6 +17,9 @@ fi
 cat .gitconfig | sed 's/\#/\@/g' > "$HOME/.gitconfig"
 cp .gitexcludes "$HOME/.gitexcludes"
 
+# ideavimrc
+cp .ideavimrc "$HOME/.ideavimrc"
+
 # configs
 cp -rf .config "$HOME/"
 

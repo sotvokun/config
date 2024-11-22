@@ -1,0 +1,62 @@
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
+
+
+" Settings
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set scrolloff=1
+
+
+let mapleader = " "
+
+" vim-sneak with `let g:sneak#label = 1` to show labels
+nmap S <Action>(AceBackwardAction)
+nmap s <Action>(AceForwardAction)
+
+
+" Life quality improvements
+nmap k gk
+nmap j gj
+nmap Q @q
+nmap Y y$
+
+imap <c-p> <Action>(EditorUp)
+imap <c-n> <Action>(EditorDown)
+imap <c-b> <Action>(EditorLeft)
+imap <c-f> <Action>(EditorRight)
+imap <c-a> <home>
+imap <c-e> <end>
+
+
+" LSP like mappings
+nmap gd <Action>(GotoDeclaration)
+nmap gr <Action>(ShowUsages)
+nmap cR <Action>(Rename)
+nmap cA <Action>(ShowIntentionActions)
+
+nmap g= <Action>(RiderStrictFormatCode)
+
+" Window and buffer navigation
+nmap <c-h> <c-w>h
+nmap <c-j> <c-w>j
+nmap <c-k> <c-w>k
+nmap <c-l> <c-w>l
+nmap <c-w>q :q<cr>
+nmap <c-w>t :tabnew<cr>
+nmap [t :tabprevious<cr>
+nmap ]t :tabnext<cr>
+
+
+" Explorer
+nmap <c-g>n :NERDTreeToggle<cr>
+
+
+" Fuzzy finders
+nmap <leader>f <Action>(GotoFile)
+nmap <leader>s <Action>(GotoSymbol)
+nmap <leader>% <Action>(FindInPath)
