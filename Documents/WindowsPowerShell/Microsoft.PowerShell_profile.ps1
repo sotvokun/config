@@ -18,10 +18,37 @@ function prompt
 }
 
 
-# vfox intergarte
-if (Get-Command "vfox.exe" -ErrorAction SilentlyContinue)
+# Version-fox Integration
+if (Get-Command 'vfox.exe' -ErrorAction SilentlyContinue)
 {
 	Invoke-Expression "$(vfox activate pwsh)"
+}
+
+
+# Windows Terminal Integration
+if ($env:WT_SESSION)
+{
+	Remove-PSReadLineKeyHandler -Chord 'Ctrl+a'
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,Ctrl+a' -Function BeginningOfLine
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,c' -ScriptBlock { wt.exe -w 0 new-tab -d "$PWD" }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,]' -ScriptBlock { wt.exe -w 0 focus-tab -n }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,[' -ScriptBlock { wt.exe -w 0 focus-tab -p }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,|' -ScriptBlock { wt.exe -w 0 split-pane -V -d "$PWD" }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,-' -ScriptBlock { wt.exe -w 0 split-pane -H -d "$PWD" }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,h' -ScriptBlock { wt.exe -w 0 move-focus left }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,j' -ScriptBlock { wt.exe -w 0 move-focus down }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,k' -ScriptBlock { wt.exe -w 0 move-focus up }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,l' -ScriptBlock { wt.exe -w 0 move-focus right }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,0' -ScriptBlock { wt.exe -w 0 focus-tab -t 0 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,1' -ScriptBlock { wt.exe -w 0 focus-tab -t 1 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,2' -ScriptBlock { wt.exe -w 0 focus-tab -t 2 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,3' -ScriptBlock { wt.exe -w 0 focus-tab -t 3 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,4' -ScriptBlock { wt.exe -w 0 focus-tab -t 4 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,5' -ScriptBlock { wt.exe -w 0 focus-tab -t 5 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,6' -ScriptBlock { wt.exe -w 0 focus-tab -t 6 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,7' -ScriptBlock { wt.exe -w 0 focus-tab -t 7 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,8' -ScriptBlock { wt.exe -w 0 focus-tab -t 8 }
+	Set-PSReadLineKeyHandler -Chord 'Ctrl+a,9' -ScriptBlock { wt.exe -w 0 focus-tab -t 9 }
 }
 
 
