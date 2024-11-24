@@ -27,7 +27,7 @@
 "      down                    Move focus to the down pane
 "
 
-if !has('win32') || !exists('$WT_SESSION')
+if has('win32') && !exists('$WT_SESSION')
 	echoerr '[wt] current session is not in Windows Terminal'
 endif
 
