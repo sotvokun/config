@@ -27,8 +27,13 @@
 "      down                    Move focus to the down pane
 "
 
+if has('nvim') && exists('g:vscode')
+	finish
+endif
+
 if has('win32') && !exists('$WT_SESSION')
 	echoerr '[wt] current session is not in Windows Terminal'
+	finish
 endif
 
 if exists('g:wt_loaded')
