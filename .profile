@@ -2,6 +2,13 @@
 [[ "$-" != *i* ]] && return
 
 
+# `is_windows`
+is_windows=0
+if [[ "$(uname)" == 'Windows_NT' || "$(uname)" =~ 'MINGW' ]]; then
+	is_windows=1
+fi
+
+
 # options
 HISTCONTROL=ignoreboth
 HISTSIZE=1000

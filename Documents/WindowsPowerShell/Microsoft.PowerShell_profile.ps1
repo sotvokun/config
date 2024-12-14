@@ -3,6 +3,11 @@ Import-Module PSReadLine
 Set-PSReadLineOption -EditMode Emacs -BellStyle Visual
 
 
+# Environment Variable
+$ENV:MSYS="winsymlinks:nativestrict"
+$ENV:CYGWIN="winsymlinks:nativestrict"
+
+
 # Alias
 Set-Alias -Name open -Value Explorer.exe
 
