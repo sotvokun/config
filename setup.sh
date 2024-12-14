@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
+# variables
+is_windows=0
+if [[ "$(uname)" == 'Windows_NT' || "$(uname)" =~ 'MINGW' ]]; then
+	is_windows=1
+fi
+
 # shell profile
-if [[ "$(uname)" == 'Windows_NT' ]]; then
+if [[ $is_windows -eq 1 ]]; then
 	cp "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1" \
 		"$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
 	cp .wslconfig "$HOME/.wslconfig"
-else
-	if [[ "$SHELL" =~ 'bash' ]]; then
-		cp .profile "$HOME/.bashrc"
-	elif [[ "$SHELL" =~ 'zsh' ]]; then
-		cp .profile "$HOME/.zshrc"
-	fi
+fi
+if [[ "$SHELL" =~ 'bash' ]]; then
+	cp .profile "$HOME/.bashrc"
+elif [[ "$SHELL" =~ 'zsh' ]]; then
+	cp .profile "$HOME/.zshrc"
 fi
 
 # gitconfig && gitexcludes
@@ -24,7 +29,8 @@ cp .ideavimrc "$HOME/.ideavimrc"
 cp -rf .config "$HOME/"
 
 # symbolic link for neovim on Windows
-if [[ "$(uname)" == 'Windows_NT' && ! -h "$HOME/AppData/Local/nvim" ]]; then
+if [[ $is_windows -eq 1 && ! -h "$HOME/AppData/Local/nvim" ]]; then
+	rm -rf "$HOME/AppData/Local/nvim"
 	ln -s "$HOME/.config/nvim" "$HOME/AppData/Local/nvim"
 fi
 
