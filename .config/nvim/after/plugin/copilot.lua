@@ -14,12 +14,8 @@ vim.g.copilot_tab_fallback = ''
 
 
 -- copilot.lua
-local ok, copilot = pcall(require, 'copilot')
-if not ok then
-	return
-end
 
-copilot.setup({
+local copilot_setup_option = {
 	suggestion = {
 		auto_trigger = true,
 		keymap = {
@@ -27,6 +23,26 @@ copilot.setup({
 			dismiss = false,
 		},
 	},
+}
+
+function copilot_setup()
+	vim.fn['plug#load']('copilot.lua')
+
+	local ok, copilot = pcall(require, 'copilot')
+	if not ok then
+		return
+	end
+
+	copilot.setup(copilot_setup_option)
+end
+
+local augroup = vim.api.nvim_create_augroup('copilot_init', { clear = true })
+vim.api.nvim_create_autocmd({'InsertEnter'}, {
+	pattern = '*',
+	callback = function(ev)
+		copilot_setup()
+	end,
+	group = augroup,
 })
 
 

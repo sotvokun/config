@@ -12,8 +12,6 @@ if not ok then
 	return
 end
 
-local copilot_ok, copilot = pcall(require, 'copilot')
-
 
 -- Helper functions
 
@@ -27,6 +25,7 @@ end
 
 local function copilot_ready()
 	-- for copilot.lua
+	local copilot_ok, copilot = pcall(require, 'copilot')
 	return copilot_ok
 
 	-- -- for copilot.vim

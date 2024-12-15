@@ -141,7 +141,7 @@ function! s:setup()
 	for pkg in s:manifest
 		let opts = {}
 		for attr in s:allow_attributes
-			if len(get(pkg, attr, '')) > 0
+			if len(get(pkg, attr, '')) > 0 || type(get(pkg, attr, '')) == type([])
 				let opts[attr] = pkg[attr]
 			endif
 		endfor
