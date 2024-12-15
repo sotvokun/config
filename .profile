@@ -67,7 +67,7 @@ fi
 
 
 # vfox
-if [[ -n $(command -v vfox) ]]; then
+if [[ $is_windows -eq 0 && -n $(command -v vfox) ]]; then
 	SHELL_BASENAME="$(basename $SHELL)"
 	__VFOX_ACTIVATE_SHELL="$(vfox activate $SHELL_BASENAME)"
 	source <(echo $__VFOX_ACTIVATE_SHELL)
