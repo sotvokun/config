@@ -1,6 +1,9 @@
 " after/plugin/gitgutter.vim - gitgutter configuration
 "
 
+if !exists('g:loaded_gitgutter') || !g:loaded_gitgutter
+	finish
+endif
 if exists('g:loaded_gitgutter_after')
 	finish
 endif

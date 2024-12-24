@@ -8,6 +8,11 @@ let g:loaded_vscode_init = 1
 
 command! -nargs=1 Load execute printf('source %s/<args>', stdpath('config'))
 
+" Section: Options
+"    Part: General
+syntax off
+
+
 " Section: Mapping
 "    Part: Foldding
 nnoremap zc <cmd>call VSCodeNotify('editor.fold')<cr>
@@ -34,13 +39,9 @@ nnoremap <silent> <esc> <cmd>nohlsearch<cr>
 inoremap <c-s> <cmd>call VSCodeNotify('workbench.action.files.save')<cr>
 nnoremap Q @q
 
-"    Part: UI
-nnoremap <c-g>n <cmd>call VSCodeNotify('workbench.view.explorer')<cr>
-
 "    Part: Editting
-nnoremap ]g <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
-nnoremap [g <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
-
+nmap ]g <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
+nmap [g <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
 
 " Section: Plugins
 "    Part: sneak
