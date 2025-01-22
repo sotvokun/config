@@ -25,6 +25,9 @@ cp .gitexcludes "$HOME/.gitexcludes"
 # ideavimrc
 cp .ideavimrc "$HOME/.ideavimrc"
 
+# remove neovim config for clean setup
+rm -rf "$HOME/.config/nvim"
+
 # configs
 cp -rf .config "$HOME/"
 
