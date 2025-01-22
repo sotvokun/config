@@ -14,6 +14,8 @@ augroup setup_fugitive
 		\ nnoremap <buffer> q <cmd>q<cr>
 augroup END
 
+command! -nargs=0 Gsync execute 'G stash | G pull --rebase | G push | G stash pop'
+
 
 " Section: gv
 " -----------------------------------------------------------------------------
@@ -38,4 +40,3 @@ augroup lazyload_gitgutter
 	autocmd!
 	autocmd BufReadPre * call plug#load('vim-gitgutter') | autocmd! lazyload_gitgutter
 augroup END
-
