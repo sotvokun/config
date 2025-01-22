@@ -34,4 +34,6 @@ Plug 'nvim-lua/plenary.nvim'
 " Section: vim-im-select
 " -----------------------------------------------------------------------------
 "
-Plug 'brglng/vim-im-select'
+if (has('mac') || has('win32')) && executable('im-select')
+	Plug 'brglng/vim-im-select'
+endif
