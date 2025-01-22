@@ -1,4 +1,7 @@
-" init-vscode.vim
+" init-vscode.vim - setup for vscode-neovim
+"
+" COMMAND:
+"   :Load                       - Load a file in config home
 "
 
 if exists('g:loaded_vscode_init')
@@ -6,54 +9,68 @@ if exists('g:loaded_vscode_init')
 endif
 let g:loaded_vscode_init = 1
 
-command! -nargs=1 Load execute printf('source %s/<args>', stdpath('config'))
 
 " Section: Options
-"    Part: General
+"    Part: general
+syntax clear
 syntax off
+set syntax=OFF
+
+"    Part: clipboard
+set clipboard=unnamedplus
 
 
 " Section: Mapping
-"    Part: Foldding
+"    Part: foldding
 nnoremap zc <cmd>call VSCodeNotify('editor.fold')<cr>
 nnoremap zo <cmd>call VSCodeNotify('editor.unfold')<cr>
 
-"    Part: Window
+"    Part: window
 nnoremap <c-j> <cmd>call VSCodeNotify('workbench.action.navigateDown')<cr>
 nnoremap <c-k> <cmd>call VSCodeNotify('workbench.action.navigateUp')<cr>
 nnoremap <c-h> <cmd>call VSCodeNotify('workbench.action.navigateLeft')<cr>
 nnoremap <c-l> <cmd>call VSCodeNotify('workbench.action.navigateRight')<cr>
 
-"    Part: Tabpage
+"    Part: tabpage
 nnoremap ]t <cmd>call VSCodeNotify('workbench.action.nextEditorInGroup')<cr>
 nnoremap [t <cmd>call VSCodeNotify('workbench.action.previousEditorInGroup')<cr>
 
-"    Part: Comment (same map as vim-commentary)
+"    Part: comment (same map as vim-commentary)
 xmap gc <Plug>VSCodeCommentary
 nmap gc <Plug>VSCodeCommentary
 omap gc <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
-"    Part: Misc
+"    Part: misc
 nnoremap <silent> <esc> <cmd>nohlsearch<cr>
 inoremap <c-s> <cmd>call VSCodeNotify('workbench.action.files.save')<cr>
 nnoremap Q @q
 
-"    Part: Editting
+"    Part: editting
 nmap ]g <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
 nmap [g <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
 
-" Section: Plugins
-"    Part: sneak
 
+" COMMAND: Load
+command! -nargs=1 Load execute printf('source %s/<args>', stdpath('config'))
+
+
+" Section: Plugin Declaration
+call plug#begin()
+
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tommcdo/vim-lion'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'justinmk/vim-sneak'
+
+call plug#end()
+
+
+" Section: Plugins Setup
+"    Part: vim-sneak
 let g:sneak#label = 1
 nnoremap f <Plug>Sneak_f
 nnoremap F <Plug>Sneak_F
 nnoremap t <Plug>Sneak_t
 nnoremap T <Plug>Sneak_T
-
-let g:pkg_manifest = stdpath('config') . '/pkg.code'
-
-silent! Load module/pkg.vim
-
-runtime after/plugin/vsnip.vim

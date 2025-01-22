@@ -63,11 +63,11 @@ set scrolloff=1
 set sidescrolloff=5
 set signcolumn=yes
 
+set guicursor=n-v-c-sm:block-Cursor,i-ci-ve:ver25-lCursor,r-cr-o:hor20-lCursor,t:block-blinkon500-blinkoff500-TermCursor
+
 if has('termguicolors')
 	set termguicolors
-	set background=dark
-	silent! colorscheme lunaperche
-	silent! colorscheme mercury
+	silent! colorscheme rsms
 endif
 
 if has('syntax')
@@ -76,7 +76,10 @@ endif
 
 "    Part: misc
 "    REFERENCES:
-"     - https://github.com/neovim/neovim/issues/24542
+"     * Cannot open file whose filename or folder name has parenthesis "(" on Windows
+"     |-  https://github.com/neovim/neovim/issues/24542
+"     |- `set isfname+=(,)` is work, but it will broke `helpgrep` command
+"     |- `set noshellslash` is work too, but it will broke some plugin
 set autoread
 set autowrite
 set confirm
@@ -91,8 +94,9 @@ set sessionoptions+=localoptions
 set modeline
 set laststatus=2
 set updatetime=750
+set title
 if has('win32')
-	set isfname+=(,)
+	set noshellslash
 endif
 
 "    Part: grep
@@ -101,28 +105,15 @@ if executable('rg')
 	set grepformat=%f:%l:%c:%m
 endif
 
-"    Part: clipboard
-if has('nvim')
-	set clipboard=unnamedplus
-elseif !has('nvim') && has('unnamedplus')
-	set clipboard=unnamedplus
-else
-	set clipboard=unnamed
-endif
-
-
-"    Part: builtin package
-"       A: netrw
-let g:netrw_banner = 0
-
-"       A: editorconfig (for vim)
-silent! packadd! editorconfig
-
 
 " Section: keymap
 "    Part: Leader
 nnoremap <space> <nop>
 let g:mapleader = ' '
+
+"    Part: <c-g> - as secondary leader
+nnoremap <c-g> <nop>
+nnoremap <c-g><c-g> <cmd>file<cr>
 
 "    Part: window
 nnoremap <c-h> <c-w>h
@@ -145,18 +136,17 @@ inoremap <c-a> <home>
 inoremap <c-e> <end>
 inoremap <c-f> <right>
 inoremap <c-b> <left>
-inoremap <m-f> <s-left>
-inoremap <m-b> <s-right>
-
-inoremap <expr> <c-n> pumvisible() ? "\<c-n>" : "\<down>"
-inoremap <expr> <c-p> pumvisible() ? "\<c-p>" : "\<up>"
+inoremap <c-n> <down>
+inoremap <c-p> <up>
+inoremap <m-f> <s-right>
+inoremap <m-b> <s-left>
 
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
 cnoremap <c-f> <right>
 cnoremap <c-b> <left>
-cnoremap <m-f> <s-left>
-cnoremap <m-b> <s-right>
+cnoremap <m-f> <s-right>
+cnoremap <m-b> <s-left>
 
 "    Part: fallback setup
 inoremap <c-x>n <c-n>
@@ -170,29 +160,39 @@ nnoremap <expr> ]b '<cmd>' . v:count1 . 'bnext<cr>'
 nnoremap <expr> [b '<cmd>' . v:count1 . 'bprevious<cr>'
 nnoremap <expr> ]t '<cmd>+' . v:count1 . 'tabnext<cr>'
 nnoremap <expr> [t '<cmd>-' . v:count1 . 'tabnext<cr>'
-nnoremap <expr> [q '<cmd>' . v:count1 . 'cnext<cr>'
-nnoremap <expr> ]q '<cmd>' . v:count1 . 'cprevious<cr>'
+nnoremap <expr> ]q '<cmd>' . v:count1 . 'cnext<cr>'
+nnoremap <expr> [q '<cmd>' . v:count1 . 'cprevious<cr>'
 
 " better indenting
 vnoremap < <gv
 vnoremap > >gv
 
 " terminal
+function! s:open_terminal(...)
+	let shell = has('win32') ? 'powershell' : ''
+	if a:0 == 0
+		execute printf('terminal %s', shell)
+	elseif a:0 == 1 && a:1 == 'v'
+		execute printf('vsplit | terminal %s', shell)
+	elseif a:0 == 1 && a:1 == 's'
+		execute printf('split | terminal %s', shell)
+	endif
+endfunction
 tnoremap <esc> <c-\><c-n>
+nnoremap <c-g>! <cmd>call <SID>open_terminal()<cr>
+nnoremap <c-g>s! <cmd>call <SID>open_terminal('s')<cr>
+nnoremap <c-g>v! <cmd>call <SID>open_terminal('v')<cr>
 
 " replay @q macro
 nnoremap Q @q
 
 " <esc> disable highlight and redraw
-nnoremap <silent> <esc> <cmd>nohlsearch<cr><cmd>diffupdate<cr><cmd>redraw<cr>
+nnoremap <silent> <esc> <cmd>nohlsearch<bar>diffupdate<bar>redraw<cr>
+
 
 " mark search position
 nnoremap / ms/
 nnoremap ? ms?
-
-" free <c-g>
-nnoremap <c-g> <nop>
-nnoremap <c-g><c-g> <cmd>file<cr>
 
 " delete multiple spaces but keep one
 nnoremap dz<space> ciw<space><esc>
@@ -224,6 +224,7 @@ augroup init
 	" set nonumber for terminal mode
 	if has('nvim')
 		autocmd TermOpen * setlocal nonumber
+		autocmd TermOpen term://* startinsert
 	else
 		autocmd TerminalWinOpen * setlocal nonumber
 	endif
@@ -238,10 +239,25 @@ augroup init
 	autocmd BufEnter term://*
 		\ setlocal nonumber
 
-	" filetype: help, qf
-	autocmd FileType help,qf
+	" filetype: help, qf, query, checkhealth
+	autocmd FileType help,qf,query,checkhealth
 		\ setlocal nowrap
 		\ | nnoremap <buffer> q <cmd>quit<cr>
+
+	" filetype: vimscript
+	autocmd FileType vim
+		\ setlocal commentstring=\"\ %s
+
+	" autocmd for bigfile
+	autocmd BufWinEnter *
+		\ if getfsize(@%) > 1000000
+		\ | setlocal syntax=OFF
+		\ | setlocal nowrap
+		\ | endif
+
+	if has('nvim')
+		autocmd FileType vim lua vim.treesitter.start()
+	endif
 augroup END
 
 
@@ -250,20 +266,37 @@ let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 command! -nargs=1 Load execute printf('source %s/<args>', s:home)
 
 
-" Section: Load module
-
-Load module/pkg.vim
-
+" Section: Builtin Plugin Options
+"    Part: Moonwalk
+"
 if has('nvim')
-	lua do
-	\ local ok, cmp = pcall(require, 'cmp_nvim_lsp')
-	\ if ok then
-	\ 	vim.g.lsp = { capabilities = cmp.default_capabilities() }
-	\ end
-	\ end
+	let g:moonwalk_subdirs = ['plugin', 'ftplugin', 'lsp', 'bundle']
+	silent lua vim.g.moonwalk_hook_precompile = function(src) return '(require-macros :init-macros)' .. src end
+	silent lua vim.g.moonwalk_hook_ignorecompile = function(src) return {'fnl/init-macros.fnl'} end
+endif
 
-	Load module/lsp.lua
-	if exists('g:neovide')
-		silent! Load module/neovide.vim
-	endif
+"    Part: netrw
+let g:netrw_banner = 0
+let g:netrw_preview = 1
+let g:netrw_alto = 0
+let g:netrw_winsize = 40
+
+nnoremap <expr> <c-g>e &filetype=='netrw'?"\<c-^>":"<cmd>Explore<cr>"
+
+
+"    Part: editorconfig (for vim)
+silent! packadd! editorconfig
+
+
+" Section: Load Plugins
+"
+call plug#begin()
+call bundle#load()
+call plug#end()
+
+
+" Section: Enable LSP Clients
+"
+if has('nvim')
+	lua vim.lsp.enable({'tsserver', 'gopls', 'intelephense'})
 endif

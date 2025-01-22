@@ -7,7 +7,7 @@ endif
 let g:loaded_vsnip_after = 1
 
 if has('nvim')
-	let g:vsnip_snippet_dir = stdpath('config') . '/snippets'
+	let g:vsnip_snippet_dir = stdpath('config') . '/snippet'
 endif
 
 inoremap <expr> <c-]> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<c-]>'
