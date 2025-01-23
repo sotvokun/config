@@ -7,7 +7,6 @@
 (set vim.g.loaded_codecompanion_after true)
 
 
-
 (macro copilot-claude []
   `(lambda []
      (let [adapters# (require "codecompanion.adapters")
@@ -17,11 +16,10 @@
          {:schema {:model {:default model#}}}))))
 
 
-
 (with-module [codecompanion :codecompanion]
   (codecompanion.setup
-    {
-     :display {:chat {:show_header_separator true :show_settings true}}
+    {:adapters {:copilot (copilot-claude)}
+     :display {:chat {:show_header_separator true :show_settings true :window {:opts {:number false :signcolumn "yes:1"}}}}
      :language "Chinese"
-     :strategies {:chat {:adapter "copilot" :model "claude-3.5-sonnet"}
-                  :inline {:adapter "copilot" :model "claude-3.5-sonnet"}}}))
+     :strategies {:chat {:adapter "copilot"}
+                  :inline {:adapter "copilot"}}}))

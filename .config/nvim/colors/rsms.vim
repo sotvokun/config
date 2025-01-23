@@ -2,7 +2,7 @@
 " Description:  a port of rasmus' sublime-text colorscheme
 " Author:       Junchen Du <sotvokun#outlook.com>
 " License:      UNLICENSE
-" Last Updated: 2025-1-18
+" Last Updated: 2025-1-23
 "
 
 

@@ -42,6 +42,8 @@
 --                               (TYPE: nil -> str[])
 --                               (DEFAULT: { -> [] })
 --                               NOTE: This variable only can be assigned with `lua` command.
+--   g:moonwalk_macro_path     - the macro path for fennel compiler
+--                               (DEFAULT: [])
 --
 -- COMMANDS:
 --   Moonwalk                  - compile all fennel files to lua
@@ -121,6 +123,11 @@ local _hooks = {
 	postcompile = vim.g.moonwalk_hook_postcompile,
 	ignorecompile = vim.g.moonwalk_hook_ignorecompile
 }
+
+-- g:moonwalk_macro_path
+if type(vim.g.moonwalk_macro_path) ~= 'table' then
+	vim.g.moonwalk_macro_path = {}
+end
 
 
 -- Main Functions
@@ -203,7 +210,11 @@ local function compile(path, out)
 	end
 
 	local macro_path = fennel['macro-path']
-	fennel['macro-path'] = vim.iter({'./fnl/?.fnl', './fnl/init.fnl', './fnl/init-macros.fnl'}):join(';')
+	local custom_macro_path = vim.tbl_extend('force',
+		{'./fnl/?.fnl', './fnl/init.fnl', './fnl/init-macros.fnl'},
+		vim.g.moonwalk_macro_path
+	)
+	fennel['macro-path'] = vim.iter(custom_macro_path):join(';')
 
 	src = _hooks['precompile'](src)
 	local compiled = fennel.compileString(src, { filename = path })

@@ -69,6 +69,9 @@ if has('termguicolors')
 	set termguicolors
 	silent! colorscheme rsms
 endif
+if  get(g:, 'colors_name', '') ==# 'rsms'
+	set cursorlineopt=number
+endif
 
 if has('syntax')
 	syntax on
@@ -273,6 +276,7 @@ if has('nvim')
 	let g:moonwalk_subdirs = ['plugin', 'ftplugin', 'lsp', 'bundle']
 	silent lua vim.g.moonwalk_hook_precompile = function(src) return '(require-macros :init-macros)' .. src end
 	silent lua vim.g.moonwalk_hook_ignorecompile = function(src) return {'fnl/init-macros.fnl'} end
+	silent lua vim.g.moonwalk_macro_path = {vim.fs.joinpath(vim.fn.stdpath('config'), 'fnl', 'init-macros.fnl')}
 endif
 
 "    Part: netrw
