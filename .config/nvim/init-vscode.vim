@@ -16,6 +16,14 @@ syntax clear
 syntax off
 set syntax=OFF
 
+"    Part: editor
+"        - The bug of vscode-neovim output message is not fixed yet
+"          set up the command line height to an enough value to
+"          avoid too many messages that popup the output message
+"          panel.
+"          REF: https://stackoverflow.com/questions/78611905/turn-off-neovim-messages-in-vscode
+set cmdheight=4
+
 "    Part: clipboard
 set clipboard=unnamedplus
 
