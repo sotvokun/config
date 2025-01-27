@@ -5,3 +5,8 @@ size = 13.0
 [terminal.shell]
 program = "powershell.exe"
 args = ["-NoLogo"]
+
+[[keyboard.bindings]]
+key = "F11"
+mods = "Super"
+action = "ToggleFullscreen"
