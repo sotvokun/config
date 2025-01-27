@@ -31,10 +31,18 @@ rm -rf "$HOME/.config/nvim"
 # configs
 cp -rf .config "$HOME/"
 
-# symbolic link for neovim on Windows
+# - alacritty - for Windows
+if [[ $is_windows -eq 1 ]]; then
+	mv "$HOME/.config/alacritty/alacritty.windows.toml" "$HOME/.config/alacritty/alacritty.toml"
+fi
+
+# symbolic links (neovim, alacritty) on Windows
 if [[ $is_windows -eq 1 && ! -h "$HOME/AppData/Local/nvim" ]]; then
 	rm -rf "$HOME/AppData/Local/nvim"
 	ln -s "$HOME/.config/nvim" "$HOME/AppData/Local/nvim"
+
+	rm -rf "$HOME/AppData/Roaming/alacritty"
+	ln -s "$HOME/.config/alacritty" "$HOME/AppData/Roaming/alacritty"
 fi
 
 # wsl setup
