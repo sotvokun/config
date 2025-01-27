@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-# variables
+
+# SECTION: variables
+# -----------------------------------------------------------------------------
+#
 is_windows=0
 if [[ "$(uname)" == 'Windows_NT' || "$(uname)" =~ 'MINGW' ]]; then
 	is_windows=1
 fi
 
-# shell profile
+
+# SECTION: shell profile
+# -----------------------------------------------------------------------------
+#
 if [[ $is_windows -eq 1 ]]; then
 	cp "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1" \
 		"$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
@@ -18,34 +24,48 @@ elif [[ "$SHELL" =~ 'zsh' ]]; then
 	cp .profile "$HOME/.zshrc"
 fi
 
-# gitconfig && gitexcludes
+
+# SECTION: softwares
+# -----------------------------------------------------------------------------
+#
+#    PART: gitconfig && gitexcludes
+#
 cat .gitconfig | sed 's/\#/\@/g' > "$HOME/.gitconfig"
 cp .gitexcludes "$HOME/.gitexcludes"
 
-# ideavimrc
+#    PART: ideavimrc
 cp .ideavimrc "$HOME/.ideavimrc"
 
-# remove neovim config for clean setup
-rm -rf "$HOME/.config/nvim"
-
-# configs
+#    PART: XDG_CONFIG_HOME
 cp -rf .config "$HOME/"
 
-# - alacritty - for Windows
-if [[ $is_windows -eq 1 ]]; then
-	mv "$HOME/.config/alacritty/alacritty.windows.toml" "$HOME/.config/alacritty/alacritty.toml"
-fi
-
-# symbolic links (neovim, alacritty) on Windows
+#    PART: neovim
+#        - 1. clean up the old neovim configuraiton
+#        - 2. re-copy the new configs
+#        - 3. create symbolic link for Windows
+rm -rf "$HOME/.config/nvim"
+cp -rf .config/nvim "$HOME/.config/nvim"
 if [[ $is_windows -eq 1 && ! -h "$HOME/AppData/Local/nvim" ]]; then
 	rm -rf "$HOME/AppData/Local/nvim"
 	ln -s "$HOME/.config/nvim" "$HOME/AppData/Local/nvim"
-
-	rm -rf "$HOME/AppData/Roaming/alacritty"
-	ln -s "$HOME/.config/alacritty" "$HOME/AppData/Roaming/alacritty"
 fi
 
-# wsl setup
+#    PART: alacritty setup
+#        - 1. replace the alacritty.toml by the corresponding operating system
+#        - 2. create symbolic link for Windows
+if [[ $is_windows -eq 1 ]]; then
+	mv "$HOME/.config/alacritty/alacritty.windows.toml" "$HOME/.config/alacritty/alacritty.toml"
+
+	if [[ ! -h "$HOME/AppData/Roaming/alacritty" ]]; then
+		rm -rf "$HOME/AppData/Roaming/alacritty"
+		ln -s "$HOME/.config/alacritty" "$HOME/AppData/Roaming/alacritty"
+	fi
+fi
+
+
+# SECTION: WSL (Windows Only)
+# -----------------------------------------------------------------------------
+#
 if [[ "$(uname)" == 'Linux' ]]; then
 	if [[ $(grep -i Microsoft /proc/version) ]]; then
 		/mnt/c/Windows/System32/where.exe /Q git-credential-manager
