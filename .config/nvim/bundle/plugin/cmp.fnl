@@ -35,7 +35,7 @@
     (vim.lsp.config "*" {:capabilities (cmp-lsp.default_capabilities)}))
 
   (fn setup-sources []
-    (let [src [{:name "vsnip"} {:name "buffer"} {:name "path"}]
+    (let [src [{:name "vsnip"} {:name "buffer"} {:name "path"} {:name "vison"}]
           cmp-lsp-ready (pcall require "cmp_nvim_lsp")]
       (do
         (when cmp-lsp-ready (table.insert src 2 {:name "nvim_lsp"}))

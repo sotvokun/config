@@ -44,9 +44,25 @@ augroup lazyload_codecompanion
 		\ | autocmd! lazyload_codecompanion
 augroup END
 augroup setup_codecompanion
-	autocmd! FileType codecompanion
+	autocmd!
+	autocmd FileType codecompanion
 		\ setlocal nonumber
 		\ | setlocal syntax=markdown
 		\ | setlocal nonumber
 		\ | TSBufEnable highlight
+augroup END
+
+
+" Section: vison
+" -----------------------------------------------------------------------------
+"
+Plug 'sotvokun/vison', {'on': ['Vison', 'VisonSetup', 'VisonRegisterSchema']}
+if has('nvim')
+	let g:vison_data_directory = stdpath('data') . '/vison'
+endif
+augroup setup_vison
+	autocmd!
+	autocmd BufRead,BufNewFile
+		\ package.json,tsconfig.json,jsconfig.json
+		\ Vison
 augroup END

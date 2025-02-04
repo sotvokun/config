@@ -10,8 +10,9 @@ Plug 'tpope/vim-fugitive'
 nnoremap <leader>gg <cmd>Git<cr>
 augroup setup_fugitive
 	autocmd!
-	autocmd FileType fugitive,fugitiveblame
+	autocmd FileType fugitive,fugitiveblame,git
 		\ nnoremap <buffer> q <cmd>q<cr>
+		\ | set nonumber
 augroup END
 
 command! -nargs=0 Gsync execute 'G stash | G pull --rebase | G push | G stash pop'

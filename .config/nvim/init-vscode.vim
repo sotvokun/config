@@ -72,6 +72,10 @@ Plug 'tommcdo/vim-lion'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'justinmk/vim-sneak'
 
+if (has('mac') || has('win32')) && executable('im-select')
+	Plug 'brglng/vim-im-select'
+endif
+
 call plug#end()
 
 
