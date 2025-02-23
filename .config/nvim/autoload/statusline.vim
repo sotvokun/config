@@ -30,14 +30,35 @@ function! statusline#lsp_clients()
 			return printf('[%s]', join(map(clients, {_, val -> val['name']}), ' '))
 		endif
 	else
-		return '';
+		return ''
 	endif
 endfunction
 
 
 function! statusline#fugitive()
 	if !exists(':G')
-		return '';
+		return ''
 	endif
 	return fugitive#statusline()
+endfunction
+
+function! statusline#gitgutter()
+	if !exists(':GitGutter')
+		return ''
+	endif
+	let [a, m, r] = GitGutterGetHunkSummary()
+	if a + m + r == 0
+		return ''
+	endif
+	let msgarr = []
+	if a > 0
+		call add(msgarr, printf('%%#Added#+%d%%*', a))
+	endif
+	if m > 0
+		call add(msgarr, printf('%%#Changed#~%d%%*', m))
+	endif
+	if r > 0
+		call add(msgarr, printf('%%#Removed#-%d%%*', r))
+	endif
+	return printf('[%s]', join(msgarr, ' '))
 endfunction

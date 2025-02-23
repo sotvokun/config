@@ -31,12 +31,14 @@
 
 
 ; Section: vim api
+; Reference:
+;   - augroup:
+;     https://raw.githubusercontent.com/gpanders/dotfiles/refs/heads/master/.config/nvim/fnl/macros.fnl
 
 (lambda keymap [mode lhs rhs ?opts]
   (let [modes (icollect [val (string.gmatch (tostring mode) "%S")]
                 val)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,?opts)))
-
 
 (lambda autocmd [events pattern callback ?opts]
   (let [opts (or ?opts {})]
@@ -47,6 +49,20 @@
                        {:pattern ,pattern
                         :callback ,callback}))))
 
+(lambda augroup* [clear group ...]
+  (do
+    (set _G.augroup (tostring group))
+    (if (and clear (= 0 (select :# ...)))
+        `(vim.api.nvim_del_augroup_by_name ,(tostring group))
+        `(do
+           (vim.api.nvim_create_augroup ,(tostring group) {:clear ,clear})
+           ,...))))
+
+(lambda augroup [group ...]
+  (augroup* false group ...))
+
+(lambda augroup! [group ...]
+  (augroup* true group ...))
 
 {: exit-if!
 
@@ -54,4 +70,6 @@
  : with-module
 
  : keymap
- : autocmd}
+ : autocmd
+ : augroup
+ : augroup!}

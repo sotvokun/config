@@ -134,10 +134,6 @@ if &background ==# 'light'
 	call s:HI('Error', '#000000', '#d11100', [s:a.bold])
 	call s:HI('Todo', '#f06c00', s:none, [s:a.bold])
 
-	call s:HI('Added', '#007f40')
-	call s:HI('Changed', '#d68800')
-	call s:HI('Removed', '#d11100')
-
 " - backgkround: dark
 "
 else
@@ -167,11 +163,11 @@ else
 	call s:CL('Ignore')
 	call s:HI('Error', '#000000', '#d11100', [s:a.bold])
 	call s:HI('Todo', '#f06c00', s:none, [s:a.bold])
-
-	call s:HI('Added', '#00db6e')
-	call s:HI('Changed', '#ffff4d')
-	call s:HI('Removed', '#ff4433')
 endif
+
+call s:HI('Added', '#007f40')
+call s:HI('Changed', '#d68800')
+call s:HI('Removed', '#d11100')
 
 "#>
 
@@ -298,7 +294,16 @@ call s:HI('SpellRare', s:none, s:none, [s:a.undercurl], '#0080ff')
 "#< Builtin Plugin ------------------------------------------------------------
 "
 " - netrw
-call s:LR(['netrwTreeBar', 'netrwClassify'], 'NonText')
+	call s:LR(['netrwTreeBar', 'netrwClassify'], 'NonText')
+
+"#>
+
+"#< Thirdparty Plugins --------------------------------------------------------
+"
+" - vim-gitgutter
+call s:LR(['GitGutterAdd', 'diffAdded'], 'Added')
+call s:LR(['GitGutterChange', 'diffChanged'], 'Changed')
+call s:LR(['GitGutterDelete', 'diffRemoved'], 'Removed')
 
 "#>
 

@@ -22,7 +22,7 @@ set statusline+=\
 set statusline+=%{%statusline#filename()%}
 set statusline+=\ 
 set statusline+=%m%r%w
-set statusline+=\ %{statusline#fugitive()}
+set statusline+=\ %{statusline#fugitive()}%{%statusline#gitgutter()%}
 set statusline+=%=
 set statusline+=%{statusline#lsp_clients()}
 set statusline+=%y
