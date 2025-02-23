@@ -21,4 +21,5 @@
                :backdrop 45
                :preview {:border "none"}}
      :previewers {:builtin {:syntax false :treesitter false}}
-     :lsp {:symbols {:symbol_style 3}}}))
+     :lsp {:symbols {:symbol_style 3}}
+     :grep {:rg_opts "--line-number --column --vimgrep --no-heading --no-ignore-vcs --hidden --glob=!.git/"}}))

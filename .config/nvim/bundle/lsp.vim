@@ -1,21 +1,6 @@
 " bundle/lsp.vim - plugins bundle of lsp
 "
 
-
-" Section: mason.nvim
-" -----------------------------------------------------------------------------
-"
-Plug 'williamboman/mason.nvim', {'on': []}
-augroup lazyload_mason
-	autocmd!
-	autocmd WinEnter *
-		\ call plug#load('mason.nvim')
-		\ | call v:lua.require'mason'.setup()
-		\ | autocmd! lazyload_mason
-augroup END
-
-
-
 " Section: fidget.nvim
 " -----------------------------------------------------------------------------
 "
