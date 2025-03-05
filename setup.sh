@@ -7,6 +7,7 @@
 is_windows=0
 if [[ "$(uname)" == 'Windows_NT' || "$(uname)" =~ 'MINGW' ]]; then
 	is_windows=1
+	export MSYS=winsymlinks:nativestrict
 fi
 
 
@@ -14,8 +15,19 @@ fi
 # -----------------------------------------------------------------------------
 #
 if [[ $is_windows -eq 1 ]]; then
+	# Copy the PowerShell as the legacy profile
+	if [[ ! -d "$HOME/Documents/WindowsPowerShell" ]]; then
+		mkdir -p "$HOME/Documents/WindowsPowerShell"
+	fi
+
 	cp "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1" \
 		"$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
+
+	if [[ -n "$(command -v pwsh)" ]]; then
+		rm -rf "$HOME/Documents/PowerShell"
+		ln -s "$HOME/Documents/WindowsPowerShell" "$HOME/Documents/PowerShell"
+	fi
+
 	cp .wslconfig "$HOME/.wslconfig"
 fi
 if [[ "$SHELL" =~ 'bash' ]]; then
