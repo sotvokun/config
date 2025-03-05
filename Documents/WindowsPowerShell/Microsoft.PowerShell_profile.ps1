@@ -23,10 +23,14 @@ function prompt
 }
 
 
-# Version-fox Integration
-if (Get-Command 'vfox.exe' -ErrorAction SilentlyContinue)
+# mise-en-place Integration
+if ($PSVersionTable.PSVersion.Major -ge 7 -and (Get-Command 'mise.exe' -ErrorAction SilentlyContinue))
 {
-	Invoke-Expression "$(vfox activate pwsh)"
+	mise activate pwsh | Out-String | Invoke-Expression
+}
+else
+{
+	Write-Host "mise is not installed or PowerShell version is less than 7." -ForegroundColor Yellow
 }
 
 
