@@ -66,11 +66,10 @@ if [[ -d "$HOME/.asdf" ]]; then
 fi
 
 
-# vfox
-if [[ $is_windows -eq 0 && -n $(command -v vfox) ]]; then
+# mise-en-place
+if [[ $is_windows -eq 0 && -n $(command -v mise) ]]; then
 	SHELL_BASENAME="$(basename $SHELL)"
-	__VFOX_ACTIVATE_SHELL="$(vfox activate $SHELL_BASENAME)"
-	source <(echo $__VFOX_ACTIVATE_SHELL)
+	eval "$(mise activate $SHELL_BASENAME)"
 fi
 
 
