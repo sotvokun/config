@@ -172,7 +172,10 @@ vnoremap > >gv
 
 " terminal
 function! s:open_terminal(...)
-	let shell = has('win32') ? 'powershell' : ''
+	let shell = ''
+	if has('win32')
+		let shell = executable('pwsh') ? 'pwsh -NoLogo' : 'powershell -NoLogo'
+	endif
 	if a:0 == 0
 		execute printf('terminal %s', shell)
 	elseif a:0 == 1 && a:1 == 'v'

@@ -9,7 +9,7 @@ Plug 'voldikss/vim-floaterm'
 
 let g:floaterm_opener = 'edit'
 if has('win32')
-	let g:floaterm_shell = 'powershell'
+	let g:floaterm_shell = executable('pwsh') ? 'pwsh -NoLogo' : 'powershell -NoLogo'
 endif
 
 function! s:select_floaterm()
