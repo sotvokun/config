@@ -28,12 +28,15 @@ nnoremap <leader>gv <cmd>GV<cr>
 
 " Section: gitgutter
 " -----------------------------------------------------------------------------
+"  There have an alternative plugin called 'mhinz/vim-signify' which is support
+"  more vcs, but it lose some features of 'vim-gitgutter', like stage/unstage
+"  hunk. And it cannot refresh diff status without save file.
 "
 Plug 'airblade/vim-gitgutter', {'on': []}
 
 let g:gitgutter_map_keys = 0
-nnoremap ]g <Plug>(GitGutterNextHunk)
-nnoremap [g <Plug>(GitGutterPrevHunk)
+nnoremap ]c <Plug>(GitGutterNextHunk)
+nnoremap [c <Plug>(GitGutterPrevHunk)
 nnoremap <leader>gss <Plug>(GitGutterStageHunk)
 nnoremap <leader>gsu <Plug>(GitGutterUndoHunk)
 nnoremap <leader>gsp <Plug>(GitGutterPreviewHunk)

@@ -55,8 +55,8 @@ inoremap <c-s> <cmd>call VSCodeNotify('workbench.action.files.save')<cr>
 nnoremap Q @q
 
 "    Part: editting
-nmap ]g <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
-nmap [g <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
+nmap ]c <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
+nmap [c <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
 
 
 " COMMAND: Load
