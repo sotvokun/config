@@ -39,6 +39,9 @@ function! statusline#fugitive()
 	if !exists(':G')
 		return ''
 	endif
+	if !exists('*fugitive#statusline')
+		return ''
+	endif
 	return fugitive#statusline()
 endfunction
 

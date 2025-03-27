@@ -159,12 +159,8 @@ cnoremap <c-x><c-f> <c-f>
 
 "    Part: misc
 " unimpaired
-nnoremap <expr> ]b '<cmd>' . v:count1 . 'bnext<cr>'
-nnoremap <expr> [b '<cmd>' . v:count1 . 'bprevious<cr>'
 nnoremap <expr> ]t '<cmd>+' . v:count1 . 'tabnext<cr>'
 nnoremap <expr> [t '<cmd>-' . v:count1 . 'tabnext<cr>'
-nnoremap <expr> ]q '<cmd>' . v:count1 . 'cnext<cr>'
-nnoremap <expr> [q '<cmd>' . v:count1 . 'cprevious<cr>'
 
 " better indenting
 vnoremap < <gv
@@ -211,10 +207,21 @@ if !has('nvim')
 	xnoremap * y/\V<c-r>"<cr>
 	xnoremap # y?\V<c-r>"<cr>
 	nnoremap & :&&<cr>
+
+	nnoremap <expr> ]b '<cmd>' . v:count1 . 'bnext<cr>'
+	nnoremap <expr> [b '<cmd>' . v:count1 . 'bprevious<cr>'
+	nnoremap <expr> ]q '<cmd>' . v:count1 . 'cnext<cr>'
+	nnoremap <expr> [q '<cmd>' . v:count1 . 'cprevious<cr>'
+	nnoremap <expr> ]l '<cmd>' . v:count1 . 'lnext<cr>'
+	nnoremap <expr> [l '<cmd>' . v:count1 . 'lprevious<cr>'
 endif
 
 if has('nvim')
 	nnoremap zI <cmd>Inspect<cr>
+	lua vim.keymap.del('n', 'grn')
+	lua vim.keymap.del('n', 'grr')
+	lua vim.keymap.del('n', 'gri')
+	lua vim.keymap.del('n', 'gra')
 endif
 
 
@@ -228,8 +235,8 @@ augroup init
 	autocmd WinLeave,FocusLost * set nocursorline
 	
 	" set nonumber for terminal mode
+	" neovim defaultly disable number for terminal buffer from 0.11.0
 	if has('nvim')
-		autocmd TermOpen * setlocal nonumber
 		autocmd TermOpen term://* startinsert
 	else
 		autocmd TerminalWinOpen * setlocal nonumber
