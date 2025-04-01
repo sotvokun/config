@@ -67,3 +67,56 @@ augroup lazyload_fzflua
 	autocmd!
 	autocmd User fzf-lua runtime bundle/plugin/fzflua.lua | autocmd! lazyload_fzflua
 augroup END
+
+
+" Section: fern
+" -----------------------------------------------------------------------------
+"
+Plug 'lambdalisue/vim-fern'
+Plug 'lambdalisue/vim-fern-git-status'
+
+let g:fern#renderer#default#leaf_symbol = ' '
+let g:fern#renderer#default#collapsed_symbol = '▸ '
+let g:fern#renderer#default#expanded_symbol = '▾ '
+let g:fern#renderer#hide_cursor = 1
+let g:fern#disable_default_mappings = 1
+
+" Keymap
+
+function! s:setup_fern_keymap()
+	nnoremap <buffer> <c-l> <c-w>l
+	nnoremap <buffer> q <c-w>q
+
+	nnoremap <buffer> ga <Plug>(fern-action-choice)
+	nnoremap <buffer> <c-p> <Plug>(fern-action-preview)
+	nnoremap <buffer> R <Plug>(fern-action-reload)
+
+	nnoremap <buffer> l <Plug>(fern-action-open-or-expand)
+	nnoremap <buffer> h <Plug>(fern-action-collapse)
+	nnoremap <buffer> r <Plug>(fern-action-rename)
+	nnoremap <buffer> D <Plug>(fern-action-remove)
+
+	nnoremap <buffer> y <Plug>(fern-action-copy)
+	nnoremap <buffer> p <Plug>(fern-action-paste)
+
+	nnoremap <buffer> v <Plug>(fern-action-open:vsplit)
+	nnoremap <buffer> s <Plug>(fern-action-open:split)
+	nnoremap <buffer> <cr> <Plug>(fern-action-open:select)
+
+	nnoremap <buffer> a <Plug>(fern-action-new-file)
+	nnoremap <buffer> A <Plug>(fern-action-new-dir)
+
+	nnoremap <buffer> ! <Plug>(fern-action-hidden)
+	nnoremap <buffer> m <Plug>(fern-action-mark)
+endfunction
+
+nnoremap <c-g>n <cmd>Fern . -width=40 -drawer -toggle -right<cr>
+augroup setup_fern
+	au!
+	autocmd FileType fern
+		\ setlocal nonumber
+		\ | setlocal expandtab
+		\ | setlocal conceallevel=2
+		\ | setlocal concealcursor=nc
+		\ | call s:setup_fern_keymap()
+augroup END
