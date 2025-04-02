@@ -45,10 +45,6 @@
            "snippet_forward"
            "fallback"]})
 
-;    Part: provider-snippets
-(lambda setup-provider-snippets []
-  {:opts {:search_paths [(vim.fs.joinpath (vim.fn.stdpath "config") "snippet")]}})
-
 ;    Part: completion-list-selection
 (lambda setup-completion-list-selection []
   {:preselect true :auto_insert false})
@@ -59,5 +55,4 @@
                 :cmdline {:enabled false}
                 :completion {:menu {:draw {:columns (completions-menu-columns)}}
                              :list {:selection (setup-completion-list-selection)}}
-                :sources {:providers {:snippets (setup-provider-snippets)}}
                 :fuzzy {:implementation "lua"}}))
