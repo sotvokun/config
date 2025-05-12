@@ -31,37 +31,3 @@ augroup lazyload_blink_cmp
 		\ | runtime bundle/plugin/blink.cmp.lua
 		\ | autocmd! lazyload_blink_cmp
 augroup END
-
-
-" Section: copilot
-" -----------------------------------------------------------------------------
-"
-Plug 'zbirenbaum/copilot.lua', {'on': []}
-augroup lazyload_copilot
-	autocmd!
-	autocmd InsertEnter *
-		\ call plug#load('copilot.lua')
-		\ | runtime bundle/plugin/copilot.lua
-		\ | autocmd! lazyload_copilot
-augroup END
-
-
-" Section: codecompanion.nvim
-" -----------------------------------------------------------------------------
-"
-Plug 'olimorris/codecompanion.nvim', {'on': []}
-augroup lazyload_codecompanion
-	autocmd!
-	autocmd BufRead *
-		\ call plug#load('codecompanion.nvim')
-		\ | runtime bundle/plugin/codecompanion.lua
-		\ | autocmd! lazyload_codecompanion
-augroup END
-augroup setup_codecompanion
-	autocmd!
-	autocmd FileType codecompanion
-		\ setlocal nonumber
-		\ | setlocal syntax=markdown
-		\ | setlocal nonumber
-		\ | TSBufEnable highlight
-augroup END
