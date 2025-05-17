@@ -3,8 +3,8 @@ normal = { family = "Sarasa Fixed CL", style = "Regular" }
 size = 13.0
 
 [terminal.shell]
-program = "powershell.exe"
-args = ["-NoLogo"]
+program = "pwsh.exe"
+args = ["-NoLogo", "-wd ~"]
 
 [[keyboard.bindings]]
 key = "F11"
