@@ -283,10 +283,9 @@ command! -nargs=1 Load execute printf('source %s/<args>', s:home)
 "    Part: fnlw
 "
 if has('nvim')
-	let g:fnlw_subdirs = ['plugin', 'ftplugin', 'lsp', 'bundle']
+	let g:fnlw_rtpdirs = ['plugin', 'ftplugin', 'lsp', 'bundle']
 	silent lua vim.g.fnlw_hook_precompile = function(src) return '(require-macros :init-macros)' .. src end
 	silent lua vim.g.fnlw_hook_ignorecompile = function(src) return {'fnl/init-macros.fnl'} end
-	silent lua vim.g.fnlw_macro_path = {vim.fs.joinpath(vim.fn.stdpath('config'), 'fnl', 'init-macros.fnl')}
 endif
 
 "    Part: netrw

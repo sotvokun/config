@@ -15,16 +15,9 @@
 --     repl                    - start fennel as REPL
 --
 -- VARIABLES:
---   g:fnlw_dir            - the directory for search fennel code
---                               (DEFAULT: stdpath('config'))
---   g:fnlw_subdirs        - the fennel code in this directories that under
---                               `g:fnlw_dir` will compiled to lua code.
+--   g:fnlw_rtpdirs            - the directories under user configuration directory will
+--                               be handled by fennel compiler
 --                               (DEFAULT: ['plugin', 'indent', 'ftplugin', 'colors', 'lsp'])
---   g:fnlw_compiled_dir   - the directory that stored compiled lua files.
---                               the path is in runtimepath or packpath usually.
---                               (DEFAULT: "stdconfig('data')/site")
---   g:fnlw_dir_alias      - the alias for `g:fnlw_dir` is used for handle symlink
---                               (DEFAULT: [stdpath('config'), '~/.config/nvim'])
 --   g:fnlw_hook_precompile
 --                             - the function will be called before compiling;
 --                               handling with fennel code
@@ -43,21 +36,24 @@
 --                               (TYPE: nil -> str[])
 --                               (DEFAULT: { -> [] })
 --                               NOTE: This variable only can be assigned with `lua` command.
---   g:fnlw_macro_path     - the macro path for fennel compiler
---                               (DEFAULT: [])
 --
 -- COMMANDS:
---   FnlCompile             - compile all fennel files to lua
---   FnlClean               - clean all compiled lua files
+--   FnlCompile                - compile all fennel files to lua
+--   FnlClean                  - clean all compiled lua files
 --
 -- AUTOCMDS:
---   BufWritePost               compile written fennel file in config path
---   SourceCmd                  execute the fennel with source command
+--   BufWritePost                compile written fennel file in config path
+--   SourceCmd                   execute the fennel with source command
 --
 -- REFERENCE:
 --   https://github.com/gpanders/nvim-moonwalk
 --   https://github.com/gpanders/dotfiles/blob/master/.config/nvim/lua/moonwalk.lua
 --
+
+if vim.fn.has('nvim-0.10.0') == 0 then
+	print('[fnlw.lua] works on neovim 0.10 and later versions')
+	return
+end
 
 if vim.g.loaded_fnlw then
 	return
@@ -75,60 +71,6 @@ local FENNEL_INSTALL_PATH = vim.fs.normalize(string.format(
 ))
 
 local STATE_MARK = vim.fs.normalize(vim.fn.stdpath('state') .. '/fnlwed')
-
-
--- Variables
-
---- g:fnlw_dir
-if type(vim.g.fnlw_dir) ~= 'string' then
-	vim.g.fnlw_dir = vim.fn.stdpath('config')
-end
-local _dir = vim.g.fnlw_dir
-
---- g:fnlw_subdirs
-if type(vim.g.fnlw_subdirs) ~= 'table' then
-	vim.g.fnlw_subdirs = {
-		'plugin',
-		'indent',
-		'ftplugin',
-		'colors',
-		'lsp',
-	}
-end
-local _subdirs = vim.g.fnlw_subdirs
-
--- g:fnlw_compiled_dir
-if type(vim.g.fnlw_compiled_dir) ~= 'string' then
-	vim.g.fnlw_compiled_dir = vim.fs.normalize(vim.fn.stdpath('data') .. '/site')
-end
-local _compiled_dir = vim.g.fnlw_compiled_dir
-
--- g:fnlw_dir_alias
-if type(vim.g.fnlw_dir_alias) ~= 'table' then
-	vim.g.fnlw_dir_alias = { vim.fn.stdpath('config'), '~/.config/nvim' }
-end
-local _dir_alias = vim.g.fnlw_dir_alias
-
--- hooks
-if type(vim.g.fnlw_hook_precompile) ~= 'function' then
-	vim.g.fnlw_hook_precompile = function(src) return src end
-end
-if type(vim.g.fnlw_hook_postcompile) ~= 'function' then
-	vim.g.fnlw_hook_postcompile = function(src) return src end
-end
-if type(vim.g.fnlw_hook_ignorecompile) ~= 'function' then
-	vim.g.fnlw_hook_ignorecompile = function() return {} end
-end
-local _hooks = {
-	precompile = vim.g.fnlw_hook_precompile,
-	postcompile = vim.g.fnlw_hook_postcompile,
-	ignorecompile = vim.g.fnlw_hook_ignorecompile
-}
-
--- g:fnlw_macro_path
-if type(vim.g.fnlw_macro_path) ~= 'table' then
-	vim.g.fnlw_macro_path = {}
-end
 
 
 -- Main Functions
@@ -179,13 +121,49 @@ if arg[0] ~= nil then
 		if not ok then
 			print("[fnlw.lua] no installed fennel")
 		end
-		fennel.install().repl()
+		fennel.repl()
 		return 0
 	end
 end
 
 
 -- Library Functions
+
+-- Variables
+
+--- g:fnlw_rtpdirs
+if type(vim.g.fnlw_rtpdirs) ~= 'table' then
+	vim.g.fnlw_rtpdirs = {
+		'plugin',
+		'indent',
+		'ftplugin',
+		'colors',
+		'lsp',
+	}
+end
+local rtp_dirs = vim.g.fnlw_rtpdirs
+
+-- hooks
+if type(vim.g.fnlw_hook_precompile) ~= 'function' then
+	vim.g.fnlw_hook_precompile = function(src) return src end
+end
+if type(vim.g.fnlw_hook_postcompile) ~= 'function' then
+	vim.g.fnlw_hook_postcompile = function(src) return src end
+end
+if type(vim.g.fnlw_hook_ignorecompile) ~= 'function' then
+	vim.g.fnlw_hook_ignorecompile = function() return {} end
+end
+local compiler_hooks = {
+	precompile = vim.g.fnlw_hook_precompile,
+	postcompile = vim.g.fnlw_hook_postcompile,
+	ignorecompile = vim.g.fnlw_hook_ignorecompile
+}
+
+
+-- Calculated Variables
+
+local config_dir = vim.fn.stdpath('config')
+local site_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
 
 --- compie one fennel content to lua
 -- @param path        fennel file path
@@ -200,8 +178,8 @@ local function compile(path, out)
 	end
 	path = vim.fs.normalize(path)
 
-	local base = string.gsub(path, vim.fs.normalize(_dir) .. '/', '')
-	local ignore_list = _hooks['ignorecompile']()
+	local base = string.gsub(path, vim.fs.normalize(config_dir) .. '/', '')
+	local ignore_list = compiler_hooks['ignorecompile']()
 	for _, v in ipairs(ignore_list) do
 		if base == v then
 			return
@@ -219,19 +197,18 @@ local function compile(path, out)
 	end
 
 	local macro_path = fennel['macro-path']
-	local custom_macro_path = vim.tbl_extend('force',
-		{'./fnl/?.fnl', './fnl/init.fnl', './fnl/init-macros.fnl'},
-		vim.g.fnlw_macro_path
+	fennel['macro-path'] = string.format('%s;%s',
+		macro_path,
+		vim.fs.joinpath(config_dir, 'fnl', '?.fnl')
 	)
-	fennel['macro-path'] = vim.iter(custom_macro_path):join(';')
 
-	src = _hooks['precompile'](src)
+	src = compiler_hooks['precompile'](src)
 	local compiled = fennel.compileString(src, { filename = path })
-	src = _hooks['postcompile'](src)
+	src = compiler_hooks['postcompile'](src)
 
 	if not out then
 		folder_and_ext = base:gsub('^fnl/', 'lua/'):gsub('%.fnl$', '.lua')
-		out = vim.fs.normalize(_compiled_dir .. '/' .. folder_and_ext)
+		out = vim.fs.normalize(site_dir .. '/' .. folder_and_ext)
 	end
 	vim.fn.mkdir(vim.fn.fnamemodify(out, ':h'), 'p')
 
@@ -250,7 +227,7 @@ end
 --                   (EXAMPLE: fnl, lua)
 -- @param fn         function to do action
 local function walk(dir, ext, fn)
-	local subdirs = vim.list_extend(_subdirs, {ext})
+	local subdirs = vim.list_extend(rtp_dirs, {ext})
 	local pred = function(name)
 		return string.match(name, string.format('.*%%.%s', ext))
 	end
@@ -270,7 +247,7 @@ end
 
 --- clear all compiled lua files
 local function clear()
-	walk(vim.fs.normalize(_compiled_dir), 'lua', function(path)
+	walk(vim.fs.normalize(site_dir), 'lua', function(path)
 		os.remove(path)
 	end)
 end
@@ -293,7 +270,7 @@ vim.api.nvim_create_user_command('FnlCompile', function()
 	loader_disable()
 
 	clear()
-	walk(_dir, 'fnl', compile)
+	walk(config_dir, 'fnl', compile)
 
 	local f = assert(io.open(STATE_MARK, 'w'))
 	f:write('')
@@ -321,15 +298,21 @@ end, {
 
 vim.api.nvim_create_augroup('fnlw', { clear = true })
 
--- compile fennel files in `g:fnlw_dir`
+-- compile fennel files in rtpdirs under the user configuration folder
+local possible_config_dirs = {
+	config_dir,
+}
+if vim.uv.fs_lstat(config_dir).type == 'link' then
+	table.insert(possible_config_dirs, vim.uv.fs_realpath(config_dir))
+end
 vim.api.nvim_create_autocmd('BufWritePost', {
 	group = 'fnlw',
 	pattern = vim.tbl_map(function(p)
 		return vim.fs.normalize(p .. '/*.fnl')
-	end, _dir_alias),
+	end, possible_config_dirs),
 	callback = function(args)
 		local path = args.match
-		for _, cfgpath in ipairs(vim.tbl_map(vim.fs.normalize, _dir_alias)) do
+		for _, cfgpath in ipairs(vim.tbl_map(vim.fs.normalize, possible_config_dirs)) do
 			if vim.startswith(path, cfgpath) then
 				path = string.gsub(path, cfgpath, vim.fn.stdpath('config'))
 			end
@@ -343,15 +326,16 @@ vim.api.nvim_create_autocmd('SourceCmd', {
 	group = 'fnlw',
 	pattern = '*.fnl',
 	callback = function(args)
-		local src_path = vim.fs.normalize(args.file)
-		-- handle Windows driver mark colon
-		if vim.fn.has('win32') then
-			src_path = src_path:gsub(':', '')
+		local ok, fennel = pcall(require, 'fennel')
+		if not ok then
+			error('[fnlw.lua] no `fennel` can required; ' .. fennel)
+			return
 		end
+		fennel.dofile(vim.fs.normalize(args.file))
 	end,
 })
 
 -- As a plugin beahviour
-if not (vim.uv or vim.loop).fs_stat(STATE_MARK) then
+if not vim.uv.fs_stat(STATE_MARK) then
 	vim.cmd.FnlCompile()
 end
