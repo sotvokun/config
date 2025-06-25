@@ -18,7 +18,7 @@ endif
 
 
 set statusline=
-set statusline+=\ 
+set statusline=\ 
 set statusline+=%{%statusline#filename()%}
 set statusline+=\ 
 set statusline+=%m%r%w
