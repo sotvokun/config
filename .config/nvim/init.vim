@@ -280,13 +280,13 @@ command! -nargs=1 Load execute printf('source %s/<args>', s:home)
 
 
 " Section: Builtin Plugin Options
-"    Part: Moonwalk
+"    Part: fnlw
 "
 if has('nvim')
-	let g:moonwalk_subdirs = ['plugin', 'ftplugin', 'lsp', 'bundle']
-	silent lua vim.g.moonwalk_hook_precompile = function(src) return '(require-macros :init-macros)' .. src end
-	silent lua vim.g.moonwalk_hook_ignorecompile = function(src) return {'fnl/init-macros.fnl'} end
-	silent lua vim.g.moonwalk_macro_path = {vim.fs.joinpath(vim.fn.stdpath('config'), 'fnl', 'init-macros.fnl')}
+	let g:fnlw_subdirs = ['plugin', 'ftplugin', 'lsp', 'bundle']
+	silent lua vim.g.fnlw_hook_precompile = function(src) return '(require-macros :init-macros)' .. src end
+	silent lua vim.g.fnlw_hook_ignorecompile = function(src) return {'fnl/init-macros.fnl'} end
+	silent lua vim.g.fnlw_macro_path = {vim.fs.joinpath(vim.fn.stdpath('config'), 'fnl', 'init-macros.fnl')}
 endif
 
 "    Part: netrw

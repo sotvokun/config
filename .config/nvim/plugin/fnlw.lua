@@ -1,9 +1,9 @@
--- moonwalk.lua
+-- fnlw.lua
 --
 -- a fennel wrapper to make neovim support fennel language
 --
 -- USAGE:
---   moonwalk.lua {help|version|update}
+--   fnlw.lua {help|version|update|repl}
 --
 --   subcommands:
 --     help                    - print the help message
@@ -11,43 +11,44 @@
 --     version                 - print the current fennel version
 --     update                  - install or update fennel to the latest version.
 --                               it will be installed at
---                               "stdpath('data')/site/pack/moonwalk/start/moonwalk/lua/fennel.lua"
+--                               "stdpath('data')/site/pack/fnlw/start/fnlw/lua/fennel.lua"
+--     repl                    - start fennel as REPL
 --
 -- VARIABLES:
---   g:moonwalk_dir            - the directory for search fennel code
+--   g:fnlw_dir            - the directory for search fennel code
 --                               (DEFAULT: stdpath('config'))
---   g:moonwalk_subdirs        - the fennel code in this directories that under
---                               `g:moonwalk_dir` will compiled to lua code.
+--   g:fnlw_subdirs        - the fennel code in this directories that under
+--                               `g:fnlw_dir` will compiled to lua code.
 --                               (DEFAULT: ['plugin', 'indent', 'ftplugin', 'colors', 'lsp'])
---   g:moonwalk_compiled_dir   - the directory that stored compiled lua files.
+--   g:fnlw_compiled_dir   - the directory that stored compiled lua files.
 --                               the path is in runtimepath or packpath usually.
 --                               (DEFAULT: "stdconfig('data')/site")
---   g:moonwalk_dir_alias      - the alias for `g:moonwalk_dir` is used for handle symlink
+--   g:fnlw_dir_alias      - the alias for `g:fnlw_dir` is used for handle symlink
 --                               (DEFAULT: [stdpath('config'), '~/.config/nvim'])
---   g:moonwalk_hook_precompile
+--   g:fnlw_hook_precompile
 --                             - the function will be called before compiling;
 --                               handling with fennel code
 --                               (TYPE: str -> str)
 --                               (DEFAULT: { src -> src })
 --                               NOTE: This variable only can be assigned with `lua` command.
---   g:moonwalk_hook_postcompile
+--   g:fnlw_hook_postcompile
 --                             - the function will be called after compiling;
 --                               handling with lua code
 --                               (TYPE: str -> str)
 --                               (DEFAULT: { src -> src })
 --                               NOTE: This variable only can be assigned with `lua` command.
---   g:moonwalk_hook_ignorecompile
+--   g:fnlw_hook_ignorecompile
 --                             - the function will be called while compiling;
 --                               handling to ignore specific files
 --                               (TYPE: nil -> str[])
 --                               (DEFAULT: { -> [] })
 --                               NOTE: This variable only can be assigned with `lua` command.
---   g:moonwalk_macro_path     - the macro path for fennel compiler
+--   g:fnlw_macro_path     - the macro path for fennel compiler
 --                               (DEFAULT: [])
 --
 -- COMMANDS:
---   Moonwalk                  - compile all fennel files to lua
---   MoonwalkClean             - clean all compiled lua files
+--   FnlCompile             - compile all fennel files to lua
+--   FnlClean               - clean all compiled lua files
 --
 -- AUTOCMDS:
 --   BufWritePost               compile written fennel file in config path
@@ -58,35 +59,35 @@
 --   https://github.com/gpanders/dotfiles/blob/master/.config/nvim/lua/moonwalk.lua
 --
 
-if vim.g.loaded_moonwalk then
+if vim.g.loaded_fnlw then
 	return
 end
-vim.g.loaded_moonwalk = true
+vim.g.loaded_fnlw = true
 
 
 -- Constant
 
 local FENNEL_VERSION = '1.5.3'
 local FENNEL_URL = string.format('https://fennel-lang.org/downloads/fennel-%s.lua', FENNEL_VERSION)
-local FENNEL_PATH = vim.fs.normalize(string.format(
-	'%s/site/pack/moonwalk/start/moonwalk/lua/fennel.lua',
+local FENNEL_INSTALL_PATH = vim.fs.normalize(string.format(
+	'%s/site/pack/fnlw/start/fnlw/lua/fennel.lua',
 	vim.fn.stdpath('data')
 ))
 
-local STATE_MARK = vim.fs.normalize(vim.fn.stdpath('state') .. '/moonwalked')
+local STATE_MARK = vim.fs.normalize(vim.fn.stdpath('state') .. '/fnlwed')
 
 
 -- Variables
 
---- g:moonwalk_dir
-if type(vim.g.moonwalk_dir) ~= 'string' then
-	vim.g.moonwalk_dir = vim.fn.stdpath('config')
+--- g:fnlw_dir
+if type(vim.g.fnlw_dir) ~= 'string' then
+	vim.g.fnlw_dir = vim.fn.stdpath('config')
 end
-local _dir = vim.g.moonwalk_dir
+local _dir = vim.g.fnlw_dir
 
---- g:moonwalk_subdirs
-if type(vim.g.moonwalk_subdirs) ~= 'table' then
-	vim.g.moonwalk_subdirs = {
+--- g:fnlw_subdirs
+if type(vim.g.fnlw_subdirs) ~= 'table' then
+	vim.g.fnlw_subdirs = {
 		'plugin',
 		'indent',
 		'ftplugin',
@@ -94,39 +95,39 @@ if type(vim.g.moonwalk_subdirs) ~= 'table' then
 		'lsp',
 	}
 end
-local _subdirs = vim.g.moonwalk_subdirs
+local _subdirs = vim.g.fnlw_subdirs
 
--- g:moonwalk_compiled_dir
-if type(vim.g.moonwalk_compiled_dir) ~= 'string' then
-	vim.g.moonwalk_compiled_dir = vim.fs.normalize(vim.fn.stdpath('data') .. '/site')
+-- g:fnlw_compiled_dir
+if type(vim.g.fnlw_compiled_dir) ~= 'string' then
+	vim.g.fnlw_compiled_dir = vim.fs.normalize(vim.fn.stdpath('data') .. '/site')
 end
-local _compiled_dir = vim.g.moonwalk_compiled_dir
+local _compiled_dir = vim.g.fnlw_compiled_dir
 
--- g:moonwalk_dir_alias
-if type(vim.g.moonwalk_dir_alias) ~= 'table' then
-	vim.g.moonwalk_dir_alias = { vim.fn.stdpath('config'), '~/.config/nvim' }
+-- g:fnlw_dir_alias
+if type(vim.g.fnlw_dir_alias) ~= 'table' then
+	vim.g.fnlw_dir_alias = { vim.fn.stdpath('config'), '~/.config/nvim' }
 end
-local _dir_alias = vim.g.moonwalk_dir_alias
+local _dir_alias = vim.g.fnlw_dir_alias
 
 -- hooks
-if type(vim.g.moonwalk_hook_precompile) ~= 'function' then
-	vim.g.moonwalk_hook_precompile = function(src) return src end
+if type(vim.g.fnlw_hook_precompile) ~= 'function' then
+	vim.g.fnlw_hook_precompile = function(src) return src end
 end
-if type(vim.g.moonwalk_hook_postcompile) ~= 'function' then
-	vim.g.moonwalk_hook_postcompile = function(src) return src end
+if type(vim.g.fnlw_hook_postcompile) ~= 'function' then
+	vim.g.fnlw_hook_postcompile = function(src) return src end
 end
-if type(vim.g.moonwalk_hook_ignorecompile) ~= 'function' then
-	vim.g.moonwalk_hook_ignorecompile = function() return {} end
+if type(vim.g.fnlw_hook_ignorecompile) ~= 'function' then
+	vim.g.fnlw_hook_ignorecompile = function() return {} end
 end
 local _hooks = {
-	precompile = vim.g.moonwalk_hook_precompile,
-	postcompile = vim.g.moonwalk_hook_postcompile,
-	ignorecompile = vim.g.moonwalk_hook_ignorecompile
+	precompile = vim.g.fnlw_hook_precompile,
+	postcompile = vim.g.fnlw_hook_postcompile,
+	ignorecompile = vim.g.fnlw_hook_ignorecompile
 }
 
--- g:moonwalk_macro_path
-if type(vim.g.moonwalk_macro_path) ~= 'table' then
-	vim.g.moonwalk_macro_path = {}
+-- g:fnlw_macro_path
+if type(vim.g.fnlw_macro_path) ~= 'table' then
+	vim.g.fnlw_macro_path = {}
 end
 
 
@@ -138,39 +139,47 @@ if arg[0] ~= nil then
 		cmd = arg[1]
 	end
 	if cmd == 'help' then
-		local msg = [[%s {help|version|update}]]
+		local msg = [[%s {help|version|update|repl}]]
 		print(string.format(msg, arg[0]))
 		return 0
 	end
 	if cmd == 'version' then
 		local ok, fennel = pcall(require, 'fennel')
 		if not ok then
-			print("[moonwalk.lua] no installed fennel")
+			print("[fnlw.lua] no installed fennel")
 			return 0
 		end
-		print(string.format("[moonwalk.lua] fennel version %s", fennel.version))
+		print(string.format("[fnlw.lua] fennel version %s", fennel.version))
 		return 0
 	end
 	if cmd == 'update' then
 		local ok, fennel = pcall(require, 'fennel')
 		if ok and fennel.version == FENNEL_VERSION then
-			print(string.format('[moonwalk.lua] fennel version latest'))
+			print(string.format('[fnlw.lua] fennel version latest'))
 			return 0
 		end
 
 		if vim.system == nil then
-			print(string.format('[moonwalk.lua] moonwalk.lua needs 0.10 for update'))
+			print(string.format('[fnlw.lua] fnlw.lua needs 0.10 for update'))
 		end
 
-		vim.fn.mkdir(vim.fn.fnamemodify(FENNEL_PATH, ':h'), 'p')
+		vim.fn.mkdir(vim.fn.fnamemodify(FENNEL_INSTALL_PATH, ':h'), 'p')
 		print(string.format('Downloading fennel %s', FENNEL_VERSION))
 		do
 			local job = vim.system({
-				'curl', '-sS', '-o', FENNEL_PATH, FENNEL_URL
+				'curl', '-sS', '-o', FENNEL_INSTALL_PATH, FENNEL_URL
 			}):wait(10000)
 			assert(job.code == 0, job.stderr)
 		end
 		print(string.format('complete'))
+		return 0
+	end
+	if cmd == 'repl' then
+		local ok, fennel = pcall(require, 'fennel')
+		if not ok then
+			print("[fnlw.lua] no installed fennel")
+		end
+		fennel.install().repl()
 		return 0
 	end
 end
@@ -186,7 +195,7 @@ end
 local function compile(path, out)
 	local ok, fennel = pcall(require, 'fennel')
 	if not ok then
-		error('[moonwalk.lua] no `fennel\' can be required; ' .. fennel)
+		error('[fnlw.lua] no `fennel\' can be required; ' .. fennel)
 		return
 	end
 	path = vim.fs.normalize(path)
@@ -212,7 +221,7 @@ local function compile(path, out)
 	local macro_path = fennel['macro-path']
 	local custom_macro_path = vim.tbl_extend('force',
 		{'./fnl/?.fnl', './fnl/init.fnl', './fnl/init-macros.fnl'},
-		vim.g.moonwalk_macro_path
+		vim.g.fnlw_macro_path
 	)
 	fennel['macro-path'] = vim.iter(custom_macro_path):join(';')
 
@@ -278,8 +287,8 @@ end
 
 
 -- Commands
---- :Moonwalk
-vim.api.nvim_create_user_command('Moonwalk', function()
+--- :FnlCompile
+vim.api.nvim_create_user_command('FnlCompile', function()
 	-- disable loader to avoid some weird issue may occured
 	loader_disable()
 
@@ -298,8 +307,8 @@ end, {
 	desc = 'Compile all fennel files to lua'
 })
 
---- :MoonwalkClean
-vim.api.nvim_create_user_command('MoonwalkClean', function()
+--- :FnlClean
+vim.api.nvim_create_user_command('FnlClean', function()
 	loader_disable()
 	clear()
 	vim.schedule(vim.loader.enable)
@@ -310,11 +319,11 @@ end, {
 
 -- Autocmd
 
-vim.api.nvim_create_augroup('moonwalk', { clear = true })
+vim.api.nvim_create_augroup('fnlw', { clear = true })
 
--- compile fennel files in `g:moonwalk_dir`
+-- compile fennel files in `g:fnlw_dir`
 vim.api.nvim_create_autocmd('BufWritePost', {
-	group = 'moonwalk',
+	group = 'fnlw',
 	pattern = vim.tbl_map(function(p)
 		return vim.fs.normalize(p .. '/*.fnl')
 	end, _dir_alias),
@@ -331,7 +340,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 -- source fennel
 vim.api.nvim_create_autocmd('SourceCmd', {
-	group = 'moonwalk',
+	group = 'fnlw',
 	pattern = '*.fnl',
 	callback = function(args)
 		local src_path = vim.fs.normalize(args.file)
@@ -344,5 +353,5 @@ vim.api.nvim_create_autocmd('SourceCmd', {
 
 -- As a plugin beahviour
 if not (vim.uv or vim.loop).fs_stat(STATE_MARK) then
-	vim.cmd.Moonwalk()
+	vim.cmd.FnlCompile()
 end
