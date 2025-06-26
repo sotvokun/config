@@ -40,6 +40,8 @@
 -- COMMANDS:
 --   FnlCompile                - compile all fennel files to lua
 --   FnlClean                  - clean all compiled lua files
+--   [range]Fnl[=] {chunk}     - executes fennel script from the {chunk} or the range.
+--                               `:Fnl=` are equaivalent to `:Fnl (print (fennel.view chunk))`
 --
 -- AUTOCMDS:
 --   BufWritePost                compile written fennel file in config path
@@ -291,6 +293,36 @@ vim.api.nvim_create_user_command('FnlClean', function()
 	vim.schedule(vim.loader.enable)
 end, {
 	desc = 'Clean all compiled lua files'
+})
+
+--- :Fnl
+vim.api.nvim_create_user_command('Fnl', function(args)
+	local ok, fennel = pcall(require, 'fennel')
+	if not ok then
+		error('[fnlw.lua] no `fennel` can required; ' .. fennel)
+		return
+	end
+
+	local script = args.args
+
+	local do_print_result = string.sub(args.args, 1, 1) == '='
+	if do_print_result then
+		script = string.gsub(args.args, '^=%s*(.*)$', '%1')
+	end
+
+	if args.range > 0 then
+		local lines = vim.api.nvim_buf_get_lines(0, args.line1 - 1, args.line2, false)
+		script = table.concat(lines, '\n')
+	end
+	local result = fennel.eval(script)
+	if do_print_result then
+		print(fennel.view(result))
+	end
+	return result
+end, {
+	desc = 'Execute fennel string',
+	nargs = '*',
+	range = '%'
 })
 
 
