@@ -1,5 +1,8 @@
 (exit-if-vscode!)
 
+(exit-if! vim.g.loaded_plugin_lsp)
+(set vim.g.loaded_plugin_lsp true)
+
 (augroup lsp)
 (autocmd :LspAttach "*"
          #(let [bufnr (. $1 "buf")
@@ -26,3 +29,12 @@
               (when (client.supports_method "textDocument/signatureHelp")
                 (keymap i :<c-l> vim.lsp.buf.signature_help keymap-opts))))
             {:group "lsp"})
+
+
+(fn get-clients []
+  (let [folder (vim.fs.joinpath (vim.fn.stdpath "config") "lsp")
+        files (vim.fn.readdir folder)]
+    (icollect [_ v (ipairs files)]
+      (string.gsub v "^(.+)%.fnl$" "%1"))))
+
+(vim.lsp.enable (get-clients))

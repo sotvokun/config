@@ -306,10 +306,3 @@ silent! packadd! editorconfig
 call plug#begin()
 call bundle#load()
 call plug#end()
-
-
-" Section: Enable LSP Clients
-"
-if has('nvim')
-	lua vim.lsp.enable({'tsserver', 'gopls', 'intelephense'})
-endif
