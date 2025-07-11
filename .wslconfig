@@ -1,9 +1,8 @@
 [wsl2]
 networkingMode=mirrored
-firewall=true
-autoProxy=true
 dnsTunneling=true
-
+firewall=true
+autoProxy=false
 
 [experimental]
 autoMemoryReclaim=gradual
