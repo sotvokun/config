@@ -1,3 +1,5 @@
+;; ![macro]
+
 ; Section: Utils
 
 (fn exit-if! [condition]
