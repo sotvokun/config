@@ -1,4 +1,4 @@
-;; ![macro]
+;; ![macro,auto-require]
 
 ; Section: Utils
 
