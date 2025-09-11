@@ -97,7 +97,7 @@ local function update_fennel()
 	do
 		local job = vim.system({
 			curl_exepath, '-sS', '-o', FENNEL_INSTALL_PATH, FENNEL_DOWNLOAD_URL
-		}):wait(10000)
+		}):wait(60000)
 		assert(job.code == 0, job.stderr)
 	end
 	print_('complete')
@@ -119,44 +119,6 @@ local function writefile(path, content)
 	f:write(content)
 	f:close()
 	return 0
-end
-
---- compile one fennel file to lua code and write it to specific path
--- @param input         input fennel file path
--- @param out           compiled lua file output path
--- @return              0 for success, otherwise failed
-local function compile(input, out)
-	local ok, fennel = pcall(require, 'fennel')
-	if not ok then
-		print_('no \'fennel\' can be required; ' .. fennel, 1)
-		return 1
-	end
-
-	if input:match('.*macros%.fnl') ~= nil then
-		return
-	end
-
-	input = vim.fs.normalize(input)
-	local src_string = nil
-	do
-		local f = openfile(input, 'r')
-		if f == nil then
-			return 1
-		end
-		src_string = f:read('*a')
-		f:close()
-	end
-	if not src_string then
-		print_(string.format('failed to read content in the file \'%s\'', input), 1)
-		return 1
-	end
-
-	local compiled = fennel.compileString(src_string, {
-		correlate = true,
-		filename = input
-	})
-
-	return writefile(out, compiled)
 end
 
 --- walk all files matched with pattern
@@ -194,31 +156,133 @@ local function config_relpath(path, config_dir)
 	return relpath
 end
 
+--- preprocess the fennel source code
+--- this function will do the following things:
+---   1. register macro file into fennel's macro path if did not registered
+---   2. add the auto-requires of files/macros at the head of the source code
+local function preprocess_source_code(src)
+	local ok, fennel = pcall(require, 'fennel')
+	if not ok then
+		print_('no \'fennel\' can be required; ' .. fennel, 1)
+	end
 
--- Component
+	local has_macro_path = type(fennel.fnlkit_macro_path) == 'string'
+	local has_preprocess_files = (
+		type(fennel.fnlkit_preprocess_files) == 'table'
+		and #fennel.fnlkit_preprocess_files > 0
+	)
 
-local Macro = {paths={}}
-function Macro:collect()
-	local config_fnl_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'fnl')
-	local pattern = vim.fs.normalize(vim.fs.joinpath(config_fnl_dir, '.+%.fnl$'))
-	walk(config_fnl_dir, pattern, function(path)
-		local lines = vim.fn.readfile(path)
-		if #lines == 0 then
-			return
+	if not has_preprocess_files then
+		fennel.fnlkit_preprocess_files = {}
+		local config_fnl_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'fnl')
+		local config_fnl_pattern = vim.fs.normalize(
+			vim.fs.joinpath(config_fnl_dir, '.+%.fnl$')
+		)
+		walk(config_fnl_dir, config_fnl_pattern, function(path)
+			local lines = vim.fn.readfile(path)
+			if #lines == 0 then
+				return
+			end
+
+			local pattern = '^;;*%s*%!%[(.*)%]%s*$'
+			local matched_raw_attributes = string.match(lines[1], pattern)
+			if matched_raw_attributes == nil then
+				return
+			end
+
+			local file_item = {
+				file_path = path,
+				module_path = vim.fs.normalize(
+					vim.fs.relpath(config_fnl_dir, path)
+				):sub(1, -5):gsub('/', '.')
+			}
+
+			local attributes = vim.split(matched_raw_attributes, ',')
+			for i, attribute in ipairs(attributes) do
+				local attribute_ = vim.trim(attribute)
+				if string.len(attribute_) == 0 then
+					goto continue
+				end
+				file_item[attribute_] = true
+				::continue::
+			end
+
+			table.insert(fennel.fnlkit_preprocess_files, file_item)
+		end)
+	end
+
+	if not has_macro_path then
+		local fnlkit_macro_path = (
+			vim.iter(fennel.fnlkit_preprocess_files)
+			:filter(function(v) return v.macro end)
+			:map(function(v) return v.file_path end)
+			:join(';')
+		)
+		if string.len(fnlkit_macro_path) ~= 0 then
+			fennel.fnlkit_macro_path = fnlkit_macro_path
+			local fennel_macro_path = string.format(
+				'%s;%s',
+				fennel.fnlkit_macro_path,
+				fennel.macroPath
+			)
+			fennel['macroPath'] = fennel_macro_path
+			fennel['macro-path'] = fennel_macro_path
 		end
-		if string.match(lines[1], '^;;*%s*%!%[macro%]$') ~= nil then
-			table.insert(Macro.paths, path)
-		end
-	end)
+	end
+
+	local auto_requires = (
+		vim.iter(fennel.fnlkit_preprocess_files)
+		:filter(function(v) return v['auto-require'] end)
+		:map(function(v)
+			local require_string = '(require :%s)'
+			if (v.macro) then
+				require_string = '(require-macros :%s)'
+			end
+			return string.format(require_string, v.module_path)
+		end)
+		:join('')
+	)
+	return string.format('%s\n%s', auto_requires, src)
 end
 
-function Macro:inject()
-	local fennel = require('fennel')
-	local macroPathTable = vim.deepcopy(Macro.paths)
-	table.insert(macroPathTable, fennel.macroPath)
-	local macroPath = vim.iter(macroPathTable):join(';')
-	fennel['macroPath'] = macroPath
-	fennel['macro-path'] = macroPath
+--- compile one fennel file to lua code and write it to specific path
+-- @param input         input fennel file path
+-- @param out           compiled lua file output path
+-- @return              0 for success, otherwise failed
+local function compile(input, out)
+	local ok, fennel = pcall(require, 'fennel')
+	if not ok then
+		print_('no \'fennel\' can be required; ' .. fennel, 1)
+		return 1
+	end
+
+	if input:match('.*macros%.fnl') ~= nil then
+		return
+	end
+
+	input = vim.fs.normalize(input)
+	local src_string = nil
+	do
+		local f = openfile(input, 'r')
+		if f == nil then
+			return 1
+		end
+		src_string = f:read('*a')
+		f:close()
+	end
+	if not src_string then
+		print_(string.format('failed to read content in the file \'%s\'', input), 1)
+		return 1
+	end
+
+	src_string = preprocess_source_code(src_string)
+
+	local compiled = fennel.compileString(src_string, {
+		correlate = true,
+		filename = input
+	})
+
+	return writefile(out, compiled)
 end
 
 
@@ -345,13 +409,6 @@ vim.api.nvim_create_autocmd('SourceCmd', {
 	end
 })
 
--- Script As Plugin
-
-do
-	Macro:collect()
-	Macro:inject()
-end
-
 
 -- Script As Executable
 
@@ -361,7 +418,7 @@ if arg[0] ~= nil then
 		subcmd = arg[1]
 	end
 	if subcmd == 'help' then
-		local msg = '%s {help|version|update|compile <input> [<out>]}'
+		local msg = '%s {help|version|update}'
 		print(string.format(msg, arg[0]))
 		return 0
 	end
@@ -376,17 +433,5 @@ if arg[0] ~= nil then
 	end
 	if subcmd == 'update' then
 		return update_fennel()
-	end
-	if subcmd == 'compile' then
-		local input = arg[2]
-		if input == nil then
-			print_('no input file specified', 1)
-			return 1
-		end
-		local out = arg[3]
-		if out == nil then
-			out = input:gsub('%.fnl$', '.lua')
-		end
-		return compile(input, out)
 	end
 end
