@@ -1,0 +1,93 @@
+[
+    /**
+     * Views
+     */
+
+    // - Disable default command binding
+    {
+        "key": "ctrl+g",
+        "command": "-workbench.action.gotoLine"
+    },
+    
+    // - Sidebar Global
+    {
+        "key": "ctrl+g 1",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+g 2",
+        "command": "workbench.action.toggleAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+g 3",
+        "command": "workbench.action.togglePanel"
+    },
+    
+    // - Explorer
+    {
+        "key": "ctrl+g n",
+        "command": "workbench.view.explorer"
+    },
+    {
+        "key": "ctrl+g n",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+    },
+    {
+        "key": "ctrl+g shift+n",
+        "command": "workbench.view.explorer",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+    },
+
+    // - Search
+    {
+        "key": "ctrl+g f",
+        "command": "workbench.view.search"
+    },
+    {
+        "key": "ctrl+g f",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "search.action.clearSearchResults",
+                "workbench.action.toggleSidebarVisibility"
+            ]
+        },
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
+    },
+    {
+        "key": "ctrl+g shift+f",
+        "command": "workbench.view.search",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
+    },
+
+    // - SCM
+    {
+        "key": "ctrl+g ctrl+g",
+        "command": "workbench.view.scm"
+    },
+    {
+        "key": "ctrl+g ctrl+g",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
+    },
+    
+
+    /**
+     * Helper keybindings
+     */
+    // Reveal current file in explorer
+    {
+        "key": "ctrl+h r",
+        "command": "revealInExplorer"
+    },
+
+
+    /**
+     * Cursor ONLY
+     */
+    {
+        "key": "ctrl+i",
+        "command": "composerMode.agent"
+    }
+]

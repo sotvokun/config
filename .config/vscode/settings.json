@@ -1,0 +1,86 @@
+{
+    /**
+     * Workbench
+     */
+    "workbench.editor.showIcons": false,
+    "workbench.colorTheme": "Railgun",
+    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-auto",
+    "workbench.layoutControl.enabled": false,
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.orientation": "vertical",
+    "workbench.activityBar.location": "top",
+
+
+    /**
+     * Window
+     */
+    "window.density.editorTabHeight": "compact",
+    "window.menuBarVisibility": "compact",
+    "window.commandCenter": false,
+
+
+    /**
+     * Editor
+     */
+    "editor.fontFamily": "Sarasa Mono SC",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true,
+    "editor.bracketPairColorization.enabled": false,
+    "editor.cursorBlinking": "solid",
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.smoothScrolling": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.minimap.enabled": false,
+
+
+    /**
+     * Misc
+     */
+    "security.workspace.trust.enabled": false,
+    "extensions.autoCheckUpdates": true,
+    "extensions.autoUpdate": false,
+    "extensions.ignoreRecommendations": true,
+
+    
+    /**
+     * Built-in features
+     */
+    // Breadcrumbs
+    "breadcrumbs.enabled": false,
+    
+    // Zen Mode
+    "zenMode.fullScreen": false,
+    "zenMode.centerLayout": true,
+    "zenMode.showTabs": "none",
+    
+    // File Explorer
+    "explorer.autoReveal": false,
+    
+    
+    /**
+     * Cursor ONLY
+     */
+    "cursor.general.disableHttp2": true,
+    
+
+    /**
+     * Extensions
+     */
+    // vscode-neovim
+    //
+    // `workbench.view.showQuietly`
+    // There has a bug about vscode-neovim plugin with the nightly version of neovim (0.12.0).
+    // The messages are always outputs into the output panel. It's too noisy for coding.
+    // The following vscode-neovim issue offered an ungraceful way to avoid the stupid behaviour.
+    // REF: https://github.com/vscode-neovim/vscode-neovim/issues/2099#issuecomment-2657736422
+    //
+    // `extensions.experimental.affinity`
+    // REF: https://github.com/vscode-neovim/vscode-neovim/issues/1051
+    //
+    "workbench.view.showQuietly": {
+        "workbench.panel.output": true
+    },
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    }
+}

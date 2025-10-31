@@ -74,6 +74,22 @@ if [[ $is_windows -eq 1 ]]; then
 	fi
 fi
 
+#    PART: vscode/cursor
+if [[ $is_windows -eq 1 ]]; then
+	if [[ -d "$HOME/AppData/Roaming/Code/User" ]]; then
+		rm -f "$HOME/AppData/Roaming/Code/User/settings.json"
+		rm -f "$HOME/AppData/Roaming/Code/User/keybindings.json"
+		ln -s "$HOME/.config/vscode/settings.json" "$HOME/AppData/Roaming/Code/User/settings.json"
+		ln -s "$HOME/.config/vscode/keybindings.json" "$HOME/AppData/Roaming/Code/User/keybindings.json"
+	fi
+	if [[ -d "$HOME/AppData/Roaming/Cursor/User" ]]; then
+		rm -f "$HOME/AppData/Roaming/Cursor/User/settings.json"
+		rm -f "$HOME/AppData/Roaming/Cursor/User/keybindings.json"
+		ln -s "$HOME/.config/vscode/settings.json" "$HOME/AppData/Roaming/Cursor/User/settings.json"
+		ln -s "$HOME/.config/vscode/keybindings.json" "$HOME/AppData/Roaming/Cursor/User/keybindings.json"
+	fi
+fi
+
 
 # SECTION: WSL (Windows Only)
 # -----------------------------------------------------------------------------
