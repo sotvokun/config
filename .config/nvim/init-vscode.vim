@@ -29,6 +29,13 @@ set clipboard=unnamedplus
 
 
 " Section: Mapping
+"    Part: Leader
+nnoremap <space> <nop>
+let g:mapleader = ' '
+
+"    Part: <c-g> - as secondary leader
+nnoremap <c-g> <nop>
+
 "    Part: foldding
 nnoremap zc <cmd>call VSCodeNotify('editor.fold')<cr>
 nnoremap zo <cmd>call VSCodeNotify('editor.unfold')<cr>
@@ -55,8 +62,17 @@ inoremap <c-s> <cmd>call VSCodeNotify('workbench.action.files.save')<cr>
 nnoremap Q @q
 
 "    Part: editting
-nmap ]c <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
-nmap [c <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
+nnoremap ]c <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
+nnoremap [c <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
+
+"    Part: quickly working
+nnoremap <leader><leader> <cmd>call VSCodeNotify('workbench.action.quickOpen')<cr>
+nnoremap <leader>f <cmd>call VSCodeNotify('workbench.action.quickOpen')<cr>
+nnoremap <leader>b <cmd>call VSCodeNotify('workbench.action.showAllEditors')<cr>
+nnoremap <leader>% <cmd>call VSCodeNotify('workbench.action.quickTextSearch')<cr>
+nnoremap <leader>@ <cmd>call VSCodeNotify('workbench.action.gotoSymbol')<cr>
+nnoremap <leader># <cmd>call VSCodeNotify('workbench.action.showAllSymbols')<cr>
+nnoremap <leader>1 <cmd>call VSCodeNotify('workbench.action.openView')<cr>
 
 
 " COMMAND: Load
