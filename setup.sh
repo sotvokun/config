@@ -10,6 +10,11 @@ if [[ "$(uname)" == 'Windows_NT' || "$(uname)" =~ 'MINGW' ]]; then
 	export MSYS=winsymlinks:nativestrict
 fi
 
+is_darwin=0
+if [[ "$(uname)" == 'Darwin' ]]; then
+	is_darwin=1
+fi
+
 
 # SECTION: shell profile
 # -----------------------------------------------------------------------------
@@ -87,6 +92,20 @@ if [[ $is_windows -eq 1 ]]; then
 		rm -f "$HOME/AppData/Roaming/Cursor/User/keybindings.json"
 		ln -s "$HOME/.config/vscode/settings.json" "$HOME/AppData/Roaming/Cursor/User/settings.json"
 		ln -s "$HOME/.config/vscode/keybindings.json" "$HOME/AppData/Roaming/Cursor/User/keybindings.json"
+	fi
+fi
+if [[ $is_darwin -eq 1 ]]; then
+	if [[ -d "$HOME/Library/Application Support/Code/User" ]]; then
+		rm -f "$HOME/Library/Application Support/Code/User/settings.json"
+		rm -f "$HOME/Library/Application Support/Code/User/keybindings.json"
+		ln -s "$HOME/.config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+		ln -s "$HOME/.config/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
+	fi
+	if [[ -d "$HOME/Library/Application Support/Cursor/User" ]]; then
+		rm -f "$HOME/Library/Application Support/Cursor/User/settings.json"
+		rm -f "$HOME/Library/Application Support/Cursor/User/keybindings.json"
+		ln -s "$HOME/.config/vscode/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
+		ln -s "$HOME/.config/vscode/keybindings.json" "$HOME/Library/Application Support/Cursor/User/keybindings.json"
 	fi
 fi
 
