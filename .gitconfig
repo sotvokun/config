@@ -10,3 +10,4 @@
 	rebase = true
 [alias]
 	b = branch -vv --all
+	sync = !git stash && git pull --rebase && git stash pop
