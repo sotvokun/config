@@ -49,6 +49,10 @@ fi
 #
 cat .gitconfig | sed 's/\#/\@/g' > "$HOME/.gitconfig"
 cp .gitexcludes "$HOME/.gitexcludes"
+if [[ $is_windows -eq 1 ]]; then
+	echo "[credential]" >> "$HOME/.gitconfig"
+	echo "	helper = manager" >> "$HOME/.gitconfig"
+fi
 
 #    PART: ideavimrc
 cp .ideavimrc "$HOME/.ideavimrc"
