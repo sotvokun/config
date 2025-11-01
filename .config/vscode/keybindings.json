@@ -78,7 +78,7 @@
      */
     // Reveal current file in explorer
     {
-        "key": "ctrl+h r",
+        "key": "ctrl+g x r",
         "command": "revealInExplorer"
     },
 
