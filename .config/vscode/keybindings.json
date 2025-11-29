@@ -81,6 +81,17 @@
         "key": "ctrl+g x r",
         "command": "revealInExplorer"
     },
+    
+    /**
+     * vscode-neovim
+     */
+    // Send <c-]> key to neovim
+    {
+        "key": "ctrl+]",
+        "command": "vscode-neovim.send",
+        "args": "<C-]>",
+        "when": "textInputFocus && neovim.mode == insert"
+    },
 
 
     /**
