@@ -6,6 +6,7 @@ Set-PSReadLineOption -EditMode Emacs -BellStyle Visual
 # Environment Variable
 $ENV:MSYS="winsymlinks:nativestrict"
 $ENV:CYGWIN="winsymlinks:nativestrict"
+$ENV:GOPATH="${env:LOCALAPPDATA}\go"
 
 
 # Alias
