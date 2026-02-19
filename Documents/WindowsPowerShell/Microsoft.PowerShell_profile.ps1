@@ -29,10 +29,6 @@ if ($PSVersionTable.PSVersion.Major -ge 7 -and (Get-Command 'mise.exe' -ErrorAct
 {
 	mise activate pwsh | Out-String | Invoke-Expression
 }
-else
-{
-	Write-Host "mise is not installed or PowerShell version is less than 7." -ForegroundColor Yellow
-}
 
 
 # Windows Terminal Integration
