@@ -1,4 +1,6 @@
-" autoload/statusline.vim - statusline components
+" autoload/statusline.vim
+"
+" statusline components
 "
 
 function! statusline#filename()
@@ -44,6 +46,7 @@ function! statusline#fugitive()
 	endif
 	return fugitive#statusline()
 endfunction
+
 
 function! statusline#gitgutter()
 	if !exists(':GitGutter')

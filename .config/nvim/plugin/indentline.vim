@@ -13,7 +13,7 @@
 "                                        ['diff', 'gitcommit', 'qf', 'help'])
 "   g:indentline_char                 the character used to display the
 "                                     indention levels.
-"                                     (default: '┆')
+"                                     (default: '¦')
 "
 "   g:indentline_space_char           the character used to display the
 "                                     indention levels when 'expandtab' is
@@ -26,11 +26,14 @@ if exists('g:loaded_indentline')
 endif
 let g:loaded_indentline = 1
 
+if has('g:vscode')
+	finish
+endif
 
 " Section: variables
 
 if !exists('g:indentline_char')
-	let g:indentline_char = '┆'
+	let g:indentline_char = '¦'
 endif
 
 if !exists('g:indentline_space_char')
@@ -51,6 +54,8 @@ function! s:escape_string(value)
 			let escaped_value .= '\ '
 		elseif len(char) > 1
 			let escaped_value .= '\' . char
+		elseif char == '|'
+			let escaped_value .= '\|'
 		else
 			let escaped_value .= char
 		endif
