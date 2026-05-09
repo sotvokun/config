@@ -91,6 +91,10 @@ if has('syntax')
 	syntax on
 endif
 
+if has('nvim')
+	set winborder=none
+endif
+
 "    Part: misc
 "
 set autoread

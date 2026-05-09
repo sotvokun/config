@@ -1,9 +1,24 @@
 " bundle/edit.vim
 "
 
+
+" Section: vim-repeat
+"
 Plug 'tpope/vim-repeat'
+
+
+" Section: vim-surround
+"
 Plug 'tpope/vim-surround'
+
+
+" Section: vim-lion
+"
 Plug 'tommcdo/vim-lion'
+
+
+" Section: vim-sleuth
+"
 Plug 'tpope/vim-sleuth'
 
 
