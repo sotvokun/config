@@ -60,6 +60,17 @@ cp .ideavimrc "$HOME/.ideavimrc"
 #    PART: XDG_CONFIG_HOME
 cp -rf .config "$HOME/"
 
+#    PART: lazygit
+if [[ $is_darwin -eq 1 ]]; then
+	rm -rf "$HOME/Library/Application Support/lazygit"
+	ln -s "$HOME/.config/lazygit" "$HOME/Library/Application Support/lazygit"
+fi
+if [[ $is_windows -eq 1 ]]; then
+	rm -rf "$HOME/AppData/Roaming/lazygit"
+	ln -s "$HOME/.config/lazygit" "$HOME/AppData/Roaming/lazygit"
+fi
+
+
 #    PART: neovim
 #        - 1. clean up the old neovim configuraiton
 #        - 2. re-copy the new configs
