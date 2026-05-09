@@ -4,11 +4,11 @@
      */
     "workbench.editor.showIcons": false,
     "workbench.colorTheme": "Railgun",
-    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-auto",
+    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-dark",
     "workbench.layoutControl.enabled": false,
-    "workbench.sideBar.location": "right",
     "workbench.activityBar.orientation": "vertical",
     "workbench.activityBar.location": "top",
+    "workbench.startupEditor": "none",
 
 
     /**
@@ -41,27 +41,33 @@
     "extensions.autoUpdate": false,
     "extensions.ignoreRecommendations": true,
 
-    
+
     /**
      * Built-in features
      */
     // Breadcrumbs
     "breadcrumbs.enabled": false,
-    
+
     // Zen Mode
     "zenMode.fullScreen": false,
     "zenMode.centerLayout": true,
     "zenMode.showTabs": "none",
-    
+
     // File Explorer
     "explorer.autoReveal": false,
-    
-    
+
+
+    /**
+     * AI Features
+     */
+    "chat.disableAIFeatures": true,
+
+
     /**
      * Cursor ONLY
      */
     "cursor.general.disableHttp2": true,
-    
+
 
     /**
      * Extensions
