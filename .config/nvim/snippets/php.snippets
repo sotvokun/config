@@ -16,3 +16,11 @@ snippet ~class
 	{
 		${2}
 	}
+snippet ~interface
+	<?php
+	namespace ${VIM: substitute(expand('%:.:h'), '/', '\\', 'g')};
+
+	interface ${VIM: expand('%:t:r')}${1}
+	{
+		${2}
+	}
