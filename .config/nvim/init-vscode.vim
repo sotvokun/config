@@ -79,6 +79,6 @@ nnoremap [c <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
 
 " Section: Plugin Declaration
 "
-call plug#begin()
+call bundle#begin()
 Import bundle/edit.vim
-call plug#end()
+call bundle#end()

@@ -3,7 +3,7 @@
 
 " Section: saghen/blink.cmp
 "
-Plug 'saghen/blink.cmp', { 'tag': '1.*', 'on': [] }
+Plug 'saghen/blink.cmp', { 'tag': 'v1.*', 'on': [] }
 Plug 'https://codeberg.org/FelipeLema/bink-cmp-vsnip.git'
 
 lua << EOF

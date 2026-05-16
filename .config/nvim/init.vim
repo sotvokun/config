@@ -267,6 +267,6 @@ silent! packadd! editorconfig
 
 " Section: Load Plugins
 "
-call plug#begin()
+call bundle#begin()
 call bundle#load()
-call plug#end()
+call bundle#end()

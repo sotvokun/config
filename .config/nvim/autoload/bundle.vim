@@ -33,6 +33,17 @@ function! s:load(path)
 	call add(g:bundles, bundle_name)
 endfunction
 
+function! bundle#begin(...)
+	let result = call('plug#begin', a:000)
+	if result < 0
+		return result
+	endif
+
+	let g:bundle_did_plug_begin = 1
+	doautocmd <nomodeline> User PlugBegin
+	return 1
+endfunction
+
 function! bundle#load(...)
 	if a:0 > 0
 		let home = s:path(fnamemodify(expand(a:1), ':p'))
@@ -47,7 +58,7 @@ function! bundle#load(...)
 	endif
 
 	if !exists(':Plug')
-		return s:errmsg('Must call plug#begin() before this function.')
+		return s:errmsg('Must call bundle#begin() before this function.')
 	endif
 
 	let g:bundle_home = home
@@ -64,5 +75,20 @@ function! bundle#load(...)
 			return load_result
 		endif
 	endfor
+	return 1
+endfunction
+
+function! bundle#end()
+	if !exists('*plug#end')
+		return s:errmsg('Must load vim-plug before this function.')
+	endif
+
+	let result = plug#end()
+	if result < 0
+		return result
+	endif
+
+	let g:bundle_did_plug_end = 1
+	doautocmd <nomodeline> User PlugEnd
 	return 1
 endfunction

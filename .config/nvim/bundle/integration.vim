@@ -59,7 +59,9 @@ vim.api.nvim_create_autocmd('User', {
 	pattern = 'fzf-lua',
 	group = fzf_lua_setup_augroup,
 	callback = function(ev)
-		require('fzf-lua').setup(fzf_lua_options)
+		local fzflua = require('fzf-lua')
+		fzflua.setup(fzf_lua_options)
+		fzflua.register_ui_select()
 	end
 })
 EOF
