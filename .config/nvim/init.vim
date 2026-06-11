@@ -18,6 +18,13 @@ let g:loaded_vimrc = 1
 let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 command! -nargs=1 Import execute printf("source %s/<args>", s:home)
 
+command! -nargs=0 SudoWrite
+	\ if !has('win32')
+	\ | execute 'w !sudo tee ' . expand('%')
+	\ | else
+	\ | w!
+	\ | endif
+
 
 " Section: functions
 "
