@@ -25,11 +25,11 @@ endfunction
 function! statusline#lsp_clients()
 	if has('nvim')
 		let bufnum = bufnr()
-		silent! let clients = v:lua.vim.lsp.get_clients({'bufnr': bufnum})
+		let clients = luaeval("vim.tbl_map(function(client) return client.name end, vim.lsp.get_clients({ bufnr = _A }))", bufnum)
 		if len(clients) == 0 || empty(clients) || type(clients) != type([])
 			return ''
 		else
-			return printf('[%s]', join(map(clients, {_, val -> val['name']}), ' '))
+			return printf('[%s]', join(clients, ' '))
 		endif
 	else
 		return ''

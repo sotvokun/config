@@ -30,3 +30,10 @@ set statusline+=%{&fileformat=='dos'?'[CRLF]':(&fileformat=='mac'?'[CR]':'')}
 set statusline+=%{&fileencoding=='utf-8'?'':(&fileencoding==''?'':'['.toupper(&fileencoding).']')}
 set statusline+=%10{line('.').':'.virtcol('.')}
 set statusline+=\ 
+
+if has('nvim')
+	augroup plugin_statusline_lsp
+		au!
+		autocmd LspAttach,LspDetach * redrawstatus
+	augroup END
+endif
