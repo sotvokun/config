@@ -31,7 +31,8 @@ nnoremap <silent> <c-g>g <cmd>FloatermNew --title=lazygit --width=0.9 --height=0
 " Section: ibhagwan/fzf-lua
 "
 Plug 'ibhagwan/fzf-lua', { 'on': 'FzfLua' }
-nnoremap <silent> <leader><leader> <cmd>FzfLua<cr>
+nnoremap <silent> <leader><c-p> <cmd>FzfLua<cr>
+nnoremap <silent> <leader><leader> <cmd>FzfLua global<cr>
 nnoremap <silent> <leader>f <cmd>FzfLua files<cr>
 nnoremap <silent> <leader>b <cmd>FzfLua buffers<cr>
 nnoremap <silent> <leader>% <cmd>FzfLua live_grep resume=true<cr>
