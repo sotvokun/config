@@ -70,6 +70,11 @@ if [[ $is_windows -eq 1 ]]; then
 	ln -s "$HOME/.config/lazygit" "$HOME/AppData/Roaming/lazygit"
 fi
 
+#    PART: lf
+if [[ $is_windows -eq 1 ]]; then
+	rm -rf "$HOME/AppData/Roaming/lf"
+	ln -s "$HOME/.config/lf" "$HOME/AppData/Roaming/lf"
+fi
 
 #    PART: neovim
 #        - 1. clean up the old neovim configuraiton

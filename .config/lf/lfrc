@@ -1,0 +1,7 @@
+# REFERENCE: https://github.com/vivainio/dotfiles/blob/2638df4cf54a599619e6b6c60a0484dd14f99376/lf/lfrc
+
+# Settings
+set shell sh
+set shellopts '-eu'
+set shellflag '-c'
+set mouse true
