@@ -75,6 +75,10 @@ if [[ $is_windows -eq 0 && -n $(command -v mise) ]]; then
 fi
 
 
+# opam
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
+
+
 # Prompt
 NEWLINE=$'\n'
 if [[ $UID -eq 0 ]]; then
