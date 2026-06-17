@@ -16,6 +16,14 @@ augroup fugitive_setup
 augroup END
 
 
+" Section: airblade/vim-gitgutter
+"
+Plug 'airblade/vim-gitgutter'
+
+nnoremap <silent> ]h <plug>(GitGutterNextHunk)
+nnoremap <silent> [h <plug>(GitGutterPrevHunk)
+
+
 " Section: voldikss/vim-floaterm
 "
 Plug 'voldikss/vim-floaterm'
