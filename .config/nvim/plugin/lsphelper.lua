@@ -3,6 +3,12 @@
 -- a plugin to make LSP expereience better on neovim
 --
 
+if vim.g.loaded_lsphelper == true then
+	return
+end
+vim.g.loaded_lsphelper = true
+
+
 -- defining the global lsp configurations
 
 vim.lsp.config('*', {
