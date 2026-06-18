@@ -16,6 +16,14 @@ augroup fugitive_setup
 augroup END
 
 
+" Section: diffview-plus
+"
+Plug 'dlyongemallo/diffview-plus.nvim',
+	\ { 'on': ['DiffviewOpen', 'DiffviewToggle', 'DiffviewFileHistory', 'DiffviewDiffFiles', 'DiffviewLog' ] }
+
+nnoremap <leader>gd <cmd>DiffviewToggle<cr>
+
+
 " Section: airblade/vim-gitgutter
 "
 Plug 'airblade/vim-gitgutter'
