@@ -1,3 +1,5 @@
 gui:
   border: single
   language: en
+git:
+  autoFetch: false
