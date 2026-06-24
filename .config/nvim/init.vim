@@ -84,7 +84,11 @@ set foldlevelstart=99
 
 "    Part: faces
 set list
-set listchars=tab:\|\ ,extends:>,precedes:\<,trail:~
+if &term ==# 'linux'
+	set listchars=tab:\|\ ,extends:>,precedes:\<,trail:~
+else
+	set listchars=tab:\│\ ,extends:>,precedes:\<,trail:⋅
+endif
 set scrolloff=1
 set sidescrolloff=5
 set signcolumn=yes
@@ -270,6 +274,10 @@ let g:netrw_winsize = 40
 
 "    Part: editorconfig
 silent! packadd! editorconfig
+
+"    Part: indentline
+"
+let g:indentline_char = '┆'
 
 
 " Section: Load Plugins
