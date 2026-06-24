@@ -10,6 +10,15 @@ lua << EOF
 local blink_options = {
 	keymap = {
 		preset = 'super-tab',
+
+		-- Unset some keymaps of preset
+		['<c-b>'] = { 'fallback' },
+		['<c-f>'] = { 'fallback' },
+
+		['<c-k>'] = { 'show_documentation', 'hide_documentation' },
+		['<c-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
+		['<c-u>'] = { 'scroll_documentation_up', 'fallback' },
+		['<c-d>'] = { 'scroll_documentation_down', 'fallback' },
 	},
 	snippets = { preset = 'vsnip' },
 	sources = {
