@@ -281,7 +281,11 @@ silent! packadd! editorconfig
 
 "    Part: indentline
 "
-let g:indentline_char = '┆'
+if &term ==# 'linux'
+	let g:indentline_char = '¦'
+else
+	let g:indentline_char = '┆'
+endif
 
 
 " Section: Load Plugins
