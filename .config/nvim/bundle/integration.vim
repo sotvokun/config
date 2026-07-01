@@ -49,6 +49,11 @@ nnoremap <silent> <c-g>g <cmd>FloatermNew --title=lazygit --width=0.9 --height=0
 " Section: ibhagwan/fzf-lua
 "
 Plug 'ibhagwan/fzf-lua', { 'on': 'FzfLua' }
+
+highlight link FzfLuaNormal NormalFloat
+highlight link FzfLuaBorder NormalFloat
+highlight link FzfLuaTitle NormalFloat
+
 nnoremap <silent> <leader><c-p> <cmd>FzfLua<cr>
 nnoremap <silent> <leader><leader> <cmd>FzfLua global<cr>
 nnoremap <silent> <leader>f <cmd>FzfLua files<cr>
@@ -60,16 +65,21 @@ nnoremap <silent> <leader># <cmd>FzfLua lsp_workspace_symbols<cr>
 lua << EOF
 local fzf_lua_options = {
 	winopts = {
-		border = 'none',
+		border = 'single',
+		backdrop = 100,
+		title_pos = 'left',
+		title_flags = false,
 		preview = {
-			border = 'border-top',
-			layout = 'vertical'
+			border = 'solid',
+			layout = 'horizontal',
+			title = false,
 		}
 	},
-	fzf_colors = true,
-	hls = {
-		preview_border = 'Whitespace'
-	}
+	fzf_colors = {
+		true,
+		['fg+'] = { 'fg', 'Normal' },
+		['bg+'] = { 'bg', 'CursorLine' },
+	},
 }
 
 local fzf_lua_setup_augroup =
