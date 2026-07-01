@@ -36,6 +36,8 @@ nnoremap <silent> [h <plug>(GitGutterPrevHunk)
 "
 Plug 'voldikss/vim-floaterm'
 
+highlight link Floaterm FloatermBorder
+
 "    Part: lf wrapper
 nnoremap <silent> <c-g>n <cmd>FloatermNew --title=lf --width=0.8 --height=0.8 --opener=edit lf<cr>
 nnoremap <silent> <c-g>N <cmd>FloatermNew --title=lf --width=0.8 --height=0.8 --opener=edit lf -command='set hidden!' .<cr>
