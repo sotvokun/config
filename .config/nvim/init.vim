@@ -225,7 +225,8 @@ if has('nvim')
 	lua vim.keymap.del('n', 'grt')
 	lua vim.keymap.del('n', 'grx')
 	lua vim.keymap.del('n', 'gO')
-	lua vim.keymap.del('n', 'gx')
+
+	lua vim.keymap.del('n', '<c-w>d')
 else
 	nnoremap Y y$
 	inoremap <c-u> <c-g>u<c-u>
@@ -293,3 +294,97 @@ endif
 call bundle#begin()
 call bundle#load()
 call bundle#end()
+
+
+" Section: LSP setup
+"
+if has('nvim')
+lua << EOF
+vim.lsp.config('*', {
+	root_markers = { '.git' },
+})
+
+local function on_lsp_attach(ev)
+	local client = vim.lsp.get_client_by_id(ev.data.client_id)
+	local bufnr = ev.buf
+
+	local keymap = function (k, fn, desc, mode)
+		vim.keymap.set(
+			mode and mode or 'n',
+			k,
+			fn,
+			{ buffer = bufnr, desc = desc }
+		)
+	end
+
+	if client:supports_method('textDocument/inlayHint') then
+		keymap('<c-x>zi', function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end, 'Toggle inlay hint')
+	end
+
+	keymap('<c-x>ga', vim.lsp.buf.code_action, 'Code Action')
+	keymap('<c-x>gi', vim.lsp.buf.implementation, 'Go to implementation')
+	keymap('cr', vim.lsp.buf.rename, 'Rename')
+	keymap('<c-x>gr', function()
+		if _G.FzfLua then
+			FzfLua.lsp_references()
+		else
+			vim.lsp.buf.references()
+		end
+	end, 'Go to references')
+	keymap('<c-x>gt', vim.lsp.buf.type_definition, 'Go to type definition')
+
+	keymap('gd', vim.lsp.buf.definition, 'Go to definition')
+	keymap('gD', vim.lsp.buf.declaration, 'Go to definition')
+
+	keymap('gO', function()
+		if _G.FzfLua then
+			FzfLua.lsp_document_symbols()
+		else
+			vim.lsp.buf.document_symbol()
+		end
+	end, 'List document symbols')
+end
+
+local function on_lsp_detach(ev)
+	local client = vim.lsp.get_client_by_id(ev.data.client_id)
+	local bufnr = ev.buf
+
+end
+
+local augroup = vim.api.nvim_create_augroup('lsp_setup', { clear = true })
+vim.api.nvim_create_autocmd('LspAttach', {
+	callback = on_lsp_attach,
+	group = augroup,
+})
+vim.api.nvim_create_autocmd('LspDetach', {
+	callback = on_lsp_detach,
+	group = augroup,
+})
+EOF
+endif
+
+
+" Section: Diagnostics
+"
+if has('nvim')
+lua << EOF
+	vim.keymap.set('n', 'gK', vim.diagnostic.open_float)
+
+	vim.diagnostic.config({
+		signs = {
+			severity = {
+				min = vim.diagnostic.severity.HINT,
+				max = vim.diagnostic.severity.INFO,
+			}
+		},
+		virtual_text = {
+			severity = vim.diagnostic.severity.WARN
+		},
+		virtual_lines = {
+			severity = vim.diagnostic.severity.ERROR
+		}
+	})
+EOF
+endif

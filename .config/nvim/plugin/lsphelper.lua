@@ -9,13 +9,6 @@ end
 vim.g.loaded_lsphelper = true
 
 
--- defining the global lsp configurations
-
-vim.lsp.config('*', {
-	root_markers = { '.git' },
-})
-
-
 -- extending LSP module
 
 function vim.lsp._has_mason()
