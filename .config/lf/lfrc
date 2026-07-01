@@ -5,3 +5,6 @@ set shell sh
 set shellopts '-eu'
 set shellflag '-c'
 set mouse true
+
+# keymap
+map <c-c> quit
