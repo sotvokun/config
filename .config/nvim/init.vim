@@ -218,10 +218,14 @@ nnoremap ? ms?
 " - setup some neovim builtin keybindings for vim
 if has('nvim')
 	nnoremap <c-x>I <cmd>Inspect<cr>
+	lua vim.keymap.del('n', 'gra')
+	lua vim.keymap.del('n', 'gri')
 	lua vim.keymap.del('n', 'grn')
 	lua vim.keymap.del('n', 'grr')
-	lua vim.keymap.del('n', 'gri')
-	lua vim.keymap.del('n', 'gra')
+	lua vim.keymap.del('n', 'grt')
+	lua vim.keymap.del('n', 'grx')
+	lua vim.keymap.del('n', 'gO')
+	lua vim.keymap.del('n', 'gx')
 else
 	nnoremap Y y$
 	inoremap <c-u> <c-g>u<c-u>
