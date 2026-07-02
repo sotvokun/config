@@ -31,13 +31,6 @@ if ($PSVersionTable.PSVersion.Major -ge 7 -and (Get-Command 'mise.exe' -ErrorAct
 }
 
 
-# opam Integration
-if (Get-Command 'opam.exe' -ErrorAction SilentlyContinue)
-{
-	(& opam env) -split '\r?\n' | ForEach-Object { Invoke-Expression $_ }
-}
-
-
 # Windows Terminal Integration
 if ($env:WT_SESSION)
 {
