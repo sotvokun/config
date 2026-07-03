@@ -12,6 +12,7 @@ augroup fugitive_setup
 	au!
 	autocmd FileType fugitive
 		\ setlocal nowrap
+		\ | set nonumber
 		\ | nnoremap <buffer> q <cmd>quit<cr>
 augroup END
 
@@ -22,6 +23,12 @@ Plug 'dlyongemallo/diffview-plus.nvim',
 	\ { 'on': ['DiffviewOpen', 'DiffviewToggle', 'DiffviewFileHistory', 'DiffviewDiffFiles', 'DiffviewLog' ] }
 
 nnoremap <leader>gd <cmd>DiffviewToggle<cr>
+
+augroup diffview_plus_setup
+	au!
+	autocmd FileType DiffviewFiles
+				\ nnoremap <buffer> q <cmd>DiffviewToggle<cr>
+augroup END
 
 
 " Section: airblade/vim-gitgutter

@@ -66,6 +66,7 @@ set wildoptions+=pum,tagfile
 set modeline
 set nofsync
 set hidden
+set number
 
 if has('multi_byte')
 	set encoding=utf-8
