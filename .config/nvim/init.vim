@@ -97,6 +97,11 @@ set guicursor=n-v-c-sm:block-Cursor,i-ci-ve:ver25-lCursor,r-cr-o:hor20-lCursor,t
 
 if has('termguicolors')
 	set termguicolors
+	if &background ==# 'dark'
+		highlight Cursor guifg=#000000 guibg=#f76ec9
+	else
+		highlight Cursor guifg=#ffffff guibg=#0044ff
+	endif
 endif
 
 if has('syntax')
