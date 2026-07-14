@@ -28,8 +28,7 @@ return vim.lsp.define_config('gopls', {
 	},
 	on_attach = function(client, bufnr)
 		local lsp_gopls_augroup = vim.api.nvim_create_augroup('lsp#gopls', {})
-		if not client:supports_method('textDocument/willSaveWaitUntil')
-			and client:supports_method('textDocument/formatting') then
+		if client:supports_method('textDocument/formatting') then
 			vim.api.nvim_create_autocmd('BufWritePre', {
 				group = lsp_gopls_augroup,
 				buffer = bufnr,
