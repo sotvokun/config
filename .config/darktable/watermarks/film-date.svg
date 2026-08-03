@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="230" height="76" viewBox="0 0 230 76">
+  <defs>
+    <filter id="wide-glow" x="-40%" y="-180%" width="180%" height="460%"
+            color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="near-glow" x="-30%" y="-120%" width="160%" height="340%"
+            color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter>
+  </defs>
+
+  <!--
+    Darktable film-date watermark
+    Date: YY MM DD
+    Position and scale: controlled by Darktable
+    Font: controlled by Darktable's font selector
+    Color: controlled by Darktable's color picker
+
+    The canvas is tightly cropped around the rendered date and glow so
+    Darktable alignment follows the visible watermark rather than a large
+    transparent margin.
+  -->
+
+  <g font-family="$(WATERMARK_FONT_FAMILY)"
+     font-style="$(WATERMARK_FONT_STYLE)"
+     font-weight="$(WATERMARK_FONT_WEIGHT)"
+     font-size="34"
+     letter-spacing="5"
+     text-anchor="middle">
+
+    <!-- broad, faint bloom -->
+    <text x="115" y="47"
+          fill="$(WATERMARK_COLOR)"
+          fill-opacity="0.34"
+          filter="url(#wide-glow)">$(EXIF.DATE.SHORT_YEAR) $(EXIF.DATE.MONTH) $(EXIF.DATE.DAY)</text>
+
+    <!-- tighter glow close to the digits -->
+    <text x="115" y="47"
+          fill="$(WATERMARK_COLOR)"
+          fill-opacity="0.52"
+          filter="url(#near-glow)">$(EXIF.DATE.SHORT_YEAR) $(EXIF.DATE.MONTH) $(EXIF.DATE.DAY)</text>
+
+    <!-- main date -->
+    <text x="115" y="47"
+          fill="$(WATERMARK_COLOR)"
+          fill-opacity="0.90">$(EXIF.DATE.SHORT_YEAR) $(EXIF.DATE.MONTH) $(EXIF.DATE.DAY)</text>
+  </g>
+</svg>

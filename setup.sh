@@ -79,6 +79,12 @@ if [[ $is_windows -eq 1 ]]; then
 	ln -s "$HOME/.config/lazygit" "$HOME/AppData/Roaming/lazygit"
 fi
 
+#    PART: darktable
+if [[ $is_windows -eq 1 && -d "$HOME/AppData/Local/darktable/watermarks/" ]]; then
+	rm -rf "$HOME/AppData/Local/darktable/watermarks"
+	ln -s "$HOME/.config/darktable/watermarks" "$HOME/AppData/Local/darktable/watermarks"
+fi
+
 #    PART: lf
 if [[ $is_windows -eq 1 ]]; then
 	rm -rf "$HOME/AppData/Roaming/lf"
