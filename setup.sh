@@ -60,6 +60,15 @@ cp .ideavimrc "$HOME/.ideavimrc"
 #    PART: XDG_CONFIG_HOME
 cp -rf .config "$HOME/"
 
+#    PART: codex
+if [[ -d "$HOME/.codex" ]]; then
+	rm -rf "$HOME/.codex/agents"
+	ln -s "$HOME/.config/codex/agents" "$HOME/.codex/agents"
+
+	rm "$HOME/.codex/AGENTS.md"
+	ln -s "$HOME/.config/codex/AGENTS.md" "$HOME/.codex/AGENTS.md"
+fi
+
 #    PART: lazygit
 if [[ $is_darwin -eq 1 ]]; then
 	rm -rf "$HOME/Library/Application Support/lazygit"
