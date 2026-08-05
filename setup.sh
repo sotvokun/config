@@ -91,6 +91,21 @@ if [[ $is_windows -eq 1 ]]; then
 	ln -s "$HOME/.config/lf" "$HOME/AppData/Roaming/lf"
 fi
 
+#    PART: herdr
+if [[ $is_windows -eq 1 ]]; then
+	if command -v pwsh &> /dev/null; then
+		sed -i 's/default_shell = ""/default_shell = "pwsh.exe -NoLogo"/g' "$HOME/.config/herdr/config.toml"
+	fi
+	windows_herdr_home="$HOME/AppData/Roaming/herdr"
+	if [[ ! -d "$windows_herdr_home" ]]; then
+		mkdir -p "$windows_herdr_home"
+	fi
+	if [[ ! -L "$windows_herdr_home/config.toml" ]]; then
+		rm "$windows_herdr_home/config.toml"
+		ln -s "$HOME/.config/herdr/config.toml" "$windows_herdr_home/config.toml"
+	fi
+fi
+
 #    PART: neovim
 #        - 1. clean up the old neovim configuraiton
 #        - 2. re-copy the new configs
