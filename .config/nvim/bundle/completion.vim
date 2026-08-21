@@ -12,32 +12,10 @@ local blink_options = {
 		preset = 'super-tab',
 
 		['<c-e>'] = {
-			function(cmp)
-				if not pcall(require, 'minuet.virtualtext') then
-					return false
-				end
-				if require('minuet.virtualtext').action.is_visible() then
-					vim.defer_fn(require('minuet.virtualtext').action.dismiss, 30)
-					return true
-				else
-					return false
-				end
-			end,
 			'hide',
 			'fallback'
 		},
 		['<Tab>'] = {
-			function(_)
-				if not pcall(require, 'minuet.virtualtext') then
-					return false
-				end
-				if require('minuet.virtualtext').action.is_visible() then
-					vim.defer_fn(require('minuet.virtualtext').action.accept, 30)
-					return true
-				else
-					return false
-				end
-			end,
 			function(cmp)
 				if cmp.snippet_active() then
 					return cmp.accept()
@@ -72,40 +50,5 @@ vim.api.nvim_create_autocmd('InsertEnter', {
 		vim.fn['plug#load']('blink.cmp')
 		require('blink.cmp').setup(blink_options)
 	end
-})
-EOF
-
-
-
-" Section: milanglacier/minuet-ai.nvim
-"
-Plug 'milanglacier/minuet-ai.nvim', { 'on': [] }
-
-lua << EOF
-local minuet_options = {
-	n_completions = 1,
-	provider = 'openai_fim_compatible',
-	provider_options = {
-		provider_options = {
-			openai_fim_compatible = {
-				api_key = 'DEEPSEEK_API_KEY',
-				name = 'deepseek',
-				optional = {
-					max_tokens = 256,
-					top_p = 0.9,
-				},
-			},
-		},
-	},
-}
-
-local minuet_setup_augroup =
-	vim.api.nvim_create_augroup('minuet_setup', { clear = true })
-vim.api.nvim_create_autocmd('InsertEnter', {
-	group = minuet_setup_augroup,
-	callback = function()
-		vim.fn['plug#load']('minuet-ai.nvim')
-		require('minuet').setup(minuet_options)
-	end,
 })
 EOF
