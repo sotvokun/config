@@ -1,82 +1,71 @@
 -- lsphelper.lua
 --
--- a plugin to make LSP expereience better on neovim
---
+-- Resolve LSP executables from Mason or the system PATH before defining a
+-- configuration. Mason executables take precedence when available.
 
-if vim.g.loaded_lsphelper == true then
+if vim.g.loaded_lsphelper then
 	return
 end
 vim.g.loaded_lsphelper = true
 
-
--- extending LSP module
-
-function vim.lsp._has_mason()
-	return pcall(require, 'mason-registry')
-end
-
-function vim.lsp.executable(name)
-	has_mason, mason_registry = vim.lsp._has_mason()
-	if has_mason then
-		has_package, mason_package = pcall(mason_registry.get_package, name)
-		if has_package then
-			return true, true, mason_package
-		end
-	end
-	return vim.fn.executable(name) == 1, false, nil
-end
-
-function vim.lsp.exepath(name)
-	is_existsed, by_mason, mason_package = vim.lsp.executable(name)
-	if not is_existsed then
-		return nil
-	end
-	if not by_mason then
-		return vim.fn.exepath(name)
-	end
-
-	local has_mason_settings, mason_settings = pcall(require, 'mason.settings')
-	if not has_mason_settings then
-		return nil
-	end
-	local bin_path = vim.fs.joinpath(
-		mason_settings.current.install_root_dir,
-		'bin',
-		vim.tbl_keys(mason_package.spec.bin)[1]
-	)
-	local ok, fs_data = pcall(vim.uv.fs_stat, bin_path)
-	if not ok then
-		return nil
-	end
-	return bin_path
-end
-
-vim.lsp.default_define_config_options = {
-	name_as_executable = true
+local default_options = {
+	name_as_executable = true,
 }
 
-function vim.lsp.define_config(name, config, options)
-	if not vim.lsp.executable(name) then
+local function mason_root()
+	if vim.env.MASON and vim.env.MASON ~= '' then
+		return vim.env.MASON
+	end
+
+	local ok, settings = pcall(require, 'mason.settings')
+	if ok and settings.current then
+		return settings.current.install_root_dir
+	end
+	return nil
+end
+
+local function existing_executable(path)
+	if not path or path == '' then
+		return nil
+	end
+
+	local resolved_path = vim.fn.exepath(path)
+	if resolved_path ~= '' then
+		return resolved_path
+	end
+	if vim.uv.fs_stat(path) then
+		return path
+	end
+	return nil
+end
+
+function vim.lsp.exepath(command)
+	local root = mason_root()
+	if root then
+		local mason_command = existing_executable(vim.fs.joinpath(root, 'bin', command))
+		if mason_command then
+			return mason_command
+		end
+	end
+
+	return existing_executable(command)
+end
+
+function vim.lsp.define_config(command, config, options)
+	local opts = vim.tbl_extend('force', default_options, options or {})
+	local command_path = vim.lsp.exepath(command)
+	if not command_path then
 		return {}
 	end
 
-	local options_value = vim.tbl_extend(
-		'force',
-		vim.lsp.default_define_config_options,
-		options or {}
-	)
-
-	if options_value.name_as_executable then
-		if type(config.cmd) == 'table' and #(config.cmd) >= 1 then
-			config.cmd[1] = vim.lsp.exepath(name)
+	local resolved_config = vim.deepcopy(config)
+	if opts.name_as_executable then
+		if type(resolved_config.cmd) ~= 'table' then
+			resolved_config.cmd = {}
 		end
-		if type(config.cmd) == 'nil'
-			or (type(config.cmd) == 'table' and #(config.cmd) == 0) then
-			config.cmd = { vim.lsp.exepath(name) }
-		end
+		resolved_config.cmd[1] = command_path
 	end
-
-	return config
+	return resolved_config
 end
 
 -- vim: ts=4

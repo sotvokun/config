@@ -14,7 +14,7 @@ local exec_config = {
 	},
 	root_markers = {
 		"tsconfig.json",
-		"jsonconfig.json",
+		"jsconfig.json",
 		"package.json"
 	},
 	settings = {
@@ -33,11 +33,22 @@ local exec_config = {
 -- for vue-language-server typescript-plugin
 -- REFERENCE: https://github.com/vuejs/language-tools/wiki/Neovim
 local VUELS_EXEC = 'vue-language-server'
-local vuels_exists, from_mason, mason_package = vim.lsp.executable(VUELS_EXEC)
-if vuels_exists and from_mason then
+local function mason_package_path(executable)
+	local executable_path = vim.lsp.exepath(executable)
+	if not executable_path then
+		return nil
+	end
+
+	local mason_root = vim.fs.dirname(vim.fs.dirname(executable_path))
+	local package_path = vim.fs.joinpath(mason_root, 'packages', executable)
+	return vim.uv.fs_stat(package_path) and package_path or nil
+end
+
+local vuels_package_path = mason_package_path(VUELS_EXEC)
+if vuels_package_path then
 	table.insert(exec_config.filetypes, 'vue')
 	local vuels_module_path = vim.fs.joinpath(
-		mason_package:get_install_path(),
+		vuels_package_path,
 		'node_modules',
 		'@vue',
 		'language-server'
