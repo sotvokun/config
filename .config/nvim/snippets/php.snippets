@@ -16,6 +16,17 @@ snippet ~class
 	{
 		${2}
 	}
+snippet ~readonly
+	<?php
+	namespace ${VIM: substitute(expand('%:.:h'), '/', '\\', 'g')};
+
+	readonly class ${VIM: expand('%:t:r')}${1}
+	{
+		public function __construct(
+			${2}
+		)
+		{ }
+	}
 snippet ~interface
 	<?php
 	namespace ${VIM: substitute(expand('%:.:h'), '/', '\\', 'g')};

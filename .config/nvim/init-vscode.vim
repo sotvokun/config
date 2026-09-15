@@ -12,6 +12,7 @@ let g:loaded_vscode_init = 1
 syntax clear
 syntax off
 set syntax=OFF
+colorscheme vim
 
 "    Part: clipboard
 set clipboard=unnamedplus
