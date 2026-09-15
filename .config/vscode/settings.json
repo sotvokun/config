@@ -3,11 +3,11 @@
      * Workbench
      */
     "workbench.editor.showIcons": false,
-    "workbench.colorTheme": "Railgun",
-    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-dark",
+    "workbench.colorTheme": "Light Modern",
+    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-light",
     "workbench.layoutControl.enabled": false,
     "workbench.activityBar.orientation": "vertical",
-    "workbench.activityBar.location": "top",
+    "workbench.activityBar.location": "default",
     "workbench.startupEditor": "none",
     "workbench.experimental.modernUI": false,
 
@@ -29,7 +29,7 @@
     "editor.bracketPairColorization.enabled": false,
     "editor.cursorBlinking": "solid",
     "editor.unicodeHighlight.ambiguousCharacters": false,
-    "editor.smoothScrolling": true,
+    "editor.smoothScrolling": false,
     "editor.inlayHints.enabled": "offUnlessPressed",
     "editor.minimap.enabled": false,
 
@@ -62,12 +62,6 @@
      * AI Features
      */
     "chat.disableAIFeatures": true,
-
-
-    /**
-     * Cursor ONLY
-     */
-    "cursor.general.disableHttp2": true,
 
 
     /**
