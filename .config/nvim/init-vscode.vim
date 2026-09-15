@@ -62,9 +62,6 @@ nnoremap [t <cmd>call VSCodeNotify('workbench.action.previousEditorInGroup')<cr>
 vnoremap < <gv
 vnoremap > >gv
 
-" replay @q macro
-nnoremap Q @q
-
 " <esc> disable highlight and redraw
 nnoremap <silent> <esc> <cmd>nohlsearch<bar>diffupdate<bar>redraw<cr>
 
