@@ -1,0 +1,7 @@
+# config.yaml
+os:
+  editPreset: ""
+  edit: 'pwsh -NoProfile -Command "& (Join-Path (Split-Path -Path $PROFILE -Parent) ''Scripts\nvim_remote_edit.ps1'') {{filename}}"'
+  editAtLine: 'pwsh -NoProfile -Command "& (Join-Path (Split-Path -Path $PROFILE -Parent) ''Scripts\nvim_remote_edit.ps1'') {{filename}} {{line}}"'
+  openDirInEditor: 'pwsh -NoProfile -Command "& (Join-Path (Split-Path -Path $PROFILE -Parent) ''Scripts\nvim_remote_edit.ps1'') {{dir}}"'
+  editInTerminal: false

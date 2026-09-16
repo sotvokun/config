@@ -28,6 +28,9 @@ if [[ $is_windows -eq 1 ]]; then
 	cp "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1" \
 		"$HOME/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
 
+	cp -rf "Documents/WindowsPowerShell/Scripts/." \
+		"$HOME/Documents/WindowsPowerShell/Scripts"
+
 	if [[ -n "$(command -v pwsh)" ]]; then
 		rm -rf "$HOME/Documents/PowerShell"
 		ln -s "$HOME/Documents/WindowsPowerShell" "$HOME/Documents/PowerShell"
