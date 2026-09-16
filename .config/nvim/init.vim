@@ -200,6 +200,13 @@ inoremap <c-x>n <c-n>
 inoremap <c-x>p <c-p>
 cnoremap <c-x><c-f> <c-f>
 
+"    Part: completion
+"          vscode-like completion tab behaviour
+inoremap <expr> <tab>
+	\ pumvisible()
+	\   ? (complete_info().selected == -1 ? "\<down>" : "\<c-y>")
+	\   : "\<tab>"
+
 "    Part: misc
 "  unimpaired
 nnoremap <expr> ]t '<cmd>+'.v:count1.'tabnext<cr>'
