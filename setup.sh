@@ -162,6 +162,11 @@ if [[ $is_darwin -eq 1 ]]; then
 	fi
 fi
 
+#    PART: gram
+if [[ $is_windows -eq 1 ]]; then
+    rm -rf "$HOME/AppData/Roaming/Gram"
+    ln -s "$HOME/.config/gram" "$HOME/AppData/Roaming/Gram"
+fi
 
 # SECTION: WSL (Windows Only)
 # -----------------------------------------------------------------------------
