@@ -68,4 +68,14 @@ function vim.lsp.define_config(command, config, options)
 	return resolved_config
 end
 
+local lsphelper_autoenable_augroup = vim.api.nvim_create_augroup('lsphelper_autoenable', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+	group = lsphelper_autoenable_augroup,
+	callback = function(ev)
+		for _, config in ipairs(vim.lsp.get_configs({ filetype = ev.match, enabled = false })) do
+			vim.lsp.enable(config.name)
+		end
+	end,
+})
+
 -- vim: ts=4

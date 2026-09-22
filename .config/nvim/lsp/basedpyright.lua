@@ -20,6 +20,7 @@ end
 
 return vim.lsp.define_config('basedpyright-langserver', {
 	cmd = { 'basedpyright-langserver', '--stdio' },
+	filetypes = { 'python' },
 	root_markers = {
 		'requirements.txt',
 		'setup.py',
