@@ -1,0 +1,17 @@
+# edit
+github.com/tpope/vim-repeat
+github.com/tpope/vim-surround
+github.com/tommcdo/vim-lion
+github.com/tpope/vim-sleuth
+github.com/justinmk/vim-sneak
+github.com/hrsh7th/vim-vsnip
+github.com/AndrewRadev/switch.vim
+
+# integration
+github.com/tpope/vim-fugitive opt
+github.com/airblade/vim-gitgutter opt
+github.com/voldikss/vim-floaterm opt
+github.com/ibhagwan/fzf-lua opt
+
+# lsp
+github.com/mason-org/mason.nvim opt

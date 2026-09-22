@@ -155,7 +155,7 @@ let g:mapleader = ' '
 "    Part: release some keybindings
 "          make <c-x> as the secondary leader
 "          fallback setup
-nnoremap <c-g> <nop>
+nnoremap <c-g> <esc>
 nnoremap <c-x> <nop>
 nnoremap <c-x><c-g> <cmd>:file<cr>
 nnoremap <c-x><c-a> <c-a>
@@ -254,6 +254,15 @@ else
 endif
 
 
+" Section: completion
+"
+if has('nvim')
+	set autocomplete
+	set complete=o,.,w^10,b^10
+	set completeopt=menuone,popup,nearest,noselect
+endif
+
+
 " Section: autocmd
 "
 augroup init
@@ -299,11 +308,15 @@ else
 endif
 
 
-" Section: Load Plugins
+" Section: Plugins
 "
-call bundle#begin()
-call bundle#load()
-call bundle#end()
+let g:packup_manifest = stdpath('config') . '/pkg'
+let g:packup_home = stdpath('data') . '/site/pack/packup'
+packadd! vim-fugitive
+packadd! vim-gitgutter
+packadd! vim-floaterm
+packadd! fzf-lua
+packadd! mason.nvim
 
 
 " Section: LSP setup
@@ -324,6 +337,15 @@ local function on_lsp_attach(ev)
 			k,
 			fn,
 			{ buffer = bufnr, desc = desc }
+		)
+	end
+
+	if client:supports_method('textDocument/completion') then
+		vim.lsp.completion.enable(
+			true,
+			ev.data.client_id,
+			ev.buf,
+			{ autotrigger = false }
 		)
 	end
 

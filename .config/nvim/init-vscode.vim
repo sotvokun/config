@@ -26,7 +26,7 @@ let g:mapleader = ' '
 "    Part: release some keybindings
 "          make <c-x> as the secondary leader
 "          fallback setup
-nnoremap <c-g> <nop>
+nnoremap <c-g> <esc>
 nnoremap <c-x> <nop>
 nnoremap <c-x><c-g> <cmd>:file<cr>
 nnoremap <c-x><c-a> <c-a>
@@ -75,8 +75,7 @@ nnoremap ]c <cmd>call VSCodeNotify('workbench.action.editor.nextChange')<cr>
 nnoremap [c <cmd>call VSCodeNotify('workbench.action.editor.previousChange')<cr>
 
 
-" Section: Plugin Declaration
+" Section: Plugins
 "
-call bundle#begin()
-Import bundle/edit.vim
-call bundle#end()
+let g:packup_manifest = stdpath('config') . '/pkg'
+let g:packup_home = stdpath('data') . '/site/pack/packup'
