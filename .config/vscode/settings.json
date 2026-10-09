@@ -3,13 +3,14 @@
      * Workbench
      */
     "workbench.editor.showIcons": false,
-    "workbench.colorTheme": "Light Modern",
-    "workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-light",
+    "workbench.colorTheme": "Light 2026",
+    "workbench.iconTheme": "vscode-modern-icons",
     "workbench.layoutControl.enabled": false,
     "workbench.activityBar.orientation": "vertical",
     "workbench.activityBar.location": "default",
     "workbench.startupEditor": "none",
     "workbench.experimental.modernUI": false,
+    "workbench.activityBar.compact": true,
 
 
     /**
@@ -41,6 +42,8 @@
     "extensions.autoCheckUpdates": true,
     "extensions.autoUpdate": false,
     "extensions.ignoreRecommendations": true,
+    "scm.defaultViewMode": "tree",
+
 
 
     /**
